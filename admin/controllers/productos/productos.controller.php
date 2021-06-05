@@ -2,6 +2,8 @@
     require_once('controllers/sistema.controller.php');
     class Producto extends Sistema
     {
+
+        //Borrar
         function createProducto($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni)
         {
             $pre = $this -> calcularPrecio($cos);
@@ -50,10 +52,11 @@
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindParam(':codigo_producto', $c_d, PDO::PARAM_STR);
             $stmt -> execute();
-            $filas=$stmt -> fetchAll();
+            $filas = $stmt -> fetchAll();
             return $filas;
         }
 
+        //Borrar
         function updateProducto($cod_pro, $pro, $cos, $desc, $id_mar, $id_uni)
         {
             $pre = $this -> calcularPrecio($cos);
@@ -124,6 +127,7 @@
             }
         }
 
+        //Borrar
         function calcularPrecio($cos){ return $cos * 1.7; }
         function calcularPrecioPublico($pre){ return $pre; }
 

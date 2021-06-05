@@ -2,7 +2,7 @@
     include("productos.controller.php");
     class Aspersor extends Producto
     {
-        function createAspersor($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni,  $cmin, $cmax, $pmin, $pmax, $amin, $amax)
+        function createAspersor($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni, $cmin, $cmax, $pmin, $pmax, $amin, $amax)
         {
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
@@ -101,7 +101,7 @@
                 $sentencia = 'UPDATE aspersor SET caudal_minimo = :caudal_minimo, caudal_maximo = :caudal_maximo, presion_minima = :presion_minima, 
                                         presion_maxima = :presion_maxima, alcance_minimo = :alcance_minimo, alcance_maximo = :alcance_maximo  
                               WHERE codigo_producto = :codigo_producto';
-                $stmt = $dbh->prepare($sentencia);
+                $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
                 $stmt -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
                 $stmt -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
@@ -119,8 +119,5 @@
             }
             $dbh -> rollBack();
         }
-
-        function calcularPrecio($cos){ return $cos * 1.7; }
-        function calcularPrecioPublico($pre){ return $pre; }
     }
 ?>

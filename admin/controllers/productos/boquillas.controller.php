@@ -1,60 +1,55 @@
 <?php
     include("productos.controller.php");
     class Boquilla extends Producto{
-        var $caudal_minimo;
-        var $caudal_maximo;
-        var $presion_minima;
-        var $presion_maxima;
-        var $radio_minimo;
-        var $radio_maximo;
-        var $trayectoria;
-        var $ajuste;
-        var $tipo_boquilla;
-        var $forma_aspersion;
-
-        function getCaudalMinimo(){ return $this -> caudal_minimo; }
-        function getCaudalMaximo(){ return $this -> caudal_maximo; }
-        function getPresionMinima(){ return $this -> presion_minima; }
-        function getPresionMaxima(){ return $this -> presion_maxima; }
-        function getRadioMinimo(){ return $this -> radio_minimo; }
-        function getRadioMaximo(){ return $this -> radio_maximo; }
-        function getTrayectoria(){ return $this -> trayectoria; }
-        function getAjuste(){ return $this -> ajuste; }
-        function getTipoBoquilla(){ return $this -> tipo_boquilla; }
-        function getFormaAspersion(){ return $this -> forma_aspersion; }
-
-        function setCaudalMinimo($cmin){ $this -> caudal_minimo = $cmin; }
-        function setCaudalMaximo($cmax){ $this -> caudal_maximo = $cmax; }
-        function setPresionMinima($pmin){ $this -> presion_minima = $pmin; }
-        function setPresionMaxima($pmax){ $this -> presion_maxima = $pmax; }
-        function setRadioMinimo($rmin){ $this -> radio_minimo = $rmin; }
-        function setRadioMaximo($rmax){ $this -> radio_maximo = $rmax; }
-        function setTrayectoria($tra){ $this -> trayectoria = $tra; }
-        function setAjuste($ajus){ $this -> ajuste = $ajus; }
-        function setTipoBoquilla($t_b){ $this -> tipo_boquilla = $t_b; }
-        function setFormaAspersion($f_a){ $this -> forma_aspersion = $f_a; }
-
-        function createBoquilla($cod_pro, $cmin, $cmax, $pmin, $pmax, $rmin, $rmax, $tra, $ajus, $id_t_b, $id_f_a)
+        function createBoquilla($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni, $cmin, $cmax, $pmin, $pmax, $rmin, $rmax, $tra, $ajus, $id_t_b, $id_f_a)
         {
             $dbh = $this -> connect();
-            $sentencia2 = "INSERT INTO boquilla(codigo_producto, caudal_minimo, caudal_maximo, presion_minima, presion_maxima, 
+            $dbh -> beginTransaction();
+            try {
+                $pre = $this -> calcularPrecio($cos);
+                $pre_pub = $this -> calcularPrecioPublico($pre);
+                $foto = $this -> guardarFotografia();
+                $sentencia = "INSERT INTO producto(codigo_producto, producto, costo, precio, precio_publico, descripcion, 
+                                               existencias, fotografia, id_marca, id_unidad) 
+                                        VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
+                                               :existencias, :fotografia, :id_marca, :id_unidad)";
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
+                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
+                $stmt -> bindParam(':existencias', $exis, PDO::PARAM_STR);
+                $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
+                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
+                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
+                $resultado = $stmt -> execute();
+                $sentencia2 = "INSERT INTO boquilla(codigo_producto, caudal_minimo, caudal_maximo, presion_minima, presion_maxima, 
                                                 radio_minimo, radio_maximo, trayectoria, ajuste, id_tipo_boquilla, id_forma_aspersion)
                                          VALUES(:codigo_producto, :caudal_minimo, :caudal_maximo, :presion_minima, :presion_maxima, 
                                                 :radio_minimo, :radio_maximo, :trayectoria, :ajuste, :id_tipo_boquilla, :id_forma_aspersion)";
-            $stmt2 = $dbh -> prepare($sentencia2);
-            $stmt2 -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':presion_maxima', $pmax, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':radio_minimo', $rmin, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':radio_maximo', $rmax, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':trayectoria', $tra, PDO::PARAM_INT);
-            $stmt2 -> bindParam(':ajuste', $ajus, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
-            $stmt2 -> bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
-            $resultado = $stmt2 -> execute();
-            return $resultado;
+                $stmt2 = $dbh -> prepare($sentencia2);
+                $stmt2 -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':presion_maxima', $pmax, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':radio_minimo', $rmin, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':radio_maximo', $rmax, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':trayectoria', $tra, PDO::PARAM_INT);
+                $stmt2 -> bindParam(':ajuste', $ajus, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
+                $stmt2 -> bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
+                $resultado = $stmt2 -> execute();
+                $dbh -> commit();
+                return $resultado;
+            }
+            catch(Exception $e){
+                echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                $dbh -> rollBack();
+            }
+            $dbh -> rollBack();
         }
 
         function readBoquilla(){
@@ -83,29 +78,64 @@
             return $this -> readOne($sentencia, $c_d);
         }
 
-        function updateBoquilla($cod_pro, $cmin, $cmax, $pmin, $pmax, $rmin, $rmax, $tra, $ajus, $id_t_b, $id_f_a)
+        function updateBoquilla($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni, $cmin, $cmax, $pmin, $pmax, $rmin, $rmax, $tra, $ajus, $id_t_b, $id_f_a)
         {
-            $dbh = $this->connect();
-            $sentencia2 = 'UPDATE boquilla SET caudal_minimo = :caudal_minimo, caudal_maximo = :caudal_maximo, 
+            $dbh = $this -> connect();
+            $dbh -> beginTransaction();
+            try{
+                $pre = $this -> calcularPrecio($cos);
+                $pre_pub = $this -> calcularPrecioPublico($pre);
+                $foto = $this -> guardarFotografia();
+                if($foto){
+                    $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
+                                              descripcion = :descripcion, fotografia = :fotografia, 
+                                              id_marca = :id_marca, id_unidad = :id_unidad 
+                              WHERE codigo_producto = :codigo_producto';
+                    $stmt = $dbh -> prepare($sentencia);
+                    $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
+                }
+                else{
+                    $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
+                              descripcion = :descripcion, id_marca = :id_marca, id_unidad = :id_unidad 
+                              WHERE codigo_producto = :codigo_producto';
+                    $stmt = $dbh -> prepare($sentencia);
+                }
+                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
+                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
+                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
+                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
+                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $resultado = $stmt -> execute();
+                $sentencia2 = 'UPDATE boquilla SET caudal_minimo = :caudal_minimo, caudal_maximo = :caudal_maximo, 
                                                presion_minima = :presion_minima,presion_maxima = :presion_maxima, 
                                                radio_minimo = :radio_minimo, radio_maximo = :radio_maximo,
                                                trayectoria = :trayectoria, ajuste = :ajuste, 
                                                id_tipo_boquilla = :id_tipo_boquilla, id_forma_aspersion = :id_forma_aspersion 
                            WHERE codigo_producto = :codigo_producto';
-            $stmt2 = $dbh->prepare($sentencia2);
-            $stmt2 -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':presion_maxima', $pmax, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':radio_minimo', $rmin, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':radio_maximo', $rmax, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':trayectoria', $tra, PDO::PARAM_INT);
-            $stmt2 -> bindParam(':ajuste', $ajus, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
-            $stmt2 -> bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
-            $stmt2 -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            $resultado = $stmt2 -> execute();
-            return $resultado;
+                $stmt2 = $dbh->prepare($sentencia2);
+                $stmt2 -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':presion_maxima', $pmax, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':radio_minimo', $rmin, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':radio_maximo', $rmax, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':trayectoria', $tra, PDO::PARAM_INT);
+                $stmt2 -> bindParam(':ajuste', $ajus, PDO::PARAM_STR);
+                $stmt2 -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
+                $stmt2 -> bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
+                $stmt2 -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $resultado = $stmt2 -> execute();
+                $dbh -> commit();
+                return $resultado;
+            }
+            catch(Exception $e){
+                echo 'Excepción capturada: ',  $e -> getMessage(), "\n";
+                $dbh -> rollBack();
+            }
+            $dbh -> rollBack();
         }
     }
 ?>

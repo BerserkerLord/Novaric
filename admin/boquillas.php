@@ -23,9 +23,8 @@
             break;
         case 'guardar':
             $boquilla = $_POST['boquilla'];
-            $resultado = $boquillas -> createProducto($boquilla['codigo_producto'], $boquilla['producto'], $boquilla['costo'],
-                $boquilla['descripcion'], $boquilla['existencias'], $boquilla['id_marca'], $boquilla['id_unidad']);
-            $resultado2 = $boquillas -> createBoquilla($boquilla['codigo_producto'], $boquilla['caudal_minimo'], $boquilla['caudal_maximo'],
+            $resultado = $boquillas -> createBoquilla($boquilla['codigo_producto'], $boquilla['producto'], $boquilla['costo'],
+                $boquilla['descripcion'], $boquilla['existencias'], $boquilla['id_marca'], $boquilla['id_unidad'], $boquilla['caudal_minimo'], $boquilla['caudal_maximo'],
                 $boquilla['presion_minima'], $boquilla['presion_maxima'], $boquilla['radio_minimo'],
                 $boquilla['radio_maximo'], $boquilla['trayectoria'], $boquilla['ajuste'],
                 $boquilla['id_tipo_boquilla'], $boquilla['id_forma_aspersion']);
@@ -45,9 +44,8 @@
             break;
         case 'actualizar':
             $boquilla = $_POST['boquilla'];
-            $resultado = $boquillas -> updateProducto($boquilla['codigo_producto'], $boquilla['producto'], $boquilla['costo'],
-                $boquilla['descripcion'], $boquilla['id_marca'], $boquilla['id_unidad']);
-            $resultado2 = $boquillas -> updateBoquilla($boquilla['codigo_producto'], $boquilla['caudal_minimo'], $boquilla['caudal_maximo'],
+            $resultado2 = $boquillas -> updateBoquilla($boquilla['codigo_producto'], $boquilla['producto'], $boquilla['costo'],
+                $boquilla['descripcion'], $boquilla['existencias'], $boquilla['id_marca'], $boquilla['id_unidad'], $boquilla['caudal_minimo'], $boquilla['caudal_maximo'],
                 $boquilla['presion_minima'], $boquilla['presion_maxima'], $boquilla['radio_minimo'],
                 $boquilla['radio_maximo'], $boquilla['trayectoria'], $boquilla['ajuste'],
                 $boquilla['id_tipo_boquilla'], $boquilla['id_forma_aspersion']);
