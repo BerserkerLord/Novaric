@@ -23,11 +23,10 @@
             break;
         case 'guardar':
             $conexion = $_POST['conexion'];
-            $resultado = $conexiones -> createProducto($conexion['codigo_producto'], $conexion['producto'], $conexion['costo'],
-                                                       $conexion['descripcion'], $conexion['existencias'],
-                                                       $conexion['id_marca'], $conexion['id_unidad']);
-            $resultado2 = $conexiones -> createConexion($conexion['codigo_producto'], $conexion['diametro'], $conexion['id_forma_conexion'],
-                $conexion['id_extremidad1'], $conexion['id_extremidad2']);
+            $resultado2 = $conexiones -> createConexion($conexion['codigo_producto'], $conexion['producto'], $conexion['costo'],
+                                                        $conexion['descripcion'], $conexion['existencias'],
+                                                        $conexion['id_marca'], $conexion['id_unidad'], $conexion['diametro'],
+                                                        $conexion['id_forma_conexion'], $conexion['id_extremidad1'], $conexion['id_extremidad2']);
             $datos = $conexiones -> readConexion();
             include('views/productos/conexiones/index.php');
             break;
@@ -44,10 +43,9 @@
             break;
         case 'actualizar':
             $conexion = $_POST['conexion'];
-            $resultado = $conexiones -> updateProducto($conexion['codigo_producto'], $conexion['producto'], $conexion['costo'],
-                $conexion['descripcion'], $conexion['id_marca'], $conexion['id_unidad']);
-            $resultado2 = $conexiones -> updateConexion($conexion['codigo_producto'], $conexion['diametro'], $conexion['id_forma_conexion'],
-                $conexion['id_extremidad1'], $conexion['id_extremidad2']);
+            $resultado2 = $conexiones -> updateConexion($conexion['codigo_producto'], $conexion['producto'], $conexion['costo'],
+                                                        $conexion['descripcion'], $conexion['id_marca'], $conexion['id_unidad'],
+                                                        $conexion['diametro'], $conexion['id_forma_conexion'], $conexion['id_extremidad1'], $conexion['id_extremidad2']);
             $datos = $conexiones -> readConexion();
             include('views/productos/conexiones/index.php');
             break;

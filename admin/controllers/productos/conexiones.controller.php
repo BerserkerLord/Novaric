@@ -1,34 +1,47 @@
 <?php
     include("productos.controller.php");
     class Conexion extends Producto{
-        var $diametro;
-        var $forma;
-        var $extremidad1;
-        var $extremidad2;
-
-        function getDiametro(){ return $this -> diametro; }
-        function getForma(){ return $this -> forma; }
-        function getExtremidad1(){ return $this -> extremidad1; }
-        function getExtremidad2(){ return $this -> extremidad2; }
-
-        function setMedida($d){ $this -> medida = $d; }
-        function setForma($for){ $this -> forma = $for; }
-        function setExtremidad1($ext1){ $this -> extremidad1 = $ext1; }
-        function setExtremidad2($ext2){ $this -> extremidad2 = $ext2; }
-
-        function createConexion($cod_pro, $d, $id_f, $id_ext1, $id_ext2)
+        function createConexion($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni, $d, $id_f, $id_ext1, $id_ext2)
         {
             $dbh = $this -> connect();
-            $sentencia2 = "INSERT INTO conexion(codigo_producto, diametro, id_forma_conexion, id_extremidad1, id_extremidad2)
+            $dbh -> beginTransaction();
+            try {
+                $pre = $this -> calcularPrecio($cos);
+                $pre_pub = $this -> calcularPrecioPublico($pre);
+                $foto = $this -> guardarFotografia();
+                $sentencia = "INSERT INTO producto(codigo_producto, producto, costo, precio, precio_publico, descripcion, 
+                                               existencias, fotografia, id_marca, id_unidad) 
+                                        VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
+                                               :existencias, :fotografia, :id_marca, :id_unidad)";
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
+                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
+                $stmt -> bindParam(':existencias', $exis, PDO::PARAM_STR);
+                $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
+                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
+                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
+                $resultado = $stmt -> execute();
+                $sentencia = "INSERT INTO conexion(codigo_producto, diametro, id_forma_conexion, id_extremidad1, id_extremidad2)
                                             VALUES(:codigo_producto, :diametro, :id_forma_conexion, :id_extremidad1, :id_extremidad2)";
-            $stmt2 = $dbh->prepare($sentencia2);
-            $stmt2 -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':diametro', $d, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_STR);
-            $stmt2 -> bindParam(':id_extremidad1', $id_ext1, PDO::PARAM_INT);
-            $stmt2 -> bindParam(':id_extremidad2', $id_ext2, PDO::PARAM_INT);
-            $resultado = $stmt2 -> execute();
-            return $resultado;
+                $stmt = $dbh->prepare($sentencia);
+                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':diametro', $d, PDO::PARAM_STR);
+                $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_STR);
+                $stmt -> bindParam(':id_extremidad1', $id_ext1, PDO::PARAM_INT);
+                $stmt -> bindParam(':id_extremidad2', $id_ext2, PDO::PARAM_INT);
+                $resultado = $stmt -> execute();
+                $dbh -> commit();
+                return $resultado;
+            }
+            catch(Exception $e){
+                echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                $dbh -> rollBack();
+            }
+            $dbh -> rollBack();
         }
 
         function readConexion(){
@@ -59,20 +72,55 @@
             return $this -> readOne($sentencia, $c_d);
         }
 
-        function updateConexion($cod_pro, $d, $id_f, $id_ext1, $id_ext2)
+        function updateConexion($cod_pro, $pro, $cos, $desc, $id_mar, $id_uni, $d, $id_f, $id_ext1, $id_ext2)
         {
             $dbh = $this -> connect();
-            $sentencia2 = 'UPDATE conexion SET diametro = :diametro, id_forma_conexion = :id_forma_conexion, 
+            $dbh -> beginTransaction();
+            try{
+                $pre = $this -> calcularPrecio($cos);
+                $pre_pub = $this -> calcularPrecioPublico($pre);
+                $foto = $this -> guardarFotografia();
+                if($foto){
+                    $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
+                                              descripcion = :descripcion, fotografia = :fotografia, 
+                                              id_marca = :id_marca, id_unidad = :id_unidad 
+                              WHERE codigo_producto = :codigo_producto';
+                    $stmt = $dbh -> prepare($sentencia);
+                    $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
+                }
+                else{
+                    $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
+                              descripcion = :descripcion, id_marca = :id_marca, id_unidad = :id_unidad 
+                              WHERE codigo_producto = :codigo_producto';
+                    $stmt = $dbh -> prepare($sentencia);
+                }
+                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
+                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
+                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
+                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
+                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
+                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
+                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $resultado = $stmt -> execute();
+                $sentencia = 'UPDATE conexion SET diametro = :diametro, id_forma_conexion = :id_forma_conexion, 
                                                id_extremidad1 = :id_extremidad1, id_extremidad2 = :id_extremidad2  
                                WHERE codigo_producto = :codigo_producto';
-            $stmt2 = $dbh->prepare($sentencia2);
-            $stmt2->bindParam(':diametro', $d, PDO::PARAM_STR);
-            $stmt2->bindParam(':id_forma_conexion', $id_f, PDO::PARAM_STR);
-            $stmt2->bindParam(':id_extremidad1', $id_ext1, PDO::PARAM_INT);
-            $stmt2->bindParam(':id_extremidad2', $id_ext2, PDO::PARAM_INT);
-            $stmt2->bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            $resultado = $stmt2->execute();
-            return $resultado;
+                $stmt = $dbh->prepare($sentencia);
+                $stmt->bindParam(':diametro', $d, PDO::PARAM_STR);
+                $stmt->bindParam(':id_forma_conexion', $id_f, PDO::PARAM_STR);
+                $stmt->bindParam(':id_extremidad1', $id_ext1, PDO::PARAM_INT);
+                $stmt->bindParam(':id_extremidad2', $id_ext2, PDO::PARAM_INT);
+                $stmt->bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $resultado = $stmt -> execute();
+                $dbh -> commit();
+                return $resultado;
+            }
+            catch(Exception $e){
+                echo 'Excepción capturada: ',  $e -> getMessage(), "\n";
+                $dbh -> rollBack();
+            }
+            $dbh -> rollBack();
         }
     }
 ?>
