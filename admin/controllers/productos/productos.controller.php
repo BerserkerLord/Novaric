@@ -14,7 +14,7 @@
                                                existencias, fotografia, id_marca, id_unidad) 
                                         VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
                                                :existencias, :fotografia, :id_marca, :id_unidad)";
-            $stmt = $dbh->prepare($sentencia);
+            $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
             $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
             $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);

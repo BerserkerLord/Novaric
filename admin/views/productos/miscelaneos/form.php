@@ -1,4 +1,4 @@
-
+<div class="ps-5 pe-5 pt-3 my-container active-cont">
     <h1 class="display-3">Agregar/Actualizar miscelaneo</h1>
     <form action="miscelaneos.php?action=<?php echo(isset($datos))?'actualizar':'guardar'; ?>" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
@@ -72,3 +72,4 @@
             <i class="fa fa-save p-1 icons"></i>
         </button>
     </form>
+</div>

@@ -17,10 +17,9 @@
             break;
         case 'guardar':
             $miscelaneo = $_POST['miscelaneo'];
-            $resultado = $miscelaneos -> createProducto($miscelaneo['codigo_producto'], $miscelaneo['producto'], $miscelaneo['costo'],
+            $resultado = $miscelaneos -> createMiscelaneo($miscelaneo['codigo_producto'], $miscelaneo['producto'], $miscelaneo['costo'],
                 $miscelaneo['descripcion'], $miscelaneo['existencias'], $miscelaneo['id_marca'],
                 $miscelaneo['id_unidad']);
-            $resultado2 = $miscelaneos -> createMiscelaneo($miscelaneo['codigo_producto']);
             $datos = $miscelaneos -> readMiscelaneo();
             include('views/productos/miscelaneos/index.php');
             break;
@@ -37,7 +36,7 @@
             break;
         case 'actualizar':
             $miscelaneo = $_POST['miscelaneo'];
-            $resultado = $miscelaneos -> updateProducto($miscelaneo['codigo_producto'], $miscelaneo['producto'], $miscelaneo['costo'],
+            $resultado = $miscelaneos -> updateMiscelaneo($miscelaneo['codigo_producto'], $miscelaneo['producto'], $miscelaneo['costo'],
                 $miscelaneo['descripcion'], $miscelaneo['id_marca'], $miscelaneo['id_unidad']);
             $datos = $miscelaneos -> readMiscelaneo();
             include('views/productos/miscelaneos/index.php');

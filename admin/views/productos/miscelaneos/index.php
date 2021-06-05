@@ -1,4 +1,4 @@
-<div class="ps-5 pe-5 pt-3 pb-3">
+<div class="ps-5 pe-5 pt-3 pb-3 my-container active-cont">
     <h3 class="display-3">Miscelaneos</h3>
     <div class="container">
         <div class="row">

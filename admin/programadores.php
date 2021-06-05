@@ -17,9 +17,8 @@
             break;
         case 'guardar':
             $programador = $_POST['programador'];
-            $resultado = $programadores -> createProducto($programador['codigo_producto'], $programador['producto'], $programador['costo'],
-                $programador['descripcion'], $programador['existencias'], $programador['id_marca'], $programador['id_unidad']);
-            $resultado2 = $programadores -> createProgramador($programador['codigo_producto'], $programador['maximo_estaciones'], $programador['entradas_sensores'],
+            $resultado2 = $programadores -> createProgramador($programador['codigo_producto'], $programador['producto'], $programador['costo'],
+                $programador['descripcion'], $programador['existencias'], $programador['id_marca'], $programador['id_unidad'], $programador['maximo_estaciones'], $programador['entradas_sensores'],
                 $programador['entrada_transformador'], $programador['salida_transformador'], $programador['salida_estacion'], $programador['salida_p_mv']);
             $datos = $programadores -> readProgramador();
             include('views/productos/programadores/index.php');
@@ -37,9 +36,8 @@
             break;
         case 'actualizar':
             $programador = $_POST['programador'];
-            $resultado = $programadores -> updateProducto($programador['codigo_producto'], $programador['producto'], $programador['costo'],
-                $programador['descripcion'], $programador['id_marca'], $programador['id_unidad']);
-            $resultado2 = $programadores -> updateProgramador($programador['codigo_producto'], $programador['maximo_estaciones'], $programador['entradas_sensores'],
+            $resultado2 = $programadores -> updateProgramador($programador['codigo_producto'], $programador['producto'], $programador['costo'],
+                $programador['descripcion'], $programador['id_marca'], $programador['id_unidad'], $programador['maximo_estaciones'], $programador['entradas_sensores'],
                 $programador['entrada_transformador'], $programador['salida_transformador'], $programador['salida_estacion'], $programador['salida_p_mv']);
             $datos = $programadores -> readProgramador();
             include('views/productos/programadores/index.php');
