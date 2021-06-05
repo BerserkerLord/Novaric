@@ -1,0 +1,56 @@
+tbody {
+    font-size: 95%;
+    font-style: italic;
+}
+
+.nav-link:link,
+.nav-link:visited,
+.nav-link:active {
+    text-decoration:none;
+    color: #FFFFFF;
+}
+
+.side-navbar {
+    width: fit-content;
+    height: 100%;
+    position: fixed;
+    margin-left: -300px;
+    background-color: #0C9E21;
+    transition: 0.5s;
+}
+
+.nav-link:active,
+.nav-link:focus,
+.nav-link:hover {
+    background-color: #ffffffff;
+    color: #0C9E21;
+}
+
+.my-container {
+    transition: 0.4s;
+}
+
+.active-nav {
+    margin-left: 0;
+}
+
+/* for main section */
+.active-cont {
+    margin-left: 180px;
+}
+
+.page-link{
+
+}
+
+#dashboard_title{
+    text-decoration:none;
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+
