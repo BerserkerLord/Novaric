@@ -20,10 +20,9 @@
             break;
         case 'guardar':
             $tuberia = $_POST['tuberia'];
-            $resultado = $tuberias -> createProducto($tuberia['codigo_producto'], $tuberia['producto'], $tuberia['costo'],
-                                             $tuberia['descripcion'], $tuberia['existencias'], $tuberia['id_marca'],
-                                             $tuberia['id_unidad']);
-            $resultado2 = $tuberias -> createTuberia($tuberia['codigo_producto'], $tuberia['diametro'], $tuberia['longitud'],
+            $resultado2 = $tuberias -> createTuberia($tuberia['codigo_producto'], $tuberia['producto'], $tuberia['costo'],
+                                                     $tuberia['descripcion'], $tuberia['existencias'], $tuberia['id_marca'],
+                                                     $tuberia['id_unidad'], $tuberia['diametro'], $tuberia['longitud'],
                                                      $tuberia['id_extremidad1'], $tuberia['id_extremidad2']);
             $datos = $tuberias -> readTuberia();
             include('views/productos/tuberias/index.php');
@@ -41,9 +40,9 @@
             break;
         case 'actualizar':
             $tuberia = $_POST['tuberia'];
-            $resultado = $tuberias -> updateProducto($tuberia['codigo_producto'], $tuberia['producto'], $tuberia['costo'],
-                                             $tuberia['descripcion'], $tuberia['id_marca'], $tuberia['id_unidad']);
-            $resultado2 = $tuberias -> updateTuberia($tuberia['codigo_producto'], $tuberia['diametro'], $tuberia['longitud'],
+            $resultado2 = $tuberias -> updateTuberia($tuberia['codigo_producto'], $tuberia['producto'], $tuberia['costo'],
+                                                     $tuberia['descripcion'], $tuberia['id_marca'],
+                                                     $tuberia['id_unidad'], $tuberia['diametro'], $tuberia['longitud'],
                                                      $tuberia['id_extremidad1'], $tuberia['id_extremidad2']);
             $datos = $tuberias -> readTuberia();
             include('views/productos/tuberias/index.php');
