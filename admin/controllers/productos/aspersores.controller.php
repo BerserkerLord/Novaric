@@ -2,7 +2,7 @@
     include("productos.controller.php");
     class Aspersor extends Producto
     {
-        function createAspersor($cod_pro, $cmin, $cmax, $pmin, $pmax, $amin, $amax, $pro, $cos, $desc, $exis, $id_mar, $id_uni)
+        function createAspersor($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni,  $cmin, $cmax, $pmin, $pmax, $amin, $amax)
         {
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
@@ -14,7 +14,7 @@
                                                existencias, fotografia, id_marca, id_unidad) 
                                         VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
                                                :existencias, :fotografia, :id_marca, :id_unidad)";
-                $stmt = $dbh->prepare($sentencia);
+                $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
                 $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
                 $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
@@ -23,11 +23,12 @@
                 $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
                 $stmt -> bindParam(':existencias', $exis, PDO::PARAM_STR);
                 $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
-                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
                 $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
+                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
+                $resultado = $stmt -> execute();
                 $sentencia = "INSERT INTO aspersor(codigo_producto, caudal_minimo, caudal_maximo, presion_minima, presion_maxima, alcance_minimo, alcance_maximo)
                                             VALUES(:codigo_producto, :caudal_minimo, :caudal_maximo, :presion_minima, :presion_maxima, :alcance_minimo, :alcance_maximo)";
-                $stmt = $dbh->prepare($sentencia);
+                $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
                 $stmt -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
                 $stmt -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
@@ -43,7 +44,7 @@
                 echo 'Excepción capturada: ',  $e->getMessage(), "\n";
                 $dbh -> rollBack();
             }
-            $dbh -> rollBack();2
+            $dbh -> rollBack();
         }
 
         function readAspersor(){
@@ -71,18 +72,6 @@
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
             try{
-                $sentencia = 'UPDATE aspersor SET caudal_minimo = :caudal_minimo, caudal_maximo = :caudal_maximo, presion_minima = :presion_minima, 
-                                        presion_maxima = :presion_maxima, alcance_minimo = :alcance_minimo, alcance_maximo = :alcance_maximo  
-                              WHERE codigo_producto = :codigo_producto';
-                $stmt = $dbh->prepare($sentencia);
-                $stmt -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
-                $stmt -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
-                $stmt -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
-                $stmt -> bindParam(':presion_maxima', $pmax, PDO::PARAM_STR);
-                $stmt -> bindParam(':alcance_minimo', $amin, PDO::PARAM_STR);
-                $stmt -> bindParam(':alcance_maximo', $amax, PDO::PARAM_STR);
-                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-                $resultado = $stmt -> execute();
                 $pre = $this -> calcularPrecio($cos);
                 $pre_pub = $this -> calcularPrecioPublico($pre);
                 $foto = $this -> guardarFotografia();
@@ -107,6 +96,18 @@
                 $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
                 $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
                 $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
+                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
+                $resultado = $stmt -> execute();
+                $sentencia = 'UPDATE aspersor SET caudal_minimo = :caudal_minimo, caudal_maximo = :caudal_maximo, presion_minima = :presion_minima, 
+                                        presion_maxima = :presion_maxima, alcance_minimo = :alcance_minimo, alcance_maximo = :alcance_maximo  
+                              WHERE codigo_producto = :codigo_producto';
+                $stmt = $dbh->prepare($sentencia);
+                $stmt -> bindParam(':caudal_minimo', $cmin, PDO::PARAM_STR);
+                $stmt -> bindParam(':caudal_maximo', $cmax, PDO::PARAM_STR);
+                $stmt -> bindParam(':presion_minima', $pmin, PDO::PARAM_STR);
+                $stmt -> bindParam(':presion_maxima', $pmax, PDO::PARAM_STR);
+                $stmt -> bindParam(':alcance_minimo', $amin, PDO::PARAM_STR);
+                $stmt -> bindParam(':alcance_maximo', $amax, PDO::PARAM_STR);
                 $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
                 $resultado = $stmt -> execute();
                 $dbh -> commit();

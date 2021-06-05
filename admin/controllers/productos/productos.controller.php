@@ -91,14 +91,15 @@
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
             try{
-                $sentencia = 'DELETE FROM producto WHERE codigo_producto = :codigo_producto';
-                $sentencia2 = 'DELETE FROM ' . $tabla . ' WHERE codigo_producto = :codigo_producto';
-                $stmt = $dbh->prepare($sentencia);
-                $stmt2 = $dbh -> prepare($sentencia2);
+                $sentencia = 'DELETE FROM ' . $tabla . ' WHERE codigo_producto = :codigo_producto';
+                $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(':codigo_producto', $c_d, PDO::PARAM_STR);
-                $stmt2 -> bindParam(':codigo_producto', $c_d, PDO::PARAM_STR);
-                $resultado = $stmt2 -> execute();
                 $resultado = $stmt -> execute();
+                $sentencia = 'DELETE FROM producto WHERE codigo_producto = :codigo_producto';
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':codigo_producto', $c_d, PDO::PARAM_STR);
+                $resultado = $stmt -> execute();
+                $dbh -> commit();
                 return $resultado;
             }
             catch(Exception $e){
