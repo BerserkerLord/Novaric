@@ -17,10 +17,9 @@
             break;
         case 'guardar':
             $valvula = $_POST['valvula'];
-            $resultado = $valvulas -> createProducto($valvula['codigo_producto'], $valvula['producto'], $valvula['costo'],
+            $resultado2 = $valvulas -> createValvula($valvula['codigo_producto'], $valvula['producto'], $valvula['costo'],
                 $valvula['descripcion'], $valvula['existencias'], $valvula['id_marca'],
-                $valvula['id_unidad']);
-            $resultado2 = $valvulas -> createValvula($valvula['codigo_producto'], $valvula['temperatura_nominal'], $valvula['caudal_minimo'],
+                $valvula['id_unidad'], $valvula['temperatura_nominal'], $valvula['caudal_minimo'],
                 $valvula['caudal_maximo'], $valvula['presion_minima_recomendada'], $valvula['presion_maxima_recomendada'], $valvula['especificacion_solenoide']);
             $datos = $valvulas -> readValvula();
             include('views/productos/valvulas/index.php');
@@ -38,9 +37,8 @@
             break;
         case 'actualizar':
             $valvula = $_POST['valvula'];
-            $resultado = $valvulas -> updateProducto($valvula['codigo_producto'], $valvula['producto'], $valvula['costo'],
-                $valvula['descripcion'], $valvula['id_marca'], $valvula['id_unidad']);
-            $resultado2 = $valvulas -> updateValvula($valvula['codigo_producto'], $valvula['temperatura_nominal'], $valvula['caudal_minimo'],
+            $resultado2 = $valvulas -> updateValvula($valvula['codigo_producto'], $valvula['producto'], $valvula['costo'],
+                $valvula['descripcion'], $valvula['id_marca'], $valvula['id_unidad'], $valvula['temperatura_nominal'], $valvula['caudal_minimo'],
                 $valvula['caudal_maximo'], $valvula['presion_minima_recomendada'], $valvula['presion_maxima_recomendada'], $valvula['especificacion_solenoide']);
             $datos = $valvulas -> readValvula();
             include('views/productos/valvulas/index.php');

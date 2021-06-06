@@ -6,25 +6,7 @@
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
             try {
-                $pre = $this -> calcularPrecio($cos);
-                $pre_pub = $this -> calcularPrecioPublico($pre);
-                $foto = $this -> guardarFotografia();
-                $sentencia = "INSERT INTO producto(codigo_producto, producto, costo, precio, precio_publico, descripcion, 
-                                               existencias, fotografia, id_marca, id_unidad) 
-                                        VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
-                                               :existencias, :fotografia, :id_marca, :id_unidad)";
-                $stmt = $dbh -> prepare($sentencia);
-                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
-                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
-                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
-                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
-                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
-                $stmt -> bindParam(':existencias', $exis, PDO::PARAM_STR);
-                $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
-                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
-                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
-                $resultado = $stmt -> execute();
+                $this -> createProducto($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni) -> execute();
                 $sentencia = "INSERT INTO tuberia(codigo_producto, diametro, longitud, id_extremidad1, id_extremidad2)
                                         VALUES(:codigo_producto, :diametro, :longitud, :id_extremidad1, :id_extremidad2)";
                 $stmt = $dbh->prepare($sentencia);

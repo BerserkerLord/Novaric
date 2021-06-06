@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a href="clientes_Servicio.php?action=crear" class="btn btn-success mb-3"><i class="fa fa-plus p-1 icons"></i>
+                <a href="clientes_Servicio.php?action=crear" class="btn btn-outline-success mb-3"><i class="fa fa-plus p-1 icons"></i>
                     Agregar
                 </a>
             </div>
@@ -42,10 +42,10 @@
                 <td><?=$cliente_servicio['email']?></td>
                 <td><?=$cliente_servicio['telefono']?></td>
                 <td>
-                    <a href="clientes_servicio.php?action=ver&rfc=<?=$cliente_servicio['rfc']?>" class="btn btn-primary">
+                    <a href="clientes_servicio.php?action=ver&rfc=<?=$cliente_servicio['rfc']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="clientes_servicio.php?action=eliminar&rfc=<?=$cliente_servicio['rfc']?>" class="btn btn-danger">
+                    <a href="clientes_servicio.php?action=eliminar&rfc=<?=$cliente_servicio['rfc']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

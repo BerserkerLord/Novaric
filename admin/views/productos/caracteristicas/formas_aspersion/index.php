@@ -21,10 +21,10 @@
             <tr>
                 <td><?=$forma_aspersion['forma_aspersion']?></td>
                 <td>
-                    <a href="formas_aspersion.php?action=ver&id_forma_aspersion=<?=$forma_aspersion['id_forma_aspersion']?>" class="btn btn-primary">
+                    <a href="formas_aspersion.php?action=ver&id_forma_aspersion=<?=$forma_aspersion['id_forma_aspersion']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="formas_aspersion.php?action=eliminar&id_forma_aspersion=<?=$forma_aspersion['id_forma_aspersion']?>" class="btn btn-danger">
+                    <a href="formas_aspersion.php?action=eliminar&id_forma_aspersion=<?=$forma_aspersion['id_forma_aspersion']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

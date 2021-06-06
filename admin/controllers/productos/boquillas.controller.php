@@ -6,25 +6,7 @@
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
             try {
-                $pre = $this -> calcularPrecio($cos);
-                $pre_pub = $this -> calcularPrecioPublico($pre);
-                $foto = $this -> guardarFotografia();
-                $sentencia = "INSERT INTO producto(codigo_producto, producto, costo, precio, precio_publico, descripcion, 
-                                               existencias, fotografia, id_marca, id_unidad) 
-                                        VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
-                                               :existencias, :fotografia, :id_marca, :id_unidad)";
-                $stmt = $dbh -> prepare($sentencia);
-                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
-                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
-                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
-                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
-                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
-                $stmt -> bindParam(':existencias', $exis, PDO::PARAM_STR);
-                $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
-                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
-                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
-                $resultado = $stmt -> execute();
+                $this -> createProducto($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni) -> execute();
                 $sentencia = "INSERT INTO boquilla(codigo_producto, caudal_minimo, caudal_maximo, presion_minima, presion_maxima, 
                                                 radio_minimo, radio_maximo, trayectoria, ajuste, id_tipo_boquilla, id_forma_aspersion)
                                          VALUES(:codigo_producto, :caudal_minimo, :caudal_maximo, :presion_minima, :presion_maxima, 
@@ -83,32 +65,7 @@
             $dbh = $this -> connect();
             $dbh -> beginTransaction();
             try{
-                $pre = $this -> calcularPrecio($cos);
-                $pre_pub = $this -> calcularPrecioPublico($pre);
-                $foto = $this -> guardarFotografia();
-                if($foto){
-                    $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
-                                              descripcion = :descripcion, fotografia = :fotografia, 
-                                              id_marca = :id_marca, id_unidad = :id_unidad 
-                              WHERE codigo_producto = :codigo_producto';
-                    $stmt = $dbh -> prepare($sentencia);
-                    $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
-                }
-                else{
-                    $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
-                              descripcion = :descripcion, id_marca = :id_marca, id_unidad = :id_unidad 
-                              WHERE codigo_producto = :codigo_producto';
-                    $stmt = $dbh -> prepare($sentencia);
-                }
-                $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
-                $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
-                $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
-                $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
-                $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
-                $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
-                $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
-                $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-                $resultado = $stmt -> execute();
+                $this -> updateProducto($cod_pro, $pro, $cos, $desc, $id_mar, $id_uni) -> execute();
                 $sentencia = 'UPDATE boquilla SET caudal_minimo = :caudal_minimo, caudal_maximo = :caudal_maximo, 
                                                presion_minima = :presion_minima,presion_maxima = :presion_maxima, 
                                                radio_minimo = :radio_minimo, radio_maximo = :radio_maximo,

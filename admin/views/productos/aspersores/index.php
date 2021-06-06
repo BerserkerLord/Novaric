@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a href="aspersores.php?action=crear" class="btn btn-success mb-3"><i class="fa fa-plus p-1 icons"></i>
+                <a href="aspersores.php?action=crear" class="btn btn-outline-success mb-3"><i class="fa fa-plus p-1 icons"></i>
                     Agregar
                 </a>
             </div>
@@ -46,10 +46,10 @@
                 <td><?=$aspersor['existencias'] . ' ' . $aspersor['unidad'] . '(s)'?></td>
                 <td><?=$aspersor['marca']?></td>
                 <td>
-                    <a href="aspersores.php?action=ver&codigo_producto=<?=$aspersor['codigo_producto']?>" class="btn btn-primary">
+                    <a href="aspersores.php?action=ver&codigo_producto=<?=$aspersor['codigo_producto']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="aspersores.php?action=eliminar&codigo_producto=<?=$aspersor['codigo_producto']?>" class="btn btn-danger">
+                    <a href="aspersores.php?action=eliminar&codigo_producto=<?=$aspersor['codigo_producto']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

@@ -27,10 +27,10 @@
                 <td><?=$proveedor['domicilio']?></td>
                 <td><?=$proveedor['telefono']?></td>
                 <td>
-                    <a href="proveedores.php?action=ver&rfc=<?=$proveedor['rfc']?>" class="btn btn-primary">
+                    <a href="proveedores.php?action=ver&rfc=<?=$proveedor['rfc']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="proveedores.php?action=eliminar&rfc=<?=$proveedor['rfc']?>" class="btn btn-danger">
+                    <a href="proveedores.php?action=eliminar&rfc=<?=$proveedor['rfc']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

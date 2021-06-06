@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a href="boquillas.php?action=crear" class="btn btn-success mb-3"><i class="fa fa-plus p-1 icons"></i>
+                <a href="boquillas.php?action=crear" class="btn btn-outline-success mb-3"><i class="fa fa-plus p-1 icons"></i>
                     Agregar
                 </a>
             </div>
@@ -46,10 +46,10 @@
                 <td><?=$boquilla['existencias'] . ' ' . $boquilla['unidad'] . '(s)'?></td>
                 <td><?=$boquilla['marca']?></td>
                 <td>
-                    <a href="boquillas.php?action=ver&codigo_producto=<?=$boquilla['codigo_producto']?>" class="btn btn-primary">
+                    <a href="boquillas.php?action=ver&codigo_producto=<?=$boquilla['codigo_producto']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="boquillas.php?action=eliminar&codigo_producto=<?=$boquilla['codigo_producto']?>" class="btn btn-danger">
+                    <a href="boquillas.php?action=eliminar&codigo_producto=<?=$boquilla['codigo_producto']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

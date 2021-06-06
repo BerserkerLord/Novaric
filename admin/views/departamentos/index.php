@@ -1,5 +1,4 @@
-<?php$_GET['action'] = 'leer' ?>
-<div class="ps-5 pe-5 pt-3 my-container active-cont">
+<div class="ps-5 pe-5 pt-3 pb-5 my-container active-cont">
     <h3 class="display-3">Departamentos</h3>
     <div class="d-flex flex-row-reverse">
         <form action="departamentos.php" method="GET">
@@ -22,10 +21,10 @@
             <tr>
                 <td><?=$departamento['departamento']?></td>
                 <td>
-                    <a href="departamentos.php?action=ver&id_departamento=<?=$departamento['id_departamento']?>" class="btn btn-primary">
+                    <a href="departamentos.php?action=ver&id_departamento=<?=$departamento['id_departamento']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="departamentos.php?action=eliminar&id_departamento=<?=$departamento['id_departamento']?>" class="btn btn-danger">
+                    <a href="departamentos.php?action=eliminar&id_departamento=<?=$departamento['id_departamento']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

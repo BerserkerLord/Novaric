@@ -3,7 +3,7 @@
     <div class="d-flex flex-row-reverse">
         <form action="formas_conexion.php" method="GET">
             <input class="input-group-text" style="display:inline-block;" type="text" name="busqueda">
-            <button class="btn btn-secondary" type="submit">
+            <button class="btn btn-outline-secondary" type="submit">
                 Buscar
                 <i class="fa fa-search p-1 icons"></i>
             </button>
@@ -21,10 +21,10 @@
             <tr>
                 <td><?=$forma_conexion['forma_conexion']?></td>
                 <td>
-                    <a href="formas_conexion.php?action=ver&id_forma_conexion=<?=$forma_conexion['id_forma_conexion']?>" class="btn btn-primary">
+                    <a href="formas_conexion.php?action=ver&id_forma_conexion=<?=$forma_conexion['id_forma_conexion']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="formas_conexion.php?action=eliminar&id_forma_conexion=<?=$forma_conexion['id_forma_conexion']?>" class="btn btn-danger">
+                    <a href="formas_conexion.php?action=eliminar&id_forma_conexion=<?=$forma_conexion['id_forma_conexion']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

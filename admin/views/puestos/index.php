@@ -23,10 +23,10 @@
                 <td><?=$puesto['puesto']?></td>
                 <td><?=$puesto['departamento']?></td>
                 <td>
-                    <a href="puestos.php?action=ver&id_puesto=<?=$puesto['id_puesto']?>" class="btn btn-primary">
+                    <a href="puestos.php?action=ver&id_puesto=<?=$puesto['id_puesto']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="puestos.php?action=eliminar&id_puesto=<?=$puesto['id_puesto']?>" class="btn btn-danger">
+                    <a href="puestos.php?action=eliminar&id_puesto=<?=$puesto['id_puesto']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

@@ -27,10 +27,10 @@
                     <td><?=$servicio['servicio']?></td>
                     <td><?=$servicio['descripcion']?></td>
                     <td>
-                        <a href="servicios.php?action=ver&id_servicio=<?=$servicio['id_servicio']?>" class="btn btn-primary">
+                        <a href="servicios.php?action=ver&id_servicio=<?=$servicio['id_servicio']?>" class="btn btn-outline-primary">
                             <i class="fa fa-arrow-up p-1 icons"></i>
                         </a>
-                        <a href="servicios.php?action=eliminar&id_servicio=<?=$servicio['id_servicio']?>" class="btn btn-danger">
+                        <a href="servicios.php?action=eliminar&id_servicio=<?=$servicio['id_servicio']?>" class="btn btn-outline-danger">
                             <i class="fa fa-trash p-1 icons"></i>
                         </a>
                     </td>

@@ -2,15 +2,6 @@
     require_once('sistema.controller.php');
     class Departamento extends Sistema
     {
-        var $id_departamento;
-        var $departamento;
-
-        function getIdDepartamento(){ return $this -> id_departamento; }
-        function getDepartamento(){ return $this -> departamento; }
-
-        function setIdDepartamento($id_dep){ $this -> id_departamento = $id_dep; }
-        function setArea($dep){ $this -> departamento = $dep; }
-
         function create($dep)
         {
             $dbh = $this->connect();

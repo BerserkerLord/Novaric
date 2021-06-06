@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <a href="programadores.php?action=crear" class="btn btn-success mb-3"><i class="fa fa-plus p-1 icons"></i>
+                <a href="programadores.php?action=crear" class="btn btn-outline-success mb-3"><i class="fa fa-plus p-1 icons"></i>
                     Agregar
                 </a>
             </div>
@@ -46,10 +46,10 @@
                 <td><?=$programador['existencias'] . ' ' . $programador['unidad'] . '(s)'?></td>
                 <td><?=$programador['marca']?></td>
                 <td>
-                    <a href="programadores.php?action=ver&codigo_producto=<?=$programador['codigo_producto']?>" class="btn btn-primary">
+                    <a href="programadores.php?action=ver&codigo_producto=<?=$programador['codigo_producto']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="programadores.php?action=eliminar&codigo_producto=<?=$programador['codigo_producto']?>" class="btn btn-danger">
+                    <a href="programadores.php?action=eliminar&codigo_producto=<?=$programador['codigo_producto']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

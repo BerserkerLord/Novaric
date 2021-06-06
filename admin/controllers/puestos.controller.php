@@ -2,18 +2,6 @@
     require_once('sistema.controller.php');
     class Puesto extends Sistema
     {
-        var $id_puesto;
-        var $puesto;
-        var $departamento;
-
-        function getIdPuesto(){ return $this -> id_puesto; }
-        function getPuesto(){ return $this -> puesto; }
-        function getDepartamento(){ return $this -> departamento; }
-
-        function setIdPuesto($id_pu){ $this -> id_puesto = $id_pu; }
-        function setArea($pu){ $this -> puesto = $pu; }
-        function setIdDepartamento($dep){ $this -> departamento = $dep; }
-
         function create($pu, $id_dep)
         {
             $dbh = $this->connect();

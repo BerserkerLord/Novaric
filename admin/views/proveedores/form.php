@@ -1,4 +1,4 @@
-<div class="ps-5 pe-5 pt-5 my-container active-cont">
+<div class="ps-5 pe-5 pt-5 pb-5 my-container active-cont">
     <h3 class="display-6">Agregar/Actualizar proveedor</h3>
     <form action="proveedores.php?action=<?php echo($_GET['action'] == 'ver')?'actualizar':'guardar'; ?>" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
@@ -21,7 +21,7 @@
             <input type="text" name="proveedor[telefono]" value='<?php echo($_GET['action'] == 'ver')?$datos[0]['telefono']:''; ?>' class="form-control" id="txtTelefono">
         </div>
 
-        <button type="submit" name="enviar" class="btn btn-success">
+        <button type="submit" name="enviar" class="btn btn-outline-success">
             <i class="fa fa-save p-1 icons"></i>
             Guardar
         </button>

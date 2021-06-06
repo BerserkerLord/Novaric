@@ -3,7 +3,7 @@
     <div class="d-flex flex-row-reverse">
         <form action="unidades.php" method="GET">
             <input class="input-group-text" style="display:inline-block;" type="text" name="busqueda">
-            <button class="btn btn-secondary" type="submit">
+            <button class="btn btn-outline-secondary" type="submit">
                 Buscar
                 <i class="fa fa-search p-1 icons"></i>
             </button>
@@ -21,10 +21,10 @@
             <tr>
                 <td><?=$unidad['unidad']?></td>
                 <td>
-                    <a href="unidades.php?action=ver&id_unidad=<?=$unidad['id_unidad']?>" class="btn btn-primary">
+                    <a href="unidades.php?action=ver&id_unidad=<?=$unidad['id_unidad']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="unidades.php?action=eliminar&id_unidad=<?=$unidad['id_unidad']?>" class="btn btn-danger">
+                    <a href="unidades.php?action=eliminar&id_unidad=<?=$unidad['id_unidad']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

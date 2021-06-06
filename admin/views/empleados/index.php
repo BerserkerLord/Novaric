@@ -39,10 +39,10 @@
                 <td><?=$empleado['correo']?></td>
                 <td><?=$empleado['puesto']?></td>
                 <td>
-                    <a href="empleados.php?action=ver&rfc=<?=$empleado['rfc']?>" class="btn btn-primary mb-1">
+                    <a href="empleados.php?action=ver&rfc=<?=$empleado['rfc']?>" class="btn btn-outline-primary mb-1">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="empleados.php?action=eliminar&rfc=<?=$empleado['rfc']?>" class="btn btn-danger">
+                    <a href="empleados.php?action=eliminar&rfc=<?=$empleado['rfc']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>

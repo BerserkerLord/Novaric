@@ -47,5 +47,4 @@
             $datos = $aspersores -> readAspersor();
             include('views/productos/aspersores/index.php');
     }
-
 ?>

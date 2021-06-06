@@ -2,8 +2,6 @@
     require_once('controllers/sistema.controller.php');
     class Producto extends Sistema
     {
-
-        //Borrar
         function createProducto($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni)
         {
             $pre = $this -> calcularPrecio($cos);
@@ -25,8 +23,7 @@
             $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
             $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
             $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            return $stmt;
         }
 
         function read($sentencia, $ordenamiento)
@@ -56,7 +53,6 @@
             return $filas;
         }
 
-        //Borrar
         function updateProducto($cod_pro, $pro, $cos, $desc, $id_mar, $id_uni)
         {
             $pre = $this -> calcularPrecio($cos);
@@ -85,8 +81,7 @@
             $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
             $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
             $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            return $stmt;
         }
 
         function delete($c_d, $tabla)
@@ -127,10 +122,6 @@
             }
         }
 
-        //Borrar
-        function calcularPrecio($cos){ return $cos * 1.7; }
-        function calcularPrecioPublico($pre){ return $pre; }
-
         function total($columna, $tabla){
             $dbh = $this -> Connect();
             $sentencia = "SELECT COUNT(" . $columna . ") AS total FROM " . $tabla;
@@ -139,5 +130,8 @@
             $rows = $stmt -> fetchAll();
             return $rows[0]['total'];
         }
+
+        function calcularPrecio($cos){ return $cos * 1.7; }
+        function calcularPrecioPublico($pre){ return $pre; }
     }
 ?>

@@ -21,10 +21,10 @@
             <tr>
                 <td><?=$tipo_boquilla['tipo_boquilla']?></td>
                 <td>
-                    <a href="tipos_boquilla.php?action=ver&id_tipo_boquilla=<?=$tipo_boquilla['id_tipo_boquilla']?>" class="btn btn-primary">
+                    <a href="tipos_boquilla.php?action=ver&id_tipo_boquilla=<?=$tipo_boquilla['id_tipo_boquilla']?>" class="btn btn-outline-primary">
                         <i class="fa fa-arrow-up p-1 icons"></i>
                     </a>
-                    <a href="tipos_boquilla.php?action=eliminar&id_tipo_boquilla=<?=$tipo_boquilla['id_tipo_boquilla']?>" class="btn btn-danger">
+                    <a href="tipos_boquilla.php?action=eliminar&id_tipo_boquilla=<?=$tipo_boquilla['id_tipo_boquilla']?>" class="btn btn-outline-danger">
                         <i class="fa fa-trash p-1 icons"></i>
                     </a>
                 </td>
