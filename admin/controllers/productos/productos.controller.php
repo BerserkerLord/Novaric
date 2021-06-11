@@ -26,11 +26,11 @@
             return $stmt;
         }
 
-        function read($sentencia, $ordenamiento)
+        function read($sentencia, $orden)
         {
             $dbh = $this -> connect();
             $busqueda = (isset($_GET['busqueda']))?$_GET['busqueda']:'';
-            $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:$ordenamiento;
+            $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:$orden;
             $limite = (isset($_GET['limite']))?$_GET['limite']:'10';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             $stmt = $dbh -> prepare($sentencia);
@@ -129,6 +129,41 @@
             $stmt -> execute();
             $rows = $stmt -> fetchAll();
             return $rows[0]['total'];
+        }
+
+        function readProductosDisponibles($id_factura){
+            $dbh = $this -> Connect();
+            $query = "SELECT codigo_producto, producto FROM producto 
+                      WHERE codigo_producto NOT IN(SELECT p.codigo_producto FROM factura f 
+                                                       INNER JOIN detalle_factura_producto AS dpf ON f.id_factura = dpf.id_factura
+                                                       INNER JOIN producto p ON p.codigo_producto = dpf.codigo_producto 
+                                                   WHERE f.id_factura = :id_factura)";
+            $stmt = $dbh -> prepare($query);
+            $stmt -> bindParam(":id_factura", $id_factura, PDO::PARAM_INT);
+            $stmt -> execute();
+            $fila = $stmt -> fetchAll();
+            return $fila;
+        }
+
+        function readEntradas(){
+            $dbh = $this -> connect();
+            $busqueda = (isset($_GET['busqueda']))?$_GET['busqueda']:'';
+            $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'f.fecha';
+            $limite = (isset($_GET['limite']))?$_GET['limite']:'15';
+            $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
+            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
+                                INNER JOIN detalle_factura_producto AS dfp ON dfp.id_factura = f.id_factura
+                                INNER JOIN producto AS p USING(codigo_producto)
+                          WHERE p.codigo_producto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
+            $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
+            $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
+            $stmt -> bindValue(":limite", $limite, PDO::PARAM_INT);
+            $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
         }
 
         function calcularPrecio($cos){ return $cos * 1.7; }

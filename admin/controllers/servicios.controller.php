@@ -114,5 +114,19 @@
             $rows = $stmt -> fetchAll();
             return $rows[0]['total'];
         }
+
+        function readServiciosDisponibles($id_factura){
+            $dbh = $this -> Connect();
+            $query = "SELECT id_servicio, servicio FROM servicio 
+                      WHERE id_servicio NOT IN(SELECT s.id_servicio FROM factura f 
+                                                    INNER JOIN factura_servicio_servicio AS fss ON f.id_factura = fss.id_factura_servicio
+                                                    INNER JOIN servicio s ON s.id_servicio = fss.id_servicio 
+                                               WHERE f.id_factura = :id_factura)";
+            $stmt = $dbh -> prepare($query);
+            $stmt -> bindParam(":id_factura", $id_factura, PDO::PARAM_INT);
+            $stmt -> execute();
+            $fila = $stmt -> fetchAll();
+            return $fila;
+        }
     }
 ?>

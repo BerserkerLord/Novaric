@@ -1,25 +1,20 @@
 <div class="ps-5 pe-5 pb-5 my-container active-cont">
-    <h3 class="display-6">Agregar factura para servicios</h3>
+    <h3 class="display-6">Agregar factura</h3>
     <form action="facturas_servicio.php?action=guardar_factura" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-            <label class="form-label">Servicios</label>
-            <?php
-                $info_servicios = array();
-                foreach($servicios as $key => $servicio): ?>
-            <div class="container">
-                <div class="row pb-1">
-                    <div class="form-check col-md-3 pe-2">
-                        <input class="form-check-input" type="checkbox" value="<?php echo $servicio['id_servicio'] ?>" name='id_servicios[]' id="flexCheckChecked" >
-                        <label class="form-check-label" for="flexCheckChecked">
-                            <?php echo $servicio['servicio'] ?>
-                        </label>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" name="montos[]">
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
+            <label class="form-label">Servicio</label>
+            <select name="factura_servicio[id_servicio]" class="form-control" id="slctServicio">
+                <?php
+                echo "<option disabled selected value> -- Selecciona una opción --</option>";
+                foreach($servicios as $key => $servicio):?>
+                    <option value="<?php echo($servicio['id_servicio']); ?>"><?php echo($servicio['servicio']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Monto</label>
+            <input type="text" name="factura_servicio[monto]" class="form-control">
         </div>
 
         <div class="mb-3">
@@ -43,7 +38,6 @@
             <textarea name="factura_servicio[domicilio]" class="form-control" rows="3"></textarea>
         </div>
 
-        <input type="hidden" name='departamento[id_departamento]' value='<?php echo($_GET['action'] == 'ver')?$datos[0]['id_departamento']:''; ?>' />
         <button type="submit" name="enviar" class="btn btn-outline-success">
             <i class="fa fa-save p-1 icons"></i>
             Guardar

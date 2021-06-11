@@ -50,13 +50,21 @@
                 <a href="departamentos.php" class="nav-link"><span class="mx-2"><i class="fa fa-laptop-code p-1 icons"></i>Departamentos</span></a>
                 <a href="puestos.php" class="nav-link"><span class="mx-2"><i class="fa fa-user-friends p-1 icons"></i>Puesto</span></a>
                 <a href="empleados.php" class="nav-link"><span class="mx-2"><i class="fa fa-user-check p-1 icons"></i>Empleados</span></a>
-                <a href="inventario.php" class="nav-link"><span class="mx-2"><i class="fa fa-dolly p-1 icons"></i>Inventario</span></a>
                 <li>
-                    <a href="#" data-bs-toggle="collapse" data-target=".navbar-collapse" data-bs-target="#facturacion-collapse" aria-expanded="false" class="nav-link collapsed"><span class="mx-2"><i class="fa fa-shopping-bag p-1 icons"></i>Facturación</span></a></a>
+                    <a href="#" data-bs-toggle="collapse" data-target=".navbar-collapse" data-bs-target="#inventario-collapse" aria-expanded="false" class="nav-link collapsed"><span class="mx-2"><i class="fa fa-dolly p-1 icons"></i>Inventario</span></a>
+                    <div class="collapse" id="inventario-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="entradas.php" class="nav-link ps-5">Entradas</a></li>
+                            <li><a href="salidas.php" class="nav-link ps-5">Salidas</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" data-bs-toggle="collapse" data-target=".navbar-collapse" data-bs-target="#facturacion-collapse" aria-expanded="false" class="nav-link collapsed"><span class="mx-2"><i class="fa fa-shopping-bag p-1 icons"></i>Facturación</span></a>
                     <div class="collapse" id="facturacion-collapse">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                             <li><a href="facturas_servicio.php" class="nav-link ps-5">Facturación servicios</a></li>
-                            <li><a href="facturas_compra" class="nav-link ps-5">Facturación compras</a></li>
+                            <li><a href="facturas_compra.php" class="nav-link ps-5">Facturación compras</a></li>
                             <li><a href="facturas_venta.php" class="nav-link ps-5">Facturación ventas</a></li>
                             <li><a href="clientes_servicio.php" class="nav-link ps-5">Clientes de servicios</a></li>
                         </ul>
