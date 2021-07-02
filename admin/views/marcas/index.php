@@ -21,7 +21,7 @@
         <?php foreach($datos as $key => $marca): ?>
             <tr>
                 <td>
-                    <img src="<?php echo (isset($marca['fotografia']))? '../archivos/'.$marca['fotografia']: '../archivos/default.jpg'; ?>" alt="foto marca" class="rounded img-fluid" width="75px">
+                    <img src="<?php echo (isset($marca['fotografia']))? '../archivos/'.$marca['fotografia']: '../archivos/default.jpg'; ?>" alt="foto_marca" class="rounded img-fluid" width="75" height="75">
                 </td>
                 <td><?=$marca['marca']?></td>
                 <td>
@@ -38,8 +38,8 @@
     </table>
     <nav>
         <ul class="pagination">
-            <?php for($i = 0, $k = 1; $i < $marcas -> total(); $i+=5, $k++): ?>
-                <li class="page-item"><a class="page-link" href="marcas.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=5"><?php echo ($k); ?></a></li>
+            <?php for($i = 0, $k = 1; $i < $marcas -> total(); $i+=3, $k++): ?>
+                <li class="page-item"><a class="page-link" href="marcas.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=3"><?php echo ($k); ?></a></li>
             <?php endfor; ?>
         </ul>
     </nav>

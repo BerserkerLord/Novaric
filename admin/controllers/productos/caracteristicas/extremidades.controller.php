@@ -1,16 +1,16 @@
 <?php
     require_once('controllers/sistema.controller.php');
+
+   /*
+    * Clase principal para extremidades
+    */
     class Extremidad extends Sistema
     {
-        var $id_extremidad;
-        var $extremidad;
-    
-        function getIdExtremidad(){ return $this -> id_extremidad; }
-        function getExtremidad(){ return $this -> extremidad; }
-    
-        function setIdExtremidad($id_ext){ $this -> id_extremidad = $id_ext; }
-        function setExtremidad($ext){ $this -> extremidad = $ext; }
-    
+        /*
+        * Método para insertar un registro de una extremidad a la base de datos Novaric
+        * Params String @ext recibe la extremidad
+        * Return integer con la cantidad de registros afectados
+        */
         function create($ext)
         {
             $dbh = $this -> connect();
@@ -20,7 +20,11 @@
             $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+        * Método para obtener todos las extremidades por cantidades
+        * Return Array con todas las extremidades
+        */
         function read()
         {
             $dbh = $this -> Connect();
@@ -38,6 +42,26 @@
             $filas = $stmt -> fetchAll();
             return $filas;
         }
+
+        /*
+        * Método para obtener todos las extremidades
+        * Return Array con todas las extremidades
+        */
+        function readAll()
+        {
+            $dbh = $this -> Connect();
+            $sentencia = 'SELECT * FROM extremidad e WHERE e.extremidad LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+        /*
+         * Metodo para obtener la informacion de una extremidad
+         * Params Integer @id_ext recibe el id de una extremidad
+         * Return Array con la información de la extremidad
+         */
         function readOne($id_ext)
         {
             $dbh = $this -> connect();
@@ -48,6 +72,13 @@
             $filas = $stmt -> fetchAll();
             return $filas;
         }
+
+        /*
+         * Metodo para actualizar el registro de una extremidad
+         * Params Integer @id_ext recibe el id de una extremidad
+         *        String  @ext recibe la extremidad
+         * Return integer con la cantidad de registros afectados
+         */
         function update($id_ext, $ext)
         {
             $dbh = $this->connect();
@@ -58,6 +89,12 @@
             $resultado = $stmt -> execute();
             return $resultado;
         }
+
+        /*
+         * Metodo para elimina el registro de una extremidad
+         * Params Integer @id_ext recibe el id de una extremidad
+         * Return integer con la cantidad de registros afectados
+         */
         function delete($id_ext)
         {
             $dbh = $this->connect();
@@ -67,7 +104,11 @@
             $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+        * Método para extrater total de extremidades
+        * Return un entero que es la cantidad de extremidades
+        */
         function total(){
             $dbh = $this -> Connect();
             $sentencia = "SELECT COUNT(id_extremidad) AS total FROM extremidad";

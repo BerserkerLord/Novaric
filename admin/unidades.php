@@ -31,4 +31,5 @@
     }
     include('views/productos/caracteristicas/unidades/index.php');
     include('views/productos/caracteristicas/unidades/form.php');
+    include('views/footer.php');
 ?>

@@ -19,7 +19,7 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'d.departamento';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
-            $sentencia = 'SELECT * FROM departamento d  
+            $sentencia = 'SELECT * FROM departamento AS d  
                           WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
@@ -28,6 +28,17 @@
             $stmt -> bindValue(":limite", $limite, PDO::PARAM_INT);
             $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
             $stmt->execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+        function readAll()
+        {
+            $dbh = $this -> connect();
+            $sentencia = 'SELECT * FROM departamento AS d  
+                          WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
             $filas = $stmt -> fetchAll();
             return $filas;
         }

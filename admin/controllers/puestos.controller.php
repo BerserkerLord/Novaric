@@ -33,6 +33,16 @@
             return $filas;
         }
 
+        function readAll()
+        {
+            $dbh = $this -> Connect();
+            $sentencia = 'SELECT * FROM puesto AS p INNER JOIN departamento USING(id_departamento)';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
         function readOne($id_pu)
         {
             $dbh = $this->connect();

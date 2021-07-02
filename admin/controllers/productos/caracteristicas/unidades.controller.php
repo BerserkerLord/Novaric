@@ -1,16 +1,16 @@
 <?php
     require_once('controllers/sistema.controller.php');
+
+    /*
+     * Clase principal para unidades
+     */
     class Unidad extends Sistema
     {
-        var $id_unidad;
-        var $unidad;
-
-        function getIdUnidad(){ return $this -> id_unidad; }
-        function getUnidad(){ return $this -> unidad; }
-
-        function setIdUnidad($id_un){ $this -> id_unidad = $id_un; }
-        function setUnidad($un){ $this -> unidad = $un; }
-
+        /*
+        * Método para insertar un registro de unidad a la base de datos Novaric
+        * Params String @un recibe la unidad
+        * Return integer con la cantidad de registros afectados
+        */
         function create($un)
         {
             $dbh = $this->connect();
@@ -21,6 +21,10 @@
             return $resultado;
         }
 
+        /*
+        * Método para obtener todos las unidades
+        * Return Array con todas las unidades
+        */
         function read()
         {
             $dbh = $this -> Connect();
@@ -34,10 +38,30 @@
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
             $stmt -> bindValue(":limite", $limite, PDO::PARAM_INT);
             $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
-            $stmt->execute();
-            $filas = $stmt->fetchAll();
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
             return $filas;
         }
+
+        /*
+        * Método para obtener todos las unidades por cantidad
+        * Return Array con todas las unidades
+        */
+        function readAll()
+        {
+            $dbh = $this -> Connect();
+            $sentencia = 'SELECT * FROM unidad AS u';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+        /*
+         * Metodo para obtener la informacion de una unidad
+         * Params Integer @id_un recibe el id de una unidad
+         * Return Array con la información de la unidad
+         */
         function readOne($id_un)
         {
             $dbh = $this -> connect();
@@ -48,6 +72,13 @@
             $filas = $stmt -> fetchAll();
             return $filas;
         }
+
+        /*
+         * Metodo para actualizar el registro de una unidad
+         * Params Integer @id_un recibe el id de una unidad
+         *        String  @un recibe la unidad
+         * Return integer con la cantidad de registros afectados
+         */
         function update($id_un, $un)
         {
             $dbh = $this -> connect();
@@ -58,16 +89,26 @@
             $resultado = $stmt -> execute();
             return $resultado;
         }
+
+        /*
+         * Metodo para elimina el registro de una unidad
+         * Params Integer @id_un recibe el id de una unidad
+         * Return integer con la cantidad de registros afectados
+         */
         function delete($id_un)
         {
             $dbh = $this -> connect();
             $sentencia = 'DELETE FROM unidad WHERE id_unidad = :id_unidad';
-            $stmt= $dbh->prepare($sentencia);
-            $stmt->bindParam(':id_unidad', $id_un, PDO::PARAM_INT);
+            $stmt= $dbh -> prepare($sentencia);
+            $stmt -> bindParam(':id_unidad', $id_un, PDO::PARAM_INT);
             $resultado = $stmt -> execute();
             return $resultado;
         }
 
+        /*
+        * Método para extrater total de unidades
+        * Return un entero que es la cantidad de unidades
+        */
         function total(){
             $dbh = $this -> Connect();
             $sentencia = "SELECT COUNT(id_unidad) AS total FROM unidad";

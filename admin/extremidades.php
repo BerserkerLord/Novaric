@@ -31,4 +31,5 @@
     }
     include('views/productos/caracteristicas/extremidades/index.php');
     include('views/productos/caracteristicas/extremidades/form.php');
+    include('views/footer.php');
 ?>

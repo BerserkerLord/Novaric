@@ -1,26 +1,30 @@
 <?php
     require_once('controllers/sistema.controller.php');
+
+    /*
+     * Clase principal para formas de aspersión
+     */
     class FormaAspersion extends Sistema
     {
-        var $id_forma_aspersion;
-        var $forma_aspersion;
-    
-        function getIdFormaAspersion(){ return $this -> id_forma_aspersion; }
-        function getFormaAspersion(){ return $this -> forma_aspersion; }
-    
-        function setIdFormaAspersion($id_f_a){ $this -> id_forma_aspersion = $id_f_a; }
-        function setFormaAspersion($f_a){ $this -> forma_aspersion = $f_a; }
-    
+        /*
+        * Método para insertar un registro de forma de aspersion a la base de datos Novaric
+        * Params String @f_a recibe la forma de aspersion
+        * Return integer con la cantidad de registros afectados
+        */
         function create($f_a)
         {
-            $dbh = $this->connect();
+            $dbh = $this -> connect();
             $sentencia = "INSERT INTO forma_aspersion(forma_aspersion) VALUES(:forma_aspersion)";
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindParam(':forma_aspersion', $f_a, PDO::PARAM_STR);
-            $resultado = $stmt->execute();
+            $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+        * Método para obtener todos las formas de aspersion por cantidad
+        * Return Array con todas las formas de aspersion
+        */
         function read()
         {
             $dbh = $this -> Connect();
@@ -38,7 +42,26 @@
             $filas = $stmt -> fetchAll();
             return $filas;
         }
-    
+
+        /*
+        * Método para obtener todos las formas de aspersion
+        * Return Array con todas las formas de aspersion
+        */
+        function readAll()
+        {
+            $dbh = $this -> Connect();
+            $sentencia = 'SELECT * FROM forma_aspersion fa WHERE fa.forma_aspersion LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+        /*
+         * Metodo para obtener la informacion de una forma de aspersion
+         * Params Integer @id_f_a recibe el id de una forma de aspersion
+         * Return Array con la información de la forma de aspersion
+         */
         function readOne($id_f_a)
         {
             $dbh = $this->connect();
@@ -49,28 +72,43 @@
             $filas = $stmt -> fetchAll();
             return $filas;
         }
-    
+
+        /*
+         * Metodo para actualizar el registro de una forma de aspersion
+         * Params Integer @id_f_a recibe el id de una forma de aspersion
+         *        String  @tb recibe la forma de aspersion
+         * Return integer con la cantidad de registros afectados
+         */
         function update($id_f_a, $tb)
         {
-            $dbh = $this->connect();
+            $dbh = $this -> connect();
             $sentencia = "UPDATE forma_aspersion SET forma_aspersion = :forma_aspersion WHERE id_forma_aspersion = :id_forma_aspersion";
             $stmt = $dbh -> prepare($sentencia);
-            $stmt->bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
-            $stmt->bindParam(':forma_aspersion', $tb, PDO::PARAM_STR);
-            $resultado = $stmt->execute();
+            $stmt -> bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
+            $stmt -> bindParam(':forma_aspersion', $tb, PDO::PARAM_STR);
+            $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+         * Metodo para elimina el registro de una forma de aspersion
+         * Params Integer @id_f_a recibe el id de una forma de aspersion
+         * Return integer con la cantidad de registros afectados
+         */
         function delete($id_f_a)
         {
-            $dbh = $this->connect();
+            $dbh = $this -> connect();
             $sentencia = 'DELETE FROM forma_aspersion WHERE id_forma_aspersion = :id_forma_aspersion';
-            $stmt= $dbh->prepare($sentencia);
-            $stmt->bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
-            $resultado = $stmt->execute();
+            $stmt= $dbh -> prepare($sentencia);
+            $stmt -> bindParam(':id_forma_aspersion', $id_f_a, PDO::PARAM_INT);
+            $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+        * Método para extrater total de formas de aspersion
+        * Return un entero que es la cantidad de formas de aspersion
+        */
         function total(){
             $dbh = $this -> Connect();
             $sentencia = "SELECT COUNT(id_forma_aspersion) AS total FROM forma_aspersion";

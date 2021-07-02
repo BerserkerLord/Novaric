@@ -31,4 +31,5 @@
     }
     include('views/productos/caracteristicas/tipos_boquilla/index.php');
     include('views/productos/caracteristicas/tipos_boquilla/form.php');
+    include('views/footer.php');
 ?>

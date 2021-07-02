@@ -53,4 +53,5 @@
             $datos = $conexiones -> readConexion();
             include('views/productos/conexiones/index.php');
     }
+    include('views/footer.php');
 ?>

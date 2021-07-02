@@ -31,4 +31,5 @@
     }
     include('views/productos/caracteristicas/formas_aspersion/index.php');
     include('views/productos/caracteristicas/formas_aspersion/form.php');
+    include('views/footer.php');
 ?>

@@ -10,11 +10,13 @@
             $proveedor = $_POST['proveedor'];
             $resultado = $proveedores -> create($proveedor['rfc'], $proveedor['razon_social'], $proveedor['domicilio'], $proveedor['telefono']);
             $datos = $proveedores -> read();
+            include('views/alert.php');
             break;
         case 'eliminar':
             $rfc = $_GET['rfc'];
             $resultado = $proveedores -> delete($rfc);
             $datos = $proveedores -> read();
+            include('views/alert.php');
             break;
         case 'ver':
             $rfc = $_GET['rfc'];
@@ -24,6 +26,7 @@
             $proveedor = $_POST['proveedor'];
             $resultado = $proveedores -> update($proveedor['rfc'], $proveedor['razon_social'], $proveedor['domicilio'], $proveedor['telefono']);
             $datos = $proveedores -> read();
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';
@@ -31,4 +34,5 @@
     }
     include('views/proveedores/index.php');
     include('views/proveedores/form.php');
+    include('views/footer.php');
 ?>

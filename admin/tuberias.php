@@ -51,4 +51,5 @@
             $datos = $tuberias -> readTuberia();
             include('views/productos/tuberias/index.php');
     }
+    include('views/footer.php');
 ?>

@@ -2,36 +2,12 @@
     require_once('controllers/sistema.controller.php');
     class Producto extends Sistema
     {
-        function createProducto($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni)
-        {
-            $pre = $this -> calcularPrecio($cos);
-            $pre_pub = $this -> calcularPrecioPublico($pre);
-            $dbh = $this -> connect();
-            $foto = $this -> guardarFotografia();
-            $sentencia = "INSERT INTO producto(codigo_producto, producto, costo, precio, precio_publico, descripcion, 
-                                               existencias, fotografia, id_marca, id_unidad) 
-                                        VALUES(:codigo_producto, :producto, :costo, :precio, :precio_publico, :descripcion, 
-                                               :existencias, :fotografia, :id_marca, :id_unidad)";
-            $stmt = $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
-            $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
-            $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
-            $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
-            $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
-            $stmt -> bindParam(':existencias', $exis, PDO::PARAM_STR);
-            $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
-            $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
-            $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
-            return $stmt;
-        }
-
         function read($sentencia, $orden)
         {
             $dbh = $this -> connect();
             $busqueda = (isset($_GET['busqueda']))?$_GET['busqueda']:'';
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:$orden;
-            $limite = (isset($_GET['limite']))?$_GET['limite']:'10';
+            $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);

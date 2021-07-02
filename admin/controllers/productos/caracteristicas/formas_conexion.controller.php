@@ -1,16 +1,16 @@
 <?php
     require_once('controllers/sistema.controller.php');
+
+    /*
+     * Clase principal para formas de conexiones
+     */
     class FormaConexion extends Sistema
     {
-        var $id_forma_conexion;
-        var $forma_conexion;
-    
-        function getIdFormaConexion(){ return $this -> id_forma_conexion; }
-        function getFormaConexion(){ return $this -> forma_conexion; }
-    
-        function setIdFormaConexion($id_f){ $this -> id_forma_conexion = $id_f; }
-        function setFormaConexion($for){ $this -> forma_conexion = $for; }
-    
+        /*
+        * Método para insertar un registro de formas de conexión a la base de datos Novaric
+        * Params String @for recibe la forma de la conexión
+        * Return integer con la cantidad de registros afectados
+        */
         function create($for)
         {
             $dbh = $this -> connect();
@@ -20,7 +20,11 @@
             $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+        * Método para obtener todos las formas de conexiones por cantidad
+        * Return Array con todas las faormas de conexiones
+        */
         function read()
         {
             $dbh = $this -> Connect();
@@ -38,36 +42,74 @@
             $filas = $stmt -> fetchAll();
             return $filas;
         }
+
+        /*
+        * Método para obtener todos las formas de conexiones
+        * Return Array con todas las faormas de conexiones
+        */
+        function readAll()
+        {
+            $dbh = $this -> Connect();
+            $sentencia = 'SELECT * FROM forma_conexion AS f';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+
+        /*
+         * Metodo para obtener la informacion de una forma de conexion
+         * Params Integer @id_f recibe el id de una forma de conexion
+         * Return Array con la información de la forma de conexion
+         */
         function readOne($id_f)
         {
             $dbh = $this -> connect();
             $sentencia = 'SELECT * FROM forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
-            $stmt = $dbh->prepare($sentencia);
+            $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
             $stmt -> execute();
             $filas = $stmt -> fetchAll();
             return $filas;
         }
+
+        /*
+         * Metodo para actualizar el registro de una forma de conexion
+         * Params Integer @id_f recibe el id de una forma de conexion
+         *        String  @for recibe la forma de conexion
+         * Return integer con la cantidad de registros afectados
+         */
         function update($id_f, $for)
         {
-            $dbh = $this->connect();
+            $dbh = $this -> connect();
             $sentencia = 'UPDATE forma_conexion SET forma_conexion = :forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
-            $stmt= $dbh->prepare($sentencia);
-            $stmt->bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
-            $stmt->bindParam(':forma_conexion', $for, PDO::PARAM_STR);
+            $stmt= $dbh -> prepare($sentencia);
+            $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
+            $stmt -> bindParam(':forma_conexion', $for, PDO::PARAM_STR);
             $resultado = $stmt -> execute();
             return $resultado;
         }
+
+        /*
+         * Metodo para elimina el registro de una forma de conexion
+         * Params Integer @id_f recibe el id de una forma de conexion
+         * Return integer con la cantidad de registros afectados
+         */
         function delete($id_f)
         {
-            $dbh = $this->connect();
+            $dbh = $this -> connect();
             $sentencia = 'DELETE FROM forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
-            $stmt= $dbh->prepare($sentencia);
+            $stmt= $dbh -> prepare($sentencia);
             $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
             $resultado = $stmt -> execute();
             return $resultado;
         }
-    
+
+        /*
+       * Método para extrater total de formas de conexiones
+       * Return un entero que es la cantidad de formas de conexiones
+       */
         function total(){
             $dbh = $this -> Connect();
             $sentencia = "SELECT COUNT(id_forma_conexion) AS total FROM forma_conexion";

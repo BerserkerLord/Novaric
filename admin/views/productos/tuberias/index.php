@@ -1,7 +1,7 @@
 <div class="ps-5 pe-5 pt-3 pb-3 my-container active-cont">
     <h3 class="display-3">Tuberías</h3>
-    <div class="container">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row no-gutters">
             <div class="col-md-4">
                 <a href="tuberias.php?action=crear" class="btn btn-outline-success mb-3"><i class="fa fa-plus p-1 icons"></i>
                     Agregar
@@ -40,9 +40,9 @@
                 </td>
                 <td><?=$tuberia['codigo_producto']?></td>
                 <td><?=$tuberia['producto']?></td>
-                <td><?=$tuberia['costo']?></td>
-                <td><?=$tuberia['precio']?></td>
-                <td><?=$tuberia['precio_publico']?></td>
+                <td><?="$" . $tuberia['costo']?></td>
+                <td><?="$" . $tuberia['precio']?></td>
+                <td><?="$" . $tuberia['precio_publico']?></td>
                 <td><?=$tuberia['existencias'] . ' ' . $tuberia['unidad'] . '(s)'?></td>
                 <td><?=$tuberia['marca']?></td>
                 <td>
@@ -84,8 +84,8 @@
     </table>
     <nav>
         <ul class="pagination">
-            <?php for($i = 0, $k = 1; $i < $tuberias -> total('codigo_producto', 'tuberia'); $i+=10, $k++): ?>
-                <li class="page-item"><a class="page-link" href="tuberias.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=10"><?php echo ($k); ?></a></li>
+            <?php for($i = 0, $k = 1; $i < $tuberias -> total('codigo_producto', 'tuberia'); $i+=5, $k++): ?>
+                <li class="page-item"><a class="page-link" href="tuberias.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=5"><?php echo ($k); ?></a></li>
             <?php endfor; ?>
         </ul>
     </nav>

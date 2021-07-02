@@ -31,4 +31,5 @@
     }
     include('views/productos/caracteristicas/forma_conexion/index.php');
     include('views/productos/caracteristicas/forma_conexion/form.php');
+    include('views/footer.php');
 ?>
