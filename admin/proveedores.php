@@ -1,5 +1,11 @@
 <?php
     include('controllers/proveedores.controller.php');
+    include('controllers/sistema.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'Encargado de Inventario');
+    $sistema = New Sistema;
+    $sistema -> verificarPuesto($ptos);
     $proveedores = new Proveedor;
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
     include('views/sidebar_navigation.php');

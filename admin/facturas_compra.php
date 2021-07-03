@@ -2,6 +2,12 @@
     include('controllers/facturas/factura_compra.controller.php');
     include('controllers/productos/productos.controller.php');
     include('controllers/proveedores.controller.php');
+    include('controllers/sistema.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'Contador');
+    $sistema = New Sistema;
+    $sistema -> verificarPuesto($ptos);
     $factura_compras = new FacturaCompra;
     $producto = new Producto;
     $proveedor = new Proveedor();

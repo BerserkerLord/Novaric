@@ -2,6 +2,12 @@
     include('controllers/facturas/factura_servicio.controller.php');
     include('controllers/servicios.controller.php');
     include('controllers/clientes_servicio.controller.php');
+    include('controllers/sistema.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'Contador');
+    $sistema = New Sistema;
+    $sistema -> verificarPuesto($ptos);
     $factura_servicios = new FacturaServicio;
     $servicio = new Servicio;
     $cliente = new ClienteServicio;

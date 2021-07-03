@@ -1,6 +1,12 @@
 <?php
     include('controllers/empleados.controller.php');
     include('controllers/puestos.controller.php');
+    include('controllers/sistema.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'RH');
+    $sistema = New Sistema;
+    $sistema -> verificarPuesto($ptos);
     $empleados = new Empleado;
     $puestos = new Puesto;
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';

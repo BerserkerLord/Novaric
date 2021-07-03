@@ -2,6 +2,12 @@
     include('controllers/productos/miscelaneos.controller.php');
     include('controllers/marcas.controller.php');
     include('controllers/productos/caracteristicas/unidades.controller.php');
+    include('controllers/sistema.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'Encargado de Almacen');
+    $sistema = New Sistema;
+    $sistema -> verificarPuesto($ptos);
     $miscelaneos = new Miscelaneo;
     $marca = new Marca;
     $unidad = new Unidad;

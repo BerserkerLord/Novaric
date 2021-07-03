@@ -1,5 +1,11 @@
 <?php
     include('controllers/productos/caracteristicas/formas_conexion.controller.php');
+    include('controllers/sistema.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'Encargado de Almacen');
+    $sistema = New Sistema;
+    $sistema -> verificarPuesto($ptos);
     $formas_conexion = new FormaConexion();
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
     include('views/sidebar_navigation.php');
