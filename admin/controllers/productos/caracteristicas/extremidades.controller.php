@@ -66,7 +66,7 @@
         function readAll()
         {
             $dbh = $this -> Connect();
-            $sentencia = 'SELECT * FROM extremidad e WHERE e.extremidad LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $sentencia = 'SELECT * FROM extremidad e';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> execute();
             $filas = $stmt -> fetchAll();

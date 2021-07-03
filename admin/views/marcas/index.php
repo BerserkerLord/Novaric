@@ -1,4 +1,4 @@
-<div class="ps-5 pe-5 pt-3 my-container active-cont">
+<div class="ps-5 pe-5 pt-3">
     <h3 class="display-3">Marcas</h3>
     <div class="d-flex flex-row-reverse">
         <form action="marcas.php" method="GET">

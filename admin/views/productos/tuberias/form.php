@@ -1,4 +1,4 @@
-<div class="ps-5 pe-5 pt-3 pb-5 my-container active-cont">
+<div class="ps-5 pe-5 pt-3 pb-5">
     <h1 class="display-3">Agregar/Actualizar tubería</h1>
     <form action="tuberias.php?action=<?php echo(isset($datos))?'actualizar':'guardar'; ?>" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
         <div class="col-md-4">
@@ -19,10 +19,11 @@
 
         <div class="col-md-4">
             <label class="form-label">Costo</label>
-            <input type="text" name="tuberia[costo]" value='<?php echo(isset($datos[0]['costo']))?$datos[0]['costo']:''; ?>' class="form-control" id="txtCosto" pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required>
+            <input type="text" name="tuberia[costo]" value='<?php echo(isset($datos[0]['costo']))?$datos[0]['costo']:''; ?>' class="form-control" id="txtCosto" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
+            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-6">
@@ -35,26 +36,29 @@
 
         <div class="col-md-2">
             <label class="form-label">Existencias</label>
-            <input type="text" name="tuberia[existencias]" value='<?php echo(isset($datos[0]['existencias']))?$datos[0]['existencias']:''; ?>' class="form-control" id="txtExistencias" <?php echo(isset($datos))?'disabled':'pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required'; ?>>
+            <input type="text" name="tuberia[existencias]" value='<?php echo(isset($datos[0]['existencias']))?$datos[0]['existencias']:''; ?>' class="form-control" id="txtExistencias" <?php echo(isset($datos))?'disabled':'pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required'; ?>>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
+            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-2">
             <label class="form-label">Diametro</label>
-            <input type="text" name="tuberia[diametro]" value='<?php echo(isset($datos[0]['diametro']))?$datos[0]['diametro']:''; ?>' class="form-control" id="txtDiametro" pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required>
+            <input type="text" name="tuberia[diametro]" value='<?php echo(isset($datos[0]['diametro']))?$datos[0]['diametro']:''; ?>' class="form-control" id="txtDiametro" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
+            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-2">
             <label class="form-label">Longitud</label>
-            <input type="text" name="tuberia[longitud]" value='<?php echo(isset($datos[0]['longitud']))?$datos[0]['longitud']:''; ?>' class="form-control" id="txtLongitud" pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required>
+            <input type="text" name="tuberia[longitud]" value='<?php echo(isset($datos[0]['longitud']))?$datos[0]['longitud']:''; ?>' class="form-control" id="txtLongitud" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
+            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-3">

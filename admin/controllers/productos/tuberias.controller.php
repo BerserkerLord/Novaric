@@ -18,7 +18,7 @@
          *        Double  @l recibe la longitud de la tuberia
          *        Integer @id_ext1 recibe la extremidad 1 de la tuberia
          *        Integer @id_ext2 recibe la extremidad 2 de la tuberia
-         * Return integer con la cantidad de registros afectados
+         * Return Arreglo con informacion de exito al momento de hacer la operación
          */
         function createTuberia($cod_pro, $pro, $cos, $desc, $exis, $id_mar, $id_uni, $d, $l, $id_ext1, $id_ext2)
         {
@@ -52,15 +52,16 @@
                 $stmt -> bindParam(':longitud', $l, PDO::PARAM_STR);
                 $stmt -> bindParam(':id_extremidad1', $id_ext1, PDO::PARAM_INT);
                 $stmt -> bindParam(':id_extremidad2', $id_ext2, PDO::PARAM_INT);
-                $resultado = $stmt -> execute();
+                $stmt -> execute();
                 $dbh -> commit();
-                return $resultado;
+                $msg['msg'] = 'Producto registrado correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al registrar, el código de producto ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
             }
-            catch(Exception $e){
-                echo 'Excepción capturada: ',  $e -> getMessage(), "\n";
-                $dbh -> rollBack();
-            }
-            $dbh -> rollBack();
         }
 
         /*
@@ -68,6 +69,28 @@
          * Return Array con todas las tuberias
          */
         function readTuberia(){
+            /*switch($_SESSION['engine']){
+                case 'mariadb':
+                    $sentencia = 'SELECT codigo_producto, producto, costo, precio, precio_publico, descripcion, existencias, p.fotografia,
+                                 id_marca, marca, id_unidad, unidad, diametro, longitud, extremidad1.extremidad AS extremidad1, extremidad2.extremidad AS extremidad2 FROM producto p
+                                    INNER JOIN tuberia t USING(codigo_producto)
+                                    INNER JOIN marca USING(id_marca)
+                                    INNER JOIN unidad USING(id_unidad)
+                                    INNER JOIN extremidad AS extremidad1 ON t.id_extremidad1 = extremidad1.id_extremidad
+                                    INNER JOIN extremidad AS extremidad2 ON t.id_extremidad2 = extremidad2.id_extremidad
+                                 WHERE p.producto LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    break;
+                case 'postgresql':
+                    $sentencia = 'SELECT codigo_producto, producto, costo, precio, precio_publico, descripcion, existencias, p.fotografia,
+                                 id_marca, marca, id_unidad, unidad, diametro, longitud, extremidad1.extremidad AS extremidad1, extremidad2.extremidad AS extremidad2 FROM producto p
+                                    INNER JOIN tuberia t USING(codigo_producto)
+                                    INNER JOIN marca USING(id_marca)
+                                    INNER JOIN unidad USING(id_unidad)
+                                    INNER JOIN extremidad AS extremidad1 ON t.id_extremidad1 = extremidad1.id_extremidad
+                                    INNER JOIN extremidad AS extremidad2 ON t.id_extremidad2 = extremidad2.id_extremidad
+                                 WHERE p.producto ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    break;
+            }*/
             $sentencia = 'SELECT codigo_producto, producto, costo, precio, precio_publico, descripcion, existencias, p.fotografia,
                                  id_marca, marca, id_unidad, unidad, diametro, longitud, extremidad1.extremidad AS extremidad1, extremidad2.extremidad AS extremidad2 FROM producto p 
                               INNER JOIN tuberia t USING(codigo_producto) 
@@ -109,7 +132,7 @@
          *        Double  @l recibe la longitud de la tuberia
          *        Integer @id_ext1 recibe la extremidad 1 de la tuberia
          *        Integer @id_ext2 recibe la extremidad 2 de la tuberia
-         * Return integer con la cantidad de registros afectados
+         * Return Arreglo con informacion de exito al momento de hacer la operación
          */
         function updateTuberia($cod_pro, $pro, $cos, $desc, $id_mar, $id_uni, $d, $l, $id_ext1, $id_ext2)
         {
@@ -150,15 +173,16 @@
                 $stmt -> bindParam(':id_extremidad1', $id_ext1, PDO::PARAM_INT);
                 $stmt -> bindParam(':id_extremidad2', $id_ext2, PDO::PARAM_INT);
                 $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-                $resultado = $stmt -> execute();
+                $stmt -> execute();
                 $dbh -> commit();
-                return $resultado;
+                $msg['msg'] = 'Producto actualizado correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al actualizar, el código de producto ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
             }
-            catch(Exception $e){
-                echo 'Excepción capturada: ',  $e -> getMessage(), "\n";
-                $dbh -> rollBack();
-            }
-            $dbh -> rollBack();
         }
     }
 ?>
