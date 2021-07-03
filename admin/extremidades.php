@@ -10,11 +10,13 @@
             $extremidad = $_POST['extremidad'];
             $resultado = $extremidades -> create($extremidad['extremidad']);
             $datos = $extremidades -> read();
+            include('views/alert.php');
             break;
         case 'eliminar':
             $id_extremidad = $_GET['id_extremidad'];
             $resultado = $extremidades -> delete($id_extremidad);
             $datos = $extremidades -> read();
+            include('views/alert.php');
             break;
         case 'ver':
             $id_extremidad = $_GET['id_extremidad'];
@@ -24,6 +26,7 @@
             $extremidad = $_POST['extremidad'];
             $resultado = $extremidades -> update($extremidad['id_extremidad'], $extremidad['extremidad']);
             $datos = $extremidades -> read();
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';

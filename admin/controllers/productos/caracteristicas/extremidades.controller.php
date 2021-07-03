@@ -14,11 +14,19 @@
         function create($ext)
         {
             $dbh = $this -> connect();
-            $sentencia = "INSERT INTO extremidad(extremidad) VALUES(:extremidad)";
-            $stmt= $dbh->prepare($sentencia);
-            $stmt -> bindParam(':extremidad', $ext, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = "INSERT INTO extremidad(extremidad) VALUES(:extremidad)";
+                $stmt= $dbh->prepare($sentencia);
+                $stmt -> bindParam(':extremidad', $ext, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Extremidad registrada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al registrar, la extremidad ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -32,6 +40,14 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'e.extremidad';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
+            /*switch($_SESSION['engine']){
+                case 'mariadb':
+                    $sentencia = 'SELECT * FROM extremidad e WHERE e.extremidad LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+                case 'postgresql':
+                    $sentencia = 'SELECT * FROM extremidad e WHERE e.extremidad ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+            }*/
             $sentencia = 'SELECT * FROM extremidad e WHERE e.extremidad LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
@@ -82,12 +98,20 @@
         function update($id_ext, $ext)
         {
             $dbh = $this->connect();
-            $sentencia = 'UPDATE extremidad SET extremidad = :extremidad WHERE id_extremidad = :id_extremidad';
-            $stmt= $dbh->prepare($sentencia);
-            $stmt->bindParam(':id_extremidad', $id_ext, PDO::PARAM_INT);
-            $stmt->bindParam(':extremidad', $ext, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'UPDATE extremidad SET extremidad = :extremidad WHERE id_extremidad = :id_extremidad';
+                $stmt= $dbh->prepare($sentencia);
+                $stmt->bindParam(':id_extremidad', $id_ext, PDO::PARAM_INT);
+                $stmt->bindParam(':extremidad', $ext, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Extremidad actualizada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al actualizar, la extremidad ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -98,11 +122,20 @@
         function delete($id_ext)
         {
             $dbh = $this->connect();
-            $sentencia = 'DELETE FROM extremidad WHERE id_extremidad = :id_extremidad';
-            $stmt= $dbh->prepare($sentencia);
-            $stmt -> bindParam(':id_extremidad', $id_ext, PDO::PARAM_INT);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'DELETE FROM extremidad WHERE id_extremidad = :id_extremidad';
+                $stmt= $dbh->prepare($sentencia);
+                $stmt -> bindParam(':id_extremidad', $id_ext, PDO::PARAM_INT);
+                $stmt -> execute();
+                $msg['msg'] = 'Extremidad eliminada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al eliminar, la extremidad esta asociada a uno o mas productos.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
+
         }
 
         /*
