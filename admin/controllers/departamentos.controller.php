@@ -44,11 +44,11 @@
             /*switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT * FROM departamento AS d  
-                                    WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                                  WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
                     $sentencia = 'SELECT * FROM departamento AS d  
-                                    WHERE d.departamento ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                                  WHERE d.departamento ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
             }*/
             $sentencia = 'SELECT * FROM departamento AS d  
@@ -129,11 +129,28 @@
             $dbh = $this->connect();
             $dbh -> beginTransaction();
             try {
+                $sentencia = 'SELECT id_puesto FROM puesto WHERE id_departamento = :id_dep';
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_dep', $id_dep, PDO::PARAM_INT);
+                $stmt -> execute();
+                $rows = $stmt -> fetchAll();
+                foreach($rows as $key => $row):
+                    $sentencia = 'SELECT rfc FROM empleado WHERE id_puesto = :id_puesto';
+                    $stmt = $dbh -> prepare($sentencia);
+                    $stmt -> bindParam(':id_puesto', $row['id_puesto'], PDO::PARAM_INT);
+                    $stmt -> execute();
+                    $rows2 = $stmt -> fetchAll();
+                    foreach($rows2 as $key2 => $row2){
+                        $sentencia = 'DELETE FROM empleado WHERE rfc = :rfc';
+                        $stmt = $dbh -> prepare($sentencia);
+                        $stmt -> bindParam(':rfc', $row2['rfc'], PDO::PARAM_STR);
+                        $stmt -> execute();
+                    }
+                endforeach;
                 $sentencia = 'DELETE FROM puesto WHERE id_departamento = :id_dep';
                 $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(':id_dep', $id_dep, PDO::PARAM_INT);
                 $stmt -> execute();
-
                 $sentencia = 'DELETE FROM departamento WHERE id_departamento = :id_departamento';
                 $stmt = $dbh->prepare($sentencia);
                 $stmt->bindParam(':id_departamento', $id_dep, PDO::PARAM_INT);
@@ -144,7 +161,7 @@
                 return $msg;
             } catch (Exception $e) {
                 $dbh -> rollBack();
-                $msg['msg'] = 'Error al eliminar, el departamento tiene puestos asociados.';
+                $msg['msg'] = 'Error desconocido al eliminar, favor de contactar al desarrollador.';
                 $msg['status'] = 'danger';
                 return $msg;
             }

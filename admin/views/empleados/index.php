@@ -18,7 +18,6 @@
             <th scope="col">Apellido Paterno</th>
             <th scope="col">Apellido Materno</th>
             <th scope="col">Dirección</th>
-            <th scope="col">Usuario</th>
             <th scope="col">Correo</th>
             <th scope="col">Puesto</th>
             <th scope="col">Acción</th>
@@ -29,13 +28,12 @@
             <tr>
                 <td><?=$empleado['rfc']?></td>
                 <td>
-                    <img src="<?php echo (isset($empleado['fotografia']))? '../archivos/'.$empleado['fotografia']: '../archivos/default.jpg'; ?>" alt="foto empleado" class="rounded img-fluid" width="75px">
+                    <img src="<?php echo (isset($empleado['fotografia']))? '../archivos/'.$empleado['fotografia']: '../archivos/default.jpg'; ?>" alt="foto empleado" class="rounded img-fluid" width="75">
                 </td>
                 <td><?=$empleado['nombre']?></td>
                 <td><?=$empleado['apaterno']?></td>
                 <td><?=$empleado['amaterno']?></td>
                 <td><?=$empleado['direccion']?></td>
-                <td><?=$empleado['usuario']?></td>
                 <td><?=$empleado['correo']?></td>
                 <td><?=$empleado['puesto']?></td>
                 <td>

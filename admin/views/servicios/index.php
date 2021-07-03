@@ -22,7 +22,7 @@
             <?php foreach($datos as $key => $servicio): ?>
                 <tr>
                     <td>
-                        <img src="<?php echo (isset($servicio['fotografia']))? '../archivos/'.$servicio['fotografia']: '../archivos/default.jpg'; ?>" alt="foto servicio" class="rounded img-fluid" width="75px">
+                        <img src="<?php echo (isset($servicio['fotografia']))? '../archivos/'.$servicio['fotografia']: '../archivos/default.jpg'; ?>" alt="foto servicio" class="rounded img-fluid" width="75">
                     </td>
                     <td><?=$servicio['servicio']?></td>
                     <td><?=$servicio['descripcion']?></td>

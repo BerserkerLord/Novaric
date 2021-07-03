@@ -46,12 +46,12 @@
                 case 'mariadb':
                     $sentencia = 'SELECT * FROM puesto p
                                     INNER JOIN departamento USING(id_departamento)
-                                  WHERE p.puesto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';;
+                                  WHERE p.puesto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
-                    $sentencia = 'SELECT * FROM puesto p
+                    $sentencia = SELECT * FROM puesto p
                                     INNER JOIN departamento USING(id_departamento)
-                                  WHERE p.puesto ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';;
+                                 WHERE p.puesto ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
             }*/
             $sentencia = 'SELECT * FROM puesto p 
@@ -128,19 +128,22 @@
         function delete($id_pu)
         {
             $dbh = $this->connect();
+            $dbh -> beginTransaction();
             try {
-                $sentencia = 'DELETE FROM empleado WHERE id_puesto = :id:puesto';
+                $sentencia = 'DELETE FROM empleado WHERE id_puesto = :id_puesto';
                 $stmt = $dbh -> prepare($sentencia);
-                $stmt -> bindParam(':id_puesto', $id_dep);
-
+                $stmt -> bindParam(':id_puesto', $id_pu);
+                $stmt-> execute();
                 $sentencia = 'DELETE FROM puesto WHERE id_puesto = :id_puesto';
                 $stmt= $dbh->prepare($sentencia);
                 $stmt->bindParam(':id_puesto', $id_pu, PDO::PARAM_INT);
                 $stmt->execute();
+                $dbh -> commit();
                 $msg['msg'] = 'Puesto eliminado correctamente.';
                 $msg['status'] = 'success';
                 return $msg;
             } catch (Exception $e) {
+                $dbh -> rollBack();
                 $msg['msg'] = 'Error al eliminar, el puesto tiene empleados asociados.';
                 $msg['status'] = 'danger';
                 return $msg;

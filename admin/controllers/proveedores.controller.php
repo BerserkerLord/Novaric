@@ -100,7 +100,7 @@
                     $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
-                    $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde'';
                     break;
             }*/
             $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';

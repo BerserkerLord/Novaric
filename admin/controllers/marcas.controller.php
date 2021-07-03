@@ -44,10 +44,10 @@
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             /*switch($_SESSION['engine']){
                 case 'mariadb':
-                    $sentencia = 'SELECT * FROM marca AS m WHERE m.marca LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM marca AS m WHERE m.marca LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde'';
                     break;
                 case 'postgresql':
-                    $sentencia = 'SELECT * FROM marca AS m WHERE m.marca ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM marca AS m WHERE m.marca ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde'';
                     break;
             }*/
             $sentencia = 'SELECT * FROM marca AS m WHERE m.marca LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
