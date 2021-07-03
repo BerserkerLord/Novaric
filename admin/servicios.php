@@ -35,4 +35,5 @@
     }
     include('views/servicios/index.php');
     include('views/servicios/form.php');
+    include('views/footer.php');
 ?>

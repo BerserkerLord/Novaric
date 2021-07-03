@@ -126,9 +126,11 @@
          */
         function readOne($id_servicio){
             $dbh = $this -> Connect();
-            $this -> setIdServicio($id_servicio);
-            $result = $dbh -> query('SELECT * FROM servicio WHERE id_servicio = ' . $this -> getIdServicio());
-            $rows = $result -> fetchAll();
+            $sentencia = 'SELECT * FROM servicio WHERE id_servicio = :id_servicio';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> bindParam(':id_servicio', $id_servicio, PDO::PARAM_INT);
+            $stmt -> execute();
+            $rows = $stmt -> fetchAll();
             return $rows;
         }
 
