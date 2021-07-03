@@ -10,11 +10,13 @@
             $forma_conexion = $_POST['forma_conexion'];
             $resultado = $formas_conexion -> create($forma_conexion['forma_conexion']);
             $datos = $formas_conexion -> read();
+            include('views/alert.php');
             break;
         case 'eliminar':
             $id_forma_conexion = $_GET['id_forma_conexion'];
             $resultado = $formas_conexion -> delete($id_forma_conexion);
             $datos = $formas_conexion -> read();
+            include('views/alert.php');
             break;
         case 'ver':
             $id_forma_conexion = $_GET['id_forma_conexion'];
@@ -24,6 +26,7 @@
             $forma_conexion = $_POST['forma_conexion'];
             $resultado = $formas_conexion -> update($forma_conexion['id_forma_conexion'], $forma_conexion['forma_conexion']);
             $datos = $formas_conexion -> read();
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';

@@ -14,11 +14,19 @@
         function create($t_b)
         {
             $dbh = $this -> connect();
-            $sentencia = "INSERT INTO tipo_boquilla(tipo_boquilla) VALUES(:tipo_boquilla)";
-            $stmt = $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':tipo_boquilla', $t_b, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = "INSERT INTO tipo_boquilla(tipo_boquilla) VALUES(:tipo_boquilla)";
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':tipo_boquilla', $t_b, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Tipo de boquilla registrada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al registrar, la tipo de boquilla ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -32,6 +40,14 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'tb.tipo_boquilla';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
+            /*switch($_SESSION['engine']){
+                case 'mariadb':
+                    $sentencia = 'SELECT * FROM tipo_boquilla tb WHERE tb.tipo_boquilla LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+                case 'postgresql':
+                    $sentencia = 'SELECT * FROM tipo_boquilla tb WHERE tb.tipo_boquilla ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+            }*/
             $sentencia = 'SELECT * FROM tipo_boquilla tb WHERE tb.tipo_boquilla LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
@@ -82,12 +98,20 @@
         function update($id_t_b, $tb)
         {
             $dbh = $this -> connect();
-            $sentencia = "UPDATE tipo_boquilla SET tipo_boquilla = :tipo_boquilla WHERE id_tipo_boquilla = :id_tipo_boquilla";
-            $stmt = $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
-            $stmt -> bindParam(':tipo_boquilla', $tb, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = "UPDATE tipo_boquilla SET tipo_boquilla = :tipo_boquilla WHERE id_tipo_boquilla = :id_tipo_boquilla";
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
+                $stmt -> bindParam(':tipo_boquilla', $tb, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Tipo de boquilla actualizada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al actualizar, la tipo de boquilla ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -98,11 +122,19 @@
         function delete($id_t_b)
         {
             $dbh = $this -> connect();
-            $sentencia = 'DELETE FROM tipo_boquilla WHERE id_tipo_boquilla = :id_tipo_boquilla';
-            $stmt= $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'DELETE FROM tipo_boquilla WHERE id_tipo_boquilla = :id_tipo_boquilla';
+                $stmt= $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_tipo_boquilla', $id_t_b, PDO::PARAM_INT);
+                $stmt -> execute();
+                $msg['msg'] = 'Tipo de boquilla eliminada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al eliminar, la tipo de boquilla esta asociada a uno o mas productos.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*

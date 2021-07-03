@@ -10,11 +10,13 @@
             $tipo_boquilla = $_POST['tipo_boquilla'];
             $resultado = $tipos_boquilla -> create($tipo_boquilla['tipo_boquilla']);
             $datos = $tipos_boquilla -> read();
+            include('views/alert.php');
             break;
         case 'eliminar':
             $id_tipo_boquilla = $_GET['id_tipo_boquilla'];
             $resultado = $tipos_boquilla -> delete($id_tipo_boquilla);
             $datos = $tipos_boquilla -> read();
+            include('views/alert.php');
             break;
         case 'ver':
             $id_tipo_boquilla = $_GET['id_tipo_boquilla'];
@@ -24,6 +26,7 @@
             $tipo_boquilla = $_POST['tipo_boquilla'];
             $resultado = $tipos_boquilla -> update($tipo_boquilla['id_tipo_boquilla'], $tipo_boquilla['tipo_boquilla']);
             $datos = $tipos_boquilla -> read();
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';

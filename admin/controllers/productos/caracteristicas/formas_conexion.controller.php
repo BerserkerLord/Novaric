@@ -14,11 +14,19 @@
         function create($for)
         {
             $dbh = $this -> connect();
-            $sentencia = "INSERT INTO forma_conexion(forma_conexion) VALUES(:forma_conexion)";
-            $stmt= $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':forma_conexion', $for, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = "INSERT INTO forma_conexion(forma_conexion) VALUES(:forma_conexion)";
+                $stmt= $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':forma_conexion', $for, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Forma de conexión registrada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al registrar, la forma de conexión ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -32,6 +40,14 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'f.forma_conexion';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
+            /*switch($_SESSION['engine']){
+                case 'mariadb':
+                    $sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+                case 'postgresql':
+                    $sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+            }*/
             $sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
@@ -83,12 +99,20 @@
         function update($id_f, $for)
         {
             $dbh = $this -> connect();
-            $sentencia = 'UPDATE forma_conexion SET forma_conexion = :forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
-            $stmt= $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
-            $stmt -> bindParam(':forma_conexion', $for, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'UPDATE forma_conexion SET forma_conexion = :forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
+                $stmt= $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
+                $stmt -> bindParam(':forma_conexion', $for, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Forma de conexión actualizada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al actualizar, la forma de conexión  ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -99,11 +123,19 @@
         function delete($id_f)
         {
             $dbh = $this -> connect();
-            $sentencia = 'DELETE FROM forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
-            $stmt= $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'DELETE FROM forma_conexion WHERE id_forma_conexion = :id_forma_conexion';
+                $stmt= $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_forma_conexion', $id_f, PDO::PARAM_INT);
+                $stmt -> execute();
+                $msg['msg'] = 'Forma de conexión eliminada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al eliminar, la forma de conexión esta asociada a uno o mas productos.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*

@@ -35,7 +35,7 @@
     <nav>
         <ul class="pagination">
             <?php for($i = 0, $k = 1; $i < $formas_aspersion -> total(); $i+=5, $k++): ?>
-                <li class="page-item"><a class="page-link" href="formas_aspersiona.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=5"><?php echo ($k); ?></a></li>
+                <li class="page-item"><a class="page-link" href="formas_aspersion.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=5"><?php echo ($k); ?></a></li>
             <?php endfor; ?>
         </ul>
     </nav>

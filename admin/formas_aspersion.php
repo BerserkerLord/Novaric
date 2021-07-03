@@ -10,11 +10,13 @@
             $forma_aspersion = $_POST['forma_aspersion'];
             $resultado = $formas_aspersion -> create($forma_aspersion['forma_aspersion']);
             $datos = $formas_aspersion -> read();
+            include('views/alert.php');
             break;
         case 'eliminar':
             $id_forma_aspersion = $_GET['id_forma_aspersion'];
             $resultado = $formas_aspersion -> delete($id_forma_aspersion);
             $datos = $formas_aspersion -> read();
+            include('views/alert.php');
             break;
         case 'ver':
             $id_forma_aspersion = $_GET['id_forma_aspersion'];
@@ -24,6 +26,7 @@
             $forma_aspersion = $_POST['forma_aspersion'];
             $resultado = $formas_aspersion -> update($forma_aspersion['id_forma_aspersion'], $forma_aspersion['forma_aspersion']);
             $datos = $formas_aspersion -> read();
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';
