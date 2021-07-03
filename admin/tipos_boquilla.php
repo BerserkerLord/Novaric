@@ -1,6 +1,5 @@
 <?php
     include('controllers/productos/caracteristicas/tipos_boquilla.controller.php');
-    include('controllers/sistema.controller.php');
     $sistema = New Sistema;
     $sistema -> verificarPuesto('Encargado de Almacen');
     $tipos_boquilla = new TipoBoquilla;

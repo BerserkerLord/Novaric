@@ -61,16 +61,17 @@
                 $contrasena = $_POST['contrasena'];
                 if ($sistema -> validateEmail($correo)){
                     if ($sistema -> validateEmpleado($correo, $contrasena)){
-                        $roles = $sistema   -> getPuesto($correo);
+                        $puesto = $sistema -> getPuesto($correo);
                         //$permisos = $sistema -> getPermisos($correo);
                         $rfc = $sistema -> getRFCEmpleado($correo);
                         $_SESSION['validado'] = true;
-                        $_SESSION['puesto'] = $roles;
+                        $_SESSION['puesto'] = $puesto;
+                        $_SESSION['puestos'] = $sistema -> getPuestos();
                         //$_SESSION['permisos'] = $permisos;
                         $_SESSION['correo'] = $correo;
                         $_SESSION['rfc'] = $rfc;
                         $_SESSION['engine'] = $sistema -> getEngine();
-                        header('Location: ../admin/views/index.php');
+                        header('Location: ../admin/index.php');
                     }
                     else
                         $mensaje = 'Usuario o Contraseña Incorrectos';

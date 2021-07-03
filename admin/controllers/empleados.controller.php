@@ -25,7 +25,7 @@
             $foto = $this -> guardarFotografia();
             try {
                 $sentencia = "INSERT INTO empleado(rfc, nombre, apaterno, amaterno, direccion, usuario, correo, contrasenia, fotografia, id_puesto) 
-                          VALUES(:rfc, :nombre, :apaterno, :amaterno, :direccion, :usuario, :correo, :contrasenia, :fotografia, :id_puesto)";
+                          VALUES(:rfc, :nombre, :apaterno, :amaterno, :direccion, :usuario, :correo, MD5(:contrasenia), :fotografia, :id_puesto)";
                 $stmt= $dbh->prepare($sentencia);
                 $stmt->bindParam(':rfc', $errefece, PDO::PARAM_STR);
                 $stmt->bindParam(':nombre', $nom, PDO::PARAM_STR);

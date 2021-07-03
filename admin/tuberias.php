@@ -3,7 +3,6 @@
     include('controllers/marcas.controller.php');
     include('controllers/productos/caracteristicas/unidades.controller.php');
     include('controllers/productos/caracteristicas/extremidades.controller.php');
-    include('controllers/sistema.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'Encargado de Almacen');

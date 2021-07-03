@@ -20,7 +20,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="font-size: 0.92rem">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Inicio</a></li>
                         <?php
                             if($sistema -> validarPuesto('Administrador')){
@@ -32,13 +32,14 @@
                             if($sistema -> validarPuesto('RH')){
                                 include('menus/menu.rh.php');
                             }
-                            if($sistema -> validarPuesto('Encrgado de Inventario')){
+                            if($sistema -> validarPuesto('Encargado de Inventario')){
                                 include('menus/menu.inventario.php');
                             }
                             if($sistema -> validarPuesto('Encargado de Almacen')){
                                 include('menus/menu.almacen.php');
                             }
                         ?>
+                        <li class="nav-item"><a class="nav-link active" href="../login/login.php?action=logout" tabindex="-1">Logout</a></li>
                     </ul>
                 </div>
             </div>

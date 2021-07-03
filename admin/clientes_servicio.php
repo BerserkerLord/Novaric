@@ -1,11 +1,10 @@
 <?php
     include('controllers/clientes_servicio.controller.php');
-    include('controllers/sistema.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'Contador');
     $sistema = New Sistema;
-    $sistema -> verificarPuesto($ptos);
+    $sistema -> verificarPuesto($_SESSION['puestos']);
     $clientes_servicio = new ClienteServicio;
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
     include('views/sidebar_navigation.php');

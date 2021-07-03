@@ -1,6 +1,5 @@
 <?php
     include('controllers/productos/caracteristicas/formas_aspersion.controller.php');
-    include('controllers/sistema.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'Encargado de Almacen');

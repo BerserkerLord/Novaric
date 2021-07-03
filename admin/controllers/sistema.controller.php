@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require_once dirname(__FILE__).'../../../Novaric/vendor/autoload.php';
+    require_once dirname(__FILE__).'../../../vendor/autoload.php';
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     require_once('init.php');
@@ -65,7 +65,24 @@
             $fila = $stmt -> fetchAll(PDO::FETCH_ASSOC);
             $puestos = array();
             foreach($fila as $key => $value):
-                array_push($puestos, $value['p.puesto']);
+                array_push($puestos, $value['puesto']);
+            endforeach;
+            return $puestos;
+        }
+
+       /*
+        * Metodo para obtener todos los puestos
+        * Return arreglo con todos los puestos
+        */
+        function getPuestos(){
+            $dbh = $this ->Connect();
+            $query = "SELECT id_puesto, puesto FROM puesto p";
+            $stmt = $dbh ->prepare($query);
+            $stmt -> execute();
+            $fila = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+            $puestos = array();
+            foreach($fila as $key => $value):
+                array_push($puestos, $value['puesto']);
             endforeach;
             return $puestos;
         }
@@ -108,7 +125,7 @@
         function validateEmpleado($correo, $contrasena){
             $contrasena = MD5($contrasena);
             $dbh = $this -> Connect();
-            $query = "SELECT * FROM empleado WHERE correo = :correo AND contrasena = :contrasena";
+            $query = "SELECT * FROM empleado WHERE correo = :correo AND contrasenia = :contrasena";
             $stmt = $dbh ->prepare($query);
             $stmt -> bindParam(":correo", $correo, PDO::PARAM_STR);
             $stmt -> bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
@@ -138,9 +155,9 @@
         {
             if(!isset($_SESSION['validado'])){
                 $mensaje = 'Es necesario iniciar sesión';
-                include('../../login/views/header.php');
-                include('../../login/views/login.php');
-                include('../../login/views/footer.php');
+                include('../login/views/header.php');
+                include('../login/views/login.php');
+                include('../login/views/footer.php');
                 die();
             }
         }
@@ -152,13 +169,18 @@
         function verificarPuesto($puestos){
             $this -> verificarSesion();
             $puesto = $_SESSION['puesto'];
+            $c = 0;
             foreach($puestos as $p):
-                if(!in_array($p, $puesto)){
+                $c++;
+                if(!in_array($p, $puesto) && $c == count($puestos)){
                     $mensaje = 'Usted no tiene el rol adecuado.';
-                    include('../../login/views/header.php');
-                    include('../../login/views/login.php');
-                    include('../../login/views/footer.php');
+                    print_r($p);
+                    include('../login/views/header.php');
+                    include('../login/views/login.php');
+                    include('../login/views/footer.php');
                     die();
+                } else if(in_array($p, $puesto)) {
+                    break;
                 }
             endforeach;
         }
@@ -193,7 +215,7 @@
                 $mail -> addReplyTo('18030948@itcelaya.edu.mx', 'Dario Sebastian Zarate Ceballos');
                 $mail -> addAddress($correo, 'Dario Zarate');
                 $mail -> Subject = 'Recuperación de contraseña del sistema del Hospital San Juan';
-                $cuerpo = "Estimado usuario, por favor presione la siguiente liga para recuperar su contraseña </br><a href='http://localhost/hospital/login/login.php?action=change_pass&correo=" . $correo . "&token=" . $token . "'>Recuperar Contraseña</a>";
+                $cuerpo = "Estimado usuario, por favor presione la siguiente liga para recuperar su contraseña </br><a href='http://localhost/Novaric/login/login.php?action=change_pass&correo=" . $correo . "&token=" . $token . "'>Recuperar Contraseña</a>";
                 $mail -> msgHTML($cuerpo);
                 $mail -> AltBody = 'Mensaje alternativo';
                 $mail -> send();
@@ -206,7 +228,7 @@
                 if($this -> validateToken($correo, $token)){
                     $dbh = $this ->Connect();
                     $contrasena = md5($contrasena);
-                    $query = "UPDATE empleado SET contrasena = :contrasena, token = NULL WHERE correo = :correo";
+                    $query = "UPDATE empleado SET contrasenia = :contrasena, token = NULL WHERE correo = :correo";
                     $stmt = $dbh -> prepare($query);
                     $stmt -> bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
                     $stmt -> bindParam(":correo", $correo, PDO::PARAM_STR);

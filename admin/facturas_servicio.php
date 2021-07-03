@@ -2,7 +2,6 @@
     include('controllers/facturas/factura_servicio.controller.php');
     include('controllers/servicios.controller.php');
     include('controllers/clientes_servicio.controller.php');
-    include('controllers/sistema.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'Contador');

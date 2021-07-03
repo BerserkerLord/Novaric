@@ -2,7 +2,6 @@
     include('controllers/facturas/factura_compra.controller.php');
     include('controllers/productos/productos.controller.php');
     include('controllers/proveedores.controller.php');
-    include('controllers/sistema.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'Contador');

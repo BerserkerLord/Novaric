@@ -4,7 +4,7 @@
 <main class="form-signin">
     <form action="../login/login.php?action=validate" method="post">
 
-        <img src="../images/caduceo.png" class="rounded mx-auto d-block" alt="user_login_image" width="100">
+        <img src="../imagenes/login.png" class="rounded mx-auto d-block" alt="user_login_image" width="100">
 
         <h1 class="display-5">Ingresar</h1>
 

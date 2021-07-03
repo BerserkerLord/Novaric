@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Hospital San Juan</title>
+        <title>Novaric</title>
         <meta name="author" content="Dario Zarate">
         <meta name="description" content="Hospital San Juan">
         <meta name="keywords" content="hospital san juan doctores especialidad">

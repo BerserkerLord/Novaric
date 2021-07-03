@@ -1,6 +1,5 @@
 <?php
     include('controllers/departamentos.controller.php');
-    include('controllers/sistema.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'RH');
