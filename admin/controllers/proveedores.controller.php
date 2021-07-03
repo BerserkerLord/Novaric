@@ -87,7 +87,7 @@
 
         /*
         * Método para obtener todos los proveedores
-        * Return Array con todas las marcas
+        * Return Array con todos los proveedores
         */
         function read(){
             $dbh = $this -> Connect();
