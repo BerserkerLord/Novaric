@@ -9,16 +9,24 @@
         /*
         * Método para insertar un registro de unidad a la base de datos Novaric
         * Params String @un recibe la unidad
-        * Return integer con la cantidad de registros afectados
+        * Return Arreglo con informacion de exito al momento de hacer la operación
         */
         function create($un)
         {
             $dbh = $this->connect();
-            $sentencia = "INSERT INTO unidad(unidad) VALUES(:unidad)";
-            $stmt = $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':unidad', $un, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try{
+                $sentencia = "INSERT INTO unidad(unidad) VALUES(:unidad)";
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':unidad', $un, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Unidad registrada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al registrar, la unidad ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -32,6 +40,14 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'u.unidad';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
+            /*switch($_SESSION['engine']){
+                case 'mariadb':
+                    $sentencia = 'SELECT * FROM unidad u WHERE u.unidad ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+                case 'postgresql':
+                    $sentencia = 'SELECT * FROM unidad u WHERE u.unidad ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    break;
+            }*/
             $sentencia = 'SELECT * FROM unidad u WHERE u.unidad LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
@@ -82,12 +98,20 @@
         function update($id_un, $un)
         {
             $dbh = $this -> connect();
-            $sentencia = 'UPDATE unidad SET unidad = :unidad WHERE id_unidad = :id_unidad';
-            $stmt= $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':id_unidad', $id_un, PDO::PARAM_INT);
-            $stmt -> bindParam(':unidad', $un, PDO::PARAM_STR);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'UPDATE unidad SET unidad = :unidad WHERE id_unidad = :id_unidad';
+                $stmt= $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_unidad', $id_un, PDO::PARAM_INT);
+                $stmt -> bindParam(':unidad', $un, PDO::PARAM_STR);
+                $stmt -> execute();
+                $msg['msg'] = 'Unidad actualizada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al actualizar, la unidad ya existe.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*
@@ -98,11 +122,19 @@
         function delete($id_un)
         {
             $dbh = $this -> connect();
-            $sentencia = 'DELETE FROM unidad WHERE id_unidad = :id_unidad';
-            $stmt= $dbh -> prepare($sentencia);
-            $stmt -> bindParam(':id_unidad', $id_un, PDO::PARAM_INT);
-            $resultado = $stmt -> execute();
-            return $resultado;
+            try {
+                $sentencia = 'DELETE FROM unidad WHERE id_unidad = :id_unidad';
+                $stmt= $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_unidad', $id_un, PDO::PARAM_INT);
+                $resultado = $stmt -> execute();
+                $msg['msg'] = 'Unidad eliminada correctamente.';
+                $msg['status'] = 'success';
+                return $msg;
+            } catch (Exception $e) {
+                $msg['msg'] = 'Error al eliminar, la unidad esta asociada a uno o mas productos.';
+                $msg['status'] = 'danger';
+                return $msg;
+            }
         }
 
         /*

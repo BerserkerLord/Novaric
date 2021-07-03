@@ -10,11 +10,13 @@
             $unidad = $_POST['unidad'];
             $resultado = $unidades -> create($unidad['unidad']);
             $datos = $unidades -> read();
+            include('views/alert.php');
             break;
         case 'eliminar':
             $id_unidad = $_GET['id_unidad'];
             $resultado = $unidades -> delete($id_unidad);
             $datos = $unidades -> read();
+            include('views/alert.php');
             break;
         case 'ver':
             $id_unidad = $_GET['id_unidad'];
@@ -24,6 +26,7 @@
             $unidad = $_POST['unidad'];
             $resultado = $unidades -> update($unidad['id_unidad'], $unidad['unidad']);
             $datos = $unidades -> read();
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';
