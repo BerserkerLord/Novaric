@@ -127,18 +127,26 @@
         function delete($id_dep)
         {
             $dbh = $this->connect();
+            $dbh -> beginTransaction();
             try {
+                $sentencia = 'DELETE FROM puesto WHERE id_departamento = :id_dep';
+                $stmt = $dbh -> prepare($sentencia);
+                $stmt -> bindParam(':id_dep', $id_dep, PDO::PARAM_INT);
+                $stmt -> execute();
+
                 $sentencia = 'DELETE FROM departamento WHERE id_departamento = :id_departamento';
                 $stmt = $dbh->prepare($sentencia);
                 $stmt->bindParam(':id_departamento', $id_dep, PDO::PARAM_INT);
                 $stmt->execute();
+                $dbh -> commit();
                 $msg['msg'] = 'Departamento eliminado correctamente.';
                 $msg['status'] = 'success';
                 return $msg;
             } catch (Exception $e) {
+                $dbh -> rollBack();
                 $msg['msg'] = 'Error al eliminar, el departamento tiene puestos asociados.';
                 $msg['status'] = 'danger';
-
+                return $msg;
             }
         }
 

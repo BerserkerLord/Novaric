@@ -141,7 +141,7 @@
                 $msg['status'] = 'success';
                 return $msg;
             } catch (Exception $e) {
-                $msg['msg'] = 'Error desconocido al eliminar, favor de contactar con el desarrollador.';
+                $msg['msg'] = 'Error al eliminar, la marca tiene productos asignados.';
                 $msg['status'] = 'danger';
                 return $msg;
             }
