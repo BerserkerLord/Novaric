@@ -27,6 +27,20 @@
         }
 
        /*
+        * Metodo para leer todos los productos ependiendo del tipo
+        * Params String @sentencia recibe la sentencia que se introducirá a la base de datos para leer un tipo de producto
+        * Return Array con todos los productos de un tipo
+        */
+        function readAll($sentencia)
+        {
+            $dbh = $this -> connect();
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+       /*
         * Método para obtener un producto en funcion al tipo
         * Params String @sentencia recibe la consulta que ejecutará en la BD ne función al tipo de producto
         *        String @c_d recibe el código del producto

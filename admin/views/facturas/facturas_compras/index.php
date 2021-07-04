@@ -25,11 +25,11 @@
             <tr>
                 <td><?=$factura_compra['id_factura']?></td>
                 <td><?=$factura_compra['fecha']?></td>
-                <td><?=$factura_compra['rfc']?></td>
+                <td><?=$factura_compra['razon_social']?></td>
                 <td><?=$factura_compra['estatus_factura']?></td>
                 <td><?='$' . $factura_compra['total']?></td>
                 <td>
-                    <a href="facturas_compra.php?action=generar_pdf&id_factura=<?=$factura_compra['id_factura']?>" class="btn btn-outline-secondary">
+                    <a href="facturas_comprapdf.php?action=generar_pdf&id_factura=<?=$factura_compra['id_factura']?>" target="_blank" class="btn btn-outline-secondary">
                         <i class="fa fa-eye p-1 icons"></i>
                     </a>
                     <a href="facturas_compra.php?action=ver_estatus&id_factura=<?=$factura_compra['id_factura']?>&tipo=compra" class="btn btn-outline-primary">
