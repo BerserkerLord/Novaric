@@ -239,5 +239,16 @@
             }
             return false;
         }
+
+      /*
+       * Método para imprimir un mensaje al hacer una operación de la api
+       * Params Array  @info recibe un mensaje de validacion y un error y un codigo
+       */
+        function printJSON($info){
+            $info = json_encode($info);
+            header('Content-Type: application/json');
+            echo $info;
+            die();
+        }
     }
 ?>
