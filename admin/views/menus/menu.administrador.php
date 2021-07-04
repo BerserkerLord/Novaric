@@ -6,7 +6,7 @@
 <li class="nav-item"><a href="puestos.php" class="nav-link active"><i class="fa fa-user-friends p-1 icons"></i>Puesto</a></li>
 <li class="nav-item"><a href="empleados.php" class="nav-link active"><i class="fa fa-user-check p-1 icons"></i>Empleados</a></li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-pen p-1 icons"></i>Atributos Produc.</a>
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarScrollingDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-pen p-1 icons"></i>Atributos Produc.</a>
     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown1">
         <li><a href="unidades.php" class="dropdown-item">Unidades</a></li>
         <li><a href="extremidades.php" class="dropdown-item">Extremidades</a></li>
@@ -16,7 +16,7 @@
     </ul>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-shopping-bag p-1 icons"></i>Productos</a>
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarScrollingDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-shopping-bag p-1 icons"></i>Productos</a>
     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown2">
         <li><a href="tuberias.php" class="dropdown-item">Tuberias</a></li>
         <li><a href="conexiones.php" class="dropdown-item">Conexiones</a></li>
@@ -28,14 +28,14 @@
     </ul>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-dolly p-1 icons"></i>Inventario</a>
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarScrollingDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-dolly p-1 icons"></i>Inventario</a>
     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown3">
         <li><a href="entradas.php" class="dropdown-item">Entradas</a></li>
         <li><a href="salidas.php" class="dropdown-item">Salidas</a></li>
     </ul>
 </li>
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-shopping-bag p-1 icons"></i>Facturación</a>
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarScrollingDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-shopping-bag p-1 icons"></i>Facturación</a>
     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown4">
         <li><a href="facturas_servicio.php" class="dropdown-item">Facturación servicios</a></li>
         <li><a href="facturas_compra.php" class="dropdown-item">Facturación compras</a></li>

@@ -108,7 +108,7 @@
                     $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
                     break;
             }*/
-            $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+            $sentencia = 'SELECT * FROM servicio s WHERE s.servicio LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);

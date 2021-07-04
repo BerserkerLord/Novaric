@@ -29,7 +29,7 @@
                 <td><?=$factura_servicio['estatus_factura']?></td>
                 <td><?='$' . $factura_servicio['total']?></td>
                 <td>
-                    <a href="facturas_servicio.php?action=generar_pdf&id_factura=<?=$factura_servicio['id_factura']?>" class="btn btn-outline-secondary">
+                    <a href="factura_serviciopdf.php?id_factura=<?=$factura_servicio['id_factura']?>" target="_blank" class="btn btn-outline-secondary">
                         <i class="fa fa-eye p-1 icons"></i>
                     </a>
                     <a href="facturas_servicio.php?action=ver_estatus&id_factura=<?=$factura_servicio['id_factura']?>&tipo=servicio" class="btn btn-outline-primary">

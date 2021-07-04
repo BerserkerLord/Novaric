@@ -36,7 +36,7 @@
         <?php foreach($datos as $key => $tuberia): ?>
             <tr>
                 <td>
-                    <img src="<?php echo (isset($tuberia['fotografia']))? '../archivos/'.$tuberia['fotografia']: '../archivos/default.jpg'; ?>" alt="foto tuberia" class="rounded img-fluid" height="75px" width="75px">
+                    <img src="<?php echo (isset($tuberia['fotografia']))? '../archivos/'.$tuberia['fotografia']: '../archivos/default.jpg'; ?>" alt="foto tuberia" class="rounded img-fluid" height="75" width="75">
                 </td>
                 <td><?=$tuberia['codigo_producto']?></td>
                 <td><?=$tuberia['producto']?></td>

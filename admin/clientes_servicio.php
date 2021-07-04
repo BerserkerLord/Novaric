@@ -20,12 +20,14 @@
                 $cliente_servicio['amaterno'], $cliente_servicio['email'], $cliente_servicio['telefono'],
                 $cliente_servicio['domicilio']);
             $datos = $clientes_servicio -> read();
+            include('views/alert.php');
             include('views/clientes_servicio/index.php');
             break;
         case 'eliminar':
             $rfc = $_GET['rfc'];
             $resultado = $clientes_servicio -> delete($rfc);
             $datos = $clientes_servicio -> read();
+            include('views/alert.php');
             include('views/clientes_servicio/index.php');
             break;
         case 'ver':
@@ -39,6 +41,7 @@
                 $cliente_servicio['amaterno'], $cliente_servicio['email'], $cliente_servicio['telefono'],
                 $cliente_servicio['domicilio']);
             $datos = $clientes_servicio -> read();
+            include('views/alert.php');
             include('views/clientes_servicio/index.php');
             break;
         default:

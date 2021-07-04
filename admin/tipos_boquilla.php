@@ -1,7 +1,10 @@
 <?php
     include('controllers/productos/caracteristicas/tipos_boquilla.controller.php');
+    $ptos = array();
+    array_push($ptos, 'Administrador');
+    array_push($ptos, 'Encargado de Almacen');
     $sistema = New Sistema;
-    $sistema -> verificarPuesto('Encargado de Almacen');
+    $sistema -> verificarPuesto($ptos);
     $tipos_boquilla = new TipoBoquilla;
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
     include('views/sidebar_navigation.php');

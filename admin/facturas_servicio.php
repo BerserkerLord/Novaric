@@ -20,9 +20,10 @@
     {
         case 'guardar_factura':
             $factura_servicio = $_POST['factura_servicio'];
-            $factura_servicios -> createFacturaServicio($factura_servicio['rfc'], $factura_servicio['descripcion'], $factura_servicio['domicilio'],
+            $resultado = $factura_servicios -> createFacturaServicio($factura_servicio['rfc'], $factura_servicio['descripcion'], $factura_servicio['domicilio'],
                                                         $factura_servicio['id_servicio'], $factura_servicio['monto']);
             $datos = $factura_servicios -> readFactura();
+            include('views/alert.php');
             break;
         case 'ver_estatus':
             $id_factura = $_GET['id_factura'];
@@ -35,19 +36,15 @@
             break;
         case 'guardar_servicio':
             $info = $_POST['factura_servicio'];
-            $factura_servicios -> insertServicio($info['id_factura_servicio'], $info['id_servicio'], $info['monto']);
+            $resultado = $factura_servicios -> insertServicio($info['id_factura_servicio'], $info['id_servicio'], $info['monto']);
             $datos = $factura_servicios -> readFactura();
+            include('views/alert.php');
             break;
         case 'actualizar_estatus':
             $estatus = $_POST['factura'];
             $resultado = $factura_servicios -> changeStatus($estatus['id_factura'], $estatus['id_estatus_factura']);
             $datos = $factura_servicios -> readFactura();
-            break;
-        case 'generar_pdf':
-            $id_factura = $_GET['id_factura'];
-            $servicio = $factura_servicios -> readServiciosFactura($id_factura);
-            $cliente = $factura_servicios -> readClienteServicio($id_factura);
-            $factura = $factura_servicios -> readFacturaServicio($id_factura);
+            include('views/alert.php');
             break;
         default:
             $_GET['action'] = 'leer';
