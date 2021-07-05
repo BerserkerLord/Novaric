@@ -12,6 +12,9 @@
         <link href="../css/fontawesome/css/all.css" rel="stylesheet">
         <link href="../css/features.css" rel="stylesheet">
         <script src="../css/bootstrap/js/bootstrap.js"></script>
+        <link rel="stylesheet" href="../css/chart4php/lib/js/jquery.min.js">
+        <script src="../css/chart4php/lib/js/jquery.min.js"></script>
+        <script src="../css/chart4php/lib/js/chartphp.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-success">

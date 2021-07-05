@@ -50,8 +50,8 @@
     </table>
     <nav>
         <ul class="pagination">
-            <?php for($i = 0, $k = 1; $i < $empleados -> total(); $i+=5, $k++): ?>
-                <li class="page-item"><a class="page-link" href="empleados.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=5"><?php echo ($k); ?></a></li>
+            <?php for($i = 0, $k = 1; $i < $empleados -> total(); $i+=3, $k++): ?>
+                <li class="page-item"><a class="page-link" href="empleados.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=3"><?php echo ($k); ?></a></li>
             <?php endfor; ?>
         </ul>
     </nav>

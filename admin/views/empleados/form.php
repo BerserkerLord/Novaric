@@ -31,14 +31,6 @@
         </div>
 
         <div class="col-md-4">
-            <label class="form-label">Dirección</label>
-            <textarea name ="empleado[direccion]" class="form-control" id="txaDireccion" rows="3" required><?php echo($_GET['action'] == 'ver')?$datos[0]['direccion']:'';?></textarea>
-            <div class="invalid-feedback">
-                Llenar este campo por favor.
-            </div>
-        </div>
-
-        <div class="col-md-4">
             <label class="form-label">Correo</label>
             <input type="email" name="empleado[correo]" value='<?php echo($_GET['action'] == 'ver')?$datos[0]['correo']:''; ?>' class="form-control" id="txtCorreo" required>
             <div class="invalid-feedback">
@@ -46,9 +38,23 @@
             </div>
         </div>
 
+        <?php
+            if($_GET['action'] != 'ver'){
+                ?>
         <div class="col-md-4">
             <label class="form-label">Contraseña</label>
             <input type="password" name="empleado[contrasenia]" value='<?php echo($_GET['action'] == 'ver')?$datos[0]['contrasenia']:''; ?>' class="form-control" id="txtContrasenia" required>
+            <div class="invalid-feedback">
+                Llenar este campo por favor.
+            </div>
+        </div>
+            <?php
+            }
+        ?>
+
+        <div class="col-md-4">
+            <label class="form-label">Dirección</label>
+            <textarea name ="empleado[direccion]" class="form-control" id="txaDireccion" rows="3" required><?php echo($_GET['action'] == 'ver')?$datos[0]['direccion']:'';?></textarea>
             <div class="invalid-feedback">
                 Llenar este campo por favor.
             </div>

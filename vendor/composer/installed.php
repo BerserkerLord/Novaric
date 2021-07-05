@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'b32d34c7a52a43604aaf916c9a1e42d1949c258b',
+    'reference' => 'a24a9aa9db74dbddfc0f8386c3de9f2ba938dbf1',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,16 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'b32d34c7a52a43604aaf916c9a1e42d1949c258b',
+      'reference' => 'a24a9aa9db74dbddfc0f8386c3de9f2ba938dbf1',
+    ),
+    'codeguy/upload' => 
+    array (
+      'pretty_version' => '1.3.2',
+      'version' => '1.3.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '6a9e5e1fb58d65346d0e557db2d46fb25efd3e37',
     ),
     'dompdf/dompdf' => 
     array (

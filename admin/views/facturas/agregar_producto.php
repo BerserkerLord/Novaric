@@ -1,14 +1,14 @@
 <div class="ps-5 pe-5 pb-5 my-container active-cont">
     <h3 class="display-6">Agregar producto a factura</h3>
-    <form action="facturas_compra.php?action=guardar_producto" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+    <form action=<?php echo ($_GET['action'] == 'agregar_producto_compra')?"facturas_compra.php?action=guardar_producto":"facturas_venta.php?action=guardar_producto" ?> method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
         <div class="col-md-4">
             <label class="form-label">No. factura</label>
-            <input type="text" class="form-control" name='factura_compra[id_factura]' value='<?php echo $id_factura ?>' readonly/>
+            <input type="text" class="form-control" name=<?php echo ($_GET['action'] == 'agregar_producto_compra')?"factura_compra[id_factura]":"factura_venta[id_factura]" ?> value='<?php echo $id_factura ?>' readonly/>
         </div>
 
         <div class="col-md-4">
             <label class="form-label">Producto</label>
-            <select name="factura_compra[codigo_producto]" class="form-control" id="slctproducto" required>
+            <select name=<?php echo ($_GET['action'] == 'agregar_producto_compra')?"factura_compra[codigo_producto]":"factura_venta[codigo_producto]" ?> class="form-control" id="slctproducto" required>
                 <?php
                 echo "<option disabled selected value> -- Selecciona una opción --</option>";
                 foreach($productos as $key => $producto):?>
@@ -22,7 +22,7 @@
 
         <div class="col-md-4">
             <label class="form-label">Cantidad</label>
-            <input type="text" name="factura_compra[cantidad]" class="form-control" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
+            <input type="text" name=<?php echo ($_GET['action'] == 'agregar_producto_compra')?"factura_compra[cantidad]":"factura_venta[cantidad]" ?> class="form-control" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
             <div class="invalid-feedback">
                 Llenar este campo por favor o poner el formato adecuado.
             </div>

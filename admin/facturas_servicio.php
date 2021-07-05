@@ -1,7 +1,7 @@
 <?php
     include('controllers/facturas/factura_servicio.controller.php');
     include('controllers/servicios.controller.php');
-    include('controllers/clientes_servicio.controller.php');
+    include('controllers/clientes.controller.php');
     $ptos = array();
     array_push($ptos, 'Administrador');
     array_push($ptos, 'Contador');
@@ -9,7 +9,7 @@
     $sistema -> verificarPuesto($ptos);
     $factura_servicios = new FacturaServicio;
     $servicio = new Servicio;
-    $cliente = new ClienteServicio;
+    $cliente = new Cliente;
     $clientes = $cliente -> read();
     $estatuses = $factura_servicios -> readEstatuses();
     $servicios = $servicio -> read();
@@ -42,7 +42,7 @@
             break;
         case 'actualizar_estatus':
             $estatus = $_POST['factura'];
-            $resultado = $factura_servicios -> changeStatus($estatus['id_factura'], $estatus['id_estatus_factura']);
+            $resultado = $factura_servicios -> changeStatusServicio($estatus['id_factura'], $estatus['id_estatus_factura']);
             $datos = $factura_servicios -> readFactura();
             include('views/alert.php');
             break;

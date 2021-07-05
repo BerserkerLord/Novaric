@@ -36,7 +36,7 @@
             $empleado = $_POST['empleado'];
             $resultado = $empleados -> update($empleado['rfc'], $empleado['nombre'], $empleado['apaterno'], $empleado['amaterno'],
                                               $empleado['direccion'], null, $empleado['correo'],
-                                              $empleado['contrasenia'],$empleado['id_puesto']);
+                                              $empleado['id_puesto']);
             $datos = $empleados -> read();
             include('views/alert.php');
             break;

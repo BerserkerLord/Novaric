@@ -28,10 +28,10 @@
             $id_factura = $_GET['id_factura'];
             $datos = $factura_compras -> readOneFactura($id_factura);
             break;
-        case 'agregar_producto':
+        case 'agregar_producto_compra':
             $id_factura = $_GET['id_factura'];
-            $productos = $producto -> readProductosDisponibles($id_factura);
-            include('views/facturas/facturas_compras/agregar_producto.php');
+            $productos = $producto -> readProductosDisponiblesCompra($id_factura);
+            include('views/facturas/agregar_producto.php');
             break;
         case 'guardar_producto':
             $info = $_POST['factura_compra'];
@@ -41,7 +41,7 @@
             break;
         case 'actualizar_estatus':
             $estatus = $_POST['factura'];
-            $resultado = $factura_compras -> changeStatus($estatus['id_factura'], $estatus['id_estatus_factura']);
+            $resultado = $factura_compras -> changeStatusCompra($estatus['id_factura'], $estatus['id_estatus_factura']);
             $datos = $factura_compras -> readFactura();
             include('views/alert.php');
             break;
@@ -49,7 +49,7 @@
             $_GET['action'] = 'leer';
             $datos = $factura_compras -> readFactura();
     }
-    if($_GET['action'] != 'agregar_producto'){
+    if($_GET['action'] != 'agregar_producto_compra'){
         include('views/facturas/facturas_compras/index.php');
         include('views/facturas/cambiar_estatus.php');
         include('views/facturas/facturas_compras/form.php');

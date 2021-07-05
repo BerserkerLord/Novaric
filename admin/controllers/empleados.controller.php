@@ -56,7 +56,7 @@
         {
             $busqueda = (isset($_GET['busqueda']))?$_GET['busqueda']:'';
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'e.nombre';
-            $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
+            $limite = (isset($_GET['limite']))?$_GET['limite']:'3';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             $dbh = $this->connect();
 
@@ -113,21 +113,21 @@
          *        String @id_pu recibe el id del puesto del empleado
          * Return Arreglo con informacion de exito al momento de hacer la operación
          */
-        function update($errefece, $nom, $apa, $ama, $dir, $usu, $corr, $con, $id_pu)
+        function update($errefece, $nom, $apa, $ama, $dir, $usu, $corr, $id_pu)
         {
             $dbh = $this->connect();
             $foto = $this -> guardarFotografia();
             try {
                 if($foto){
                     $sentencia = 'UPDATE empleado SET nombre = :nombre, apaterno = :apaterno, amaterno = :amaterno,
-                          direccion = :direccion, usuario = :usuario, correo = :correo, contrasenia = :contrasenia,
+                          direccion = :direccion, usuario = :usuario, correo = :correo, 
                           fotografia = :fotografia, id_puesto = :id_puesto WHERE rfc = :rfc';
                     $stmt = $dbh -> prepare($sentencia);
                     $stmt -> bindParam(":fotografia", $foto, PDO::PARAM_STR);
                 }
                 else{
                     $sentencia = 'UPDATE empleado SET nombre = :nombre, apaterno = :apaterno, amaterno = :amaterno,
-                          direccion = :direccion, usuario = :usuario, correo = :correo, contrasenia = :contrasenia,
+                          direccion = :direccion, usuario = :usuario, correo = :correo, 
                           id_puesto = :id_puesto WHERE rfc = :rfc';
                     $stmt = $dbh -> prepare($sentencia);
                 }
@@ -137,7 +137,6 @@
                 $stmt->bindParam(':direccion', $dir, PDO::PARAM_STR);
                 $stmt->bindParam(':usuario', $usu, PDO::PARAM_STR);
                 $stmt->bindParam(':correo', $corr, PDO::PARAM_STR);
-                $stmt->bindParam(':contrasenia', $con, PDO::PARAM_STR);
                 $stmt->bindParam(':id_puesto', $id_pu, PDO::PARAM_INT);;
                 $stmt->bindParam(':rfc', $errefece, PDO::PARAM_STR);
                 $stmt->execute();

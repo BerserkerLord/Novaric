@@ -40,7 +40,7 @@
             $dbh = $this -> Connect();
             $busqueda = (isset($_GET['busqueda']))?$_GET['busqueda']:'';
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'p.puesto';
-            $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
+            $limite = (isset($_GET['limite']))?$_GET['limite']:'3';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             /*switch($_SESSION['engine']){
                 case 'mariadb':

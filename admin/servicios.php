@@ -35,7 +35,6 @@
         default:
             $_GET['action'] = 'leer';
             $datos = $servicios -> read();
-
     }
     include('views/servicios/index.php');
     include('views/servicios/form.php');

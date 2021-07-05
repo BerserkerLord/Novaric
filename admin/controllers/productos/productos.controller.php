@@ -152,15 +152,34 @@
         }
 
       /*
-       * Método para extrater los productos a los cuales una factura puede seleccionar
+       * Método para extrater los productos a los cuales una factura de compra puede seleccionar
        * Params Integer @id_factura el id de la factura seleccionada
        * Return Array con los productos disponibles para esa factura
        */
-        function readProductosDisponibles($id_factura){
+        function readProductosDisponiblesCompra($id_factura){
             $dbh = $this -> Connect();
             $query = "SELECT codigo_producto, producto FROM producto 
                       WHERE codigo_producto NOT IN(SELECT p.codigo_producto FROM factura f 
-                                                       INNER JOIN detalle_factura_producto AS dpf ON f.id_factura = dpf.id_factura
+                                                       INNER JOIN detalle_factura_producto_compra AS dpf ON f.id_factura = dpf.id_factura
+                                                       INNER JOIN producto p ON p.codigo_producto = dpf.codigo_producto 
+                                                   WHERE f.id_factura = :id_factura)";
+            $stmt = $dbh -> prepare($query);
+            $stmt -> bindParam(":id_factura", $id_factura, PDO::PARAM_INT);
+            $stmt -> execute();
+            $fila = $stmt -> fetchAll();
+            return $fila;
+        }
+
+        /*
+       * Método para extrater los productos a los cuales una factura de venta puede seleccionar
+       * Params Integer @id_factura el id de la factura seleccionada
+       * Return Array con los productos disponibles para esa factura
+       */
+        function readProductosDisponiblesVenta($id_factura){
+            $dbh = $this -> Connect();
+            $query = "SELECT codigo_producto, producto FROM producto 
+                      WHERE codigo_producto NOT IN(SELECT p.codigo_producto FROM factura f 
+                                                       INNER JOIN detalle_factura_producto_venta AS dpf ON f.id_factura = dpf.id_factura
                                                        INNER JOIN producto p ON p.codigo_producto = dpf.codigo_producto 
                                                    WHERE f.id_factura = :id_factura)";
             $stmt = $dbh -> prepare($query);
@@ -183,19 +202,19 @@
             /*switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
-                                      INNER JOIN detalle_factura_producto AS dfp ON dfp.id_factura = f.id_factura
+                                      INNER JOIN detalle_factura_producto_compra AS dfp ON dfp.id_factura = f.id_factura
                                       INNER JOIN producto AS p USING(codigo_producto)
                                   WHERE p.codigo_producto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
                     $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
-                                      INNER JOIN detalle_factura_producto AS dfp ON dfp.id_factura = f.id_factura
+                                      INNER JOIN detalle_factura_producto_compra AS dfp ON dfp.id_factura = f.id_factura
                                       INNER JOIN producto AS p USING(codigo_producto)
                                   WHERE p.codigo_producto ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
             }*/
             $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
-                                INNER JOIN detalle_factura_producto AS dfp ON dfp.id_factura = f.id_factura
+                                INNER JOIN detalle_factura_producto_compra AS dfp ON dfp.id_factura = f.id_factura
                                 INNER JOIN producto AS p USING(codigo_producto)
                           WHERE p.codigo_producto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);

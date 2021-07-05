@@ -4,7 +4,7 @@
     /*
     * Clase principal para clientes de servicios
     */
-    class ClienteServicio extends Sistema{
+    class Cliente extends Sistema{
 
        /*
         * Método para insertar un registro de clientes de servicios a la base de datos Novaric
@@ -20,7 +20,7 @@
         function create($rfc, $nombre, $apaterno, $amaterno, $email, $telefono, $domicilio){
             $dbh = $this -> Connect();
             try{
-                $sentencia = "INSERT INTO cliente_servicio(rfc, nombre, apaterno, amaterno, email, telefono, domicilio)
+                $sentencia = "INSERT INTO cliente(rfc, nombre, apaterno, amaterno, email, telefono, domicilio)
                                                 VALUES(:rfc, :nombre, :apaterno, :amaterno, :email, :telefono, :domicilio)";
                 $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(":rfc", $rfc, PDO::PARAM_STR);
@@ -55,7 +55,7 @@
         function update($rfc, $nombre, $apaterno, $amaterno, $email, $telefono, $domicilio){
             $dbh = $this -> Connect();
             try {
-                $sentencia = "UPDATE cliente_servicio SET nombre = :nombre, apaterno = :apaterno, amaterno = :amaterno, email = :email, telefono = :telefono,
+                $sentencia = "UPDATE cliente SET nombre = :nombre, apaterno = :apaterno, amaterno = :amaterno, email = :email, telefono = :telefono,
                                       domicilio = :domicilio WHERE rfc = :rfc";
                 $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(":nombre", $nombre, PDO::PARAM_STR);
@@ -84,7 +84,7 @@
         function delete($rfc){
             $dbh = $this -> Connect();
             try {
-                $stmt = $dbh -> prepare('DELETE FROM cliente_servicio WHERE rfc = :rfc');
+                $stmt = $dbh -> prepare('DELETE FROM cliente WHERE rfc = :rfc');
                 $stmt -> bindParam(":rfc", $rfc, PDO::PARAM_STR);
                 $stmt -> execute();
                 $msg['msg'] = 'Cliente eliminado correctamente.';
@@ -109,13 +109,13 @@
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             /*switch($_SESSION['engine']){
                 case 'mariadb':
-                    $sentencia = 'SELECT * FROM cliente_servicio cs WHERE cs.rfc LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM cliente cs WHERE cs.rfc LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
-                    $sentencia = 'SELECT * FROM cliente_servicio cs WHERE cs.rfc ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM cliente cs WHERE cs.rfc ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
             }*/
-            $sentencia = 'SELECT * FROM cliente_servicio cs WHERE cs.rfc LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $sentencia = 'SELECT * FROM cliente cs WHERE cs.rfc LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
@@ -134,7 +134,7 @@
         function readOne($rfc)
         {
             $dbh = $this->connect();
-            $sentencia='SELECT * FROM cliente_servicio WHERE rfc = :rfc';
+            $sentencia='SELECT * FROM cliente WHERE rfc = :rfc';
             $stmt = $dbh->prepare($sentencia);
             $stmt->bindParam(':rfc', $rfc, PDO::PARAM_STR);
             $stmt->execute();
@@ -144,7 +144,7 @@
 
         function readAll(){
             $dbh = $this -> Connect();
-            $sentencia = 'SELECT * FROM cliente_servicio cs';
+            $sentencia = 'SELECT * FROM cliente cs';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> execute();
             $rows = $stmt -> fetchAll();
@@ -157,7 +157,7 @@
        */
         function total(){
             $dbh = $this -> Connect();
-            $sentencia = "SELECT COUNT(rfc) AS total FROM cliente_servicio";
+            $sentencia = "SELECT COUNT(rfc) AS total FROM cliente";
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> execute();
             $rows = $stmt -> fetchAll();

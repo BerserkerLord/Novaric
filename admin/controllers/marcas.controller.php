@@ -1,5 +1,10 @@
 <?php
     require_once('sistema.controller.php');
+    use Upload\File;
+    use Upload\Storage\FileSystem;
+    use Upload\Validation\Size;
+    use Upload\Validation\Mimetype;
+    use Upload\Exception\UploadException;
 
     /*
      * Clase principal para marcas
@@ -15,7 +20,7 @@
         {
             $dbh = $this -> connect();
             try {
-                $foto = $this -> guardarFotografia();
+                $foto = $this -> guardarFotografia($mar);
                 $sentencia = "INSERT INTO marca(marca, fotografia) VALUES(:marca, :fotografia)";
                 $stmt = $dbh -> prepare($sentencia);
                 $stmt -> bindParam(':marca', $mar, PDO::PARAM_STR);
@@ -151,7 +156,7 @@
        * Método para subir una imagen de una marca
        * Return Booleano señalando si la imagen es valida de acuerdo al formato o no
        */
-        function guardarFotografia()
+        /*function guardarFotografia()
         {
             $archivo = $_FILES['fotografia'];
             $tipos = array('image/jpeg', 'image/png', 'image/gif');
@@ -164,7 +169,7 @@
                     }
                 }
             }
-        }
+        }*/
 
       /*
        * Método para extrater total de marcas
@@ -177,6 +182,34 @@
             $stmt -> execute();
             $rows = $stmt -> fetchAll();
             return $rows[0]['total'];
+        }
+
+
+        function guardarFotografia()
+        {
+            $storage = new FileSystem('../archivos/marcas');
+            $file = new File('fotografia', $storage);
+
+            $new_filename = MD5(uniqid());
+            $file -> setName($new_filename);
+
+            $file -> addValidations(array(
+                new Size('5M'),
+                new Mimetype(array('image/png', 'image/jpeg', 'image/jpg'))
+            ));
+            if($_FILES['fotografia']['error'] == 0)
+            {
+                try {
+                    $file -> upload();
+                    $filename = $new_filename . '.' . $file->getExtension();
+                    return $filename;
+                } catch (UploadException $e) {
+                    $errors = $file->getErrors();
+                    //print_r($errors);
+                    return false;
+                }
+            }
+            return false;
         }
     }
 ?>

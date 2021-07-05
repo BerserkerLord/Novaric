@@ -1,4 +1,3 @@
-<li class="nav-item"><a href="dashboard.php" class="nav-link active"><i class="fa fa-chart-area p-1 icons"></i>Métricas</a></li>
 <li class="nav-item"><a href="marcas.php" class="nav-link active"><i class="fa fa-trademark p-1 icons"></i>Marcas</a></li>
 <li class="nav-item"><a href="proveedores.php" class="nav-link active"><i class="fa fa-truck p-1 icons"></i>Proveedores</a></li>
 <li class="nav-item"><a href="servicios.php" class="nav-link active"><i class="fa fa-seedling p-1 icons"></i>Servicios</a></li>
@@ -40,6 +39,6 @@
         <li><a href="facturas_servicio.php" class="dropdown-item">Facturación servicios</a></li>
         <li><a href="facturas_compra.php" class="dropdown-item">Facturación compras</a></li>
         <li><a href="facturas_venta.php" class="dropdown-item">Facturación ventas</a></li>
-        <li><a href="clientes_servicio.php" class="dropdown-item">Clientes de servicios</a></li>
+        <li><a href="clientes.php" class="dropdown-item">Clientes</a></li>
     </ul>
 </li>

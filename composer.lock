@@ -4,8 +4,59 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "921df903d94ed4b1efada700d7684ff8",
+    "content-hash": "20792d94dcfe5dfa7c0e19cd61ff790a",
     "packages": [
+        {
+            "name": "codeguy/upload",
+            "version": "1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brandonsavage/Upload.git",
+                "reference": "6a9e5e1fb58d65346d0e557db2d46fb25efd3e37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brandonsavage/Upload/zipball/6a9e5e1fb58d65346d0e557db2d46fb25efd3e37",
+                "reference": "6a9e5e1fb58d65346d0e557db2d46fb25efd3e37",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Upload": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Lockhart",
+                    "email": "info@joshlockhart.com",
+                    "homepage": "https://github.com/codeguy/"
+                }
+            ],
+            "description": "Handle file uploads with extensible validation and storage strategies",
+            "homepage": "http://github.com/codeguy/Upload",
+            "keywords": [
+                "file",
+                "upload",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/brandonsavage/Upload/issues",
+                "source": "https://github.com/brandonsavage/Upload/tree/1.3.2"
+            },
+            "time": "2013-07-07T17:01:41+00:00"
+        },
         {
             "name": "dompdf/dompdf",
             "version": "v1.0.2",

@@ -45,6 +45,13 @@ class ComposerStaticInit4fac645486f1117d82fee8c4ad24b1d8
     );
 
     public static $prefixesPsr0 = array (
+        'U' => 
+        array (
+            'Upload' => 
+            array (
+                0 => __DIR__ . '/..' . '/codeguy/upload/src',
+            ),
+        ),
         'S' => 
         array (
             'Sabberworm\\CSS' => 
