@@ -1,5 +1,14 @@
 <?php
     require_once('controllers/sistema.controller.php');
+    use Upload\File;
+    use Upload\Storage\FileSystem;
+    use Upload\Validation\Size;
+    use Upload\Validation\Mimetype;
+    use Upload\Exception\UploadException;
+
+    /*
+     * Clase principal para productos
+     */
     class Producto extends Sistema
     {
 
@@ -56,37 +65,6 @@
             return $filas;
         }
 
-        function updateProducto($cod_pro, $pro, $cos, $desc, $id_mar, $id_uni)
-        {
-            $pre = $this -> calcularPrecio($cos);
-            $pre_pub = $this -> calcularPrecioPublico($pre);
-            $dbh = $this -> connect();
-            $foto = $this -> guardarFotografia();
-            if($foto){
-                $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
-                                              descripcion = :descripcion, fotografia = :fotografia, 
-                                              id_marca = :id_marca, id_unidad = :id_unidad 
-                              WHERE codigo_producto = :codigo_producto';
-                $stmt = $dbh -> prepare($sentencia);
-                $stmt -> bindParam(':fotografia', $foto, PDO::PARAM_STR);
-            }
-            else{
-                $sentencia = 'UPDATE producto SET producto = :producto, costo = :costo, precio = :precio, precio_publico = :precio_publico, 
-                              descripcion = :descripcion, id_marca = :id_marca, id_unidad = :id_unidad 
-                              WHERE codigo_producto = :codigo_producto';
-                $stmt = $dbh -> prepare($sentencia);
-            }
-            $stmt -> bindParam(':producto', $pro, PDO::PARAM_STR);
-            $stmt -> bindParam(':costo', $cos, PDO::PARAM_STR);
-            $stmt -> bindParam(':precio', $pre, PDO::PARAM_STR);
-            $stmt -> bindParam(':precio_publico',$pre_pub, PDO::PARAM_STR);
-            $stmt -> bindParam(':descripcion', $desc, PDO::PARAM_STR);
-            $stmt -> bindParam(':id_unidad', $id_uni, PDO::PARAM_INT);
-            $stmt -> bindParam(':id_marca', $id_mar, PDO::PARAM_INT);
-            $stmt -> bindParam(':codigo_producto', $cod_pro, PDO::PARAM_STR);
-            return $stmt;
-        }
-
        /*
         * Metodo para elimina el registro de un producto
         * Params Integer @id_un recibe el id de una unidad
@@ -123,17 +101,29 @@
        */
         function guardarFotografia()
         {
-            $archivo = $_FILES['fotografia'];
-            $tipos = array('image/jpeg', 'image/png', 'image/gif');
-            if ($archivo['error'] == 0) {
-                if ($archivo['size'] <= 2097152) {
-                    $a = explode('/', $archivo['type']);
-                    $nueva_imagen = MD5(time()) . '.' . $a[1];
-                    if (move_uploaded_file($archivo['tmp_name'], '../archivos/' . $nueva_imagen)) {
-                        return $nueva_imagen;
-                    }
+            $storage = new FileSystem('../archivos/');
+            $file = new File('fotografia', $storage);
+
+            $new_filename = MD5(uniqid());
+            $file -> setName($new_filename);
+
+            $file -> addValidations(array(
+                new Size('5M'),
+                new Mimetype(array('image/png', 'image/jpeg', 'image/jpg'))
+            ));
+            if($_FILES['fotografia']['error'] == 0)
+            {
+                try {
+                    $file -> upload();
+                    $filename = $new_filename . '.' . $file->getExtension();
+                    return $filename;
+                } catch (UploadException $e) {
+                    $errors = $file->getErrors();
+                    //print_r($errors);
+                    return false;
                 }
             }
+            return false;
         }
 
       /*
@@ -199,23 +189,36 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'f.fecha';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'15';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
-            /*switch($_SESSION['engine']){
-                case 'mariadb':
-                    $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
-                                      INNER JOIN detalle_factura_producto_compra AS dfp ON dfp.id_factura = f.id_factura
-                                      INNER JOIN producto AS p USING(codigo_producto)
-                                  WHERE p.codigo_producto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
-                    break;
-                case 'postgresql':
-                    $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
-                                      INNER JOIN detalle_factura_producto_compra AS dfp ON dfp.id_factura = f.id_factura
-                                      INNER JOIN producto AS p USING(codigo_producto)
-                                  WHERE p.codigo_producto ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
-                    break;
-            }*/
-            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad FROM factura AS f
+            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad, es.estatus_factura AS estatus_factura FROM factura AS f
                                 INNER JOIN detalle_factura_producto_compra AS dfp ON dfp.id_factura = f.id_factura
                                 INNER JOIN producto AS p USING(codigo_producto)
+                                INNER JOIN estatus_factura AS es USING(id_estatus_factura)
+                          WHERE p.codigo_producto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            $stmt = $dbh -> prepare($sentencia);
+            $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
+            $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
+            $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
+            $stmt -> bindValue(":limite", $limite, PDO::PARAM_INT);
+            $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
+            $stmt -> execute();
+            $filas = $stmt -> fetchAll();
+            return $filas;
+        }
+
+        /*
+        * Metodo que extrae todas las salidas de producto de la base de datos
+        * Return Array con todas las entradas
+        */
+        function readSalidas(){
+            $dbh = $this -> connect();
+            $busqueda = (isset($_GET['busqueda']))?$_GET['busqueda']:'';
+            $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'f.fecha';
+            $limite = (isset($_GET['limite']))?$_GET['limite']:'15';
+            $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
+            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, p.codigo_producto AS codigo_producto, p.producto AS producto, dfp.cantidad AS cantidad, es.estatus_factura AS estatus_factura  FROM factura AS f
+                                INNER JOIN detalle_factura_producto_venta AS dfp ON dfp.id_factura = f.id_factura
+                                INNER JOIN producto AS p USING(codigo_producto)
+                                INNER JOIN estatus_factura AS es USING(id_estatus_factura)
                           WHERE p.codigo_producto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":desde", $desde, PDO::PARAM_INT);
@@ -240,6 +243,6 @@
         * Params Double @pre recible el precio de un producto
         * Return Double con el precio al público del producto
         */
-        function calcularPrecioPublico($pre){ return $pre; }
+        function calcularPrecioPublico($pre){ return ceil($pre / 10) * 10; }
     }
 ?>

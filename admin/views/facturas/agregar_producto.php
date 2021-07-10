@@ -1,6 +1,6 @@
 <div class="ps-5 pe-5 pb-5 my-container active-cont">
     <h3 class="display-6">Agregar producto a factura</h3>
-    <form action=<?php echo ($_GET['action'] == 'agregar_producto_compra')?"facturas_compra.php?action=guardar_producto":"facturas_venta.php?action=guardar_producto" ?> method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+    <form action='<?php echo ($_GET['action'] == "agregar_producto_compra")?"facturas_compra.php?action=guardar_producto":"facturas_venta.php?action=guardar_producto" ?>' method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
         <div class="col-md-4">
             <label class="form-label">No. factura</label>
             <input type="text" class="form-control" name=<?php echo ($_GET['action'] == 'agregar_producto_compra')?"factura_compra[id_factura]":"factura_venta[id_factura]" ?> value='<?php echo $id_factura ?>' readonly/>

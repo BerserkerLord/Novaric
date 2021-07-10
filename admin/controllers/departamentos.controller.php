@@ -41,7 +41,7 @@
             $ordenamiento = (isset($_GET['ordenamiento'])) ? $_GET['ordenamiento'] : 'd.departamento';
             $limite = (isset($_GET['limite'])) ? $_GET['limite'] : '3';
             $desde = (isset($_GET['desde'])) ? $_GET['desde'] : '0';
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT * FROM departamento AS d  
                                   WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
@@ -50,9 +50,9 @@
                     $sentencia = 'SELECT * FROM departamento AS d  
                                   WHERE d.departamento ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-            $sentencia = 'SELECT * FROM departamento AS d  
-                          WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            }
+            /*$sentencia = 'SELECT * FROM departamento AS d
+                          WHERE d.departamento LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde'*/;
             $stmt = $dbh->prepare($sentencia);
             $stmt->bindValue(":desde", $desde, PDO::PARAM_INT);
             $stmt->bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
@@ -249,7 +249,7 @@
         function extractOne($id_departamento)
         {
             $dbh = $this->Connect();
-            $sentencia = 'SELECT departamento FROM departamento WHERE id_departamento = :id_departamento';
+            $sentencia = 'SELECT departamento, id_departamento FROM departamento WHERE id_departamento = :id_departamento';
             $stmt = $dbh->prepare($sentencia);
             $stmt->bindParam(":id_departamento", $id_departamento, PDO::PARAM_INT);
             $stmt->execute();

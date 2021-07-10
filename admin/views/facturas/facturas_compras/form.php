@@ -1,5 +1,5 @@
 <div class="ps-5 pe-5 pb-5 my-container active-cont">
-    <h3 class="display-6">Nueva compra</compra></h3>
+    <h3 class="display-6">Nueva compra</h3>
     <form action="facturas_compra.php?action=guardar_factura" method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
         <div class="col-md-4">
             <label class="form-label">Producto</label>

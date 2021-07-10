@@ -42,21 +42,21 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'p.puesto';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'3';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT * FROM puesto p
                                     INNER JOIN departamento USING(id_departamento)
                                   WHERE p.puesto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
-                    $sentencia = SELECT * FROM puesto p
+                    $sentencia = 'SELECT * FROM puesto p
                                     INNER JOIN departamento USING(id_departamento)
                                  WHERE p.puesto ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-            $sentencia = 'SELECT * FROM puesto p 
+            }
+            /*$sentencia = 'SELECT * FROM puesto p
                               INNER JOIN departamento USING(id_departamento)
-                          WHERE p.puesto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                          WHERE p.puesto LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';*/
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);

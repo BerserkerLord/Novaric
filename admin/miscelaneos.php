@@ -11,8 +11,8 @@
     $marca = new Marca;
     $unidad = new Unidad;
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
-    $marcas = $marca -> read();
-    $unidades = $unidad -> read();
+    $marcas = $marca -> readAll();
+    $unidades = $unidad -> readAll();
     include('views/sidebar_navigation.php');
 
     switch($accion)
@@ -26,12 +26,14 @@
                 $miscelaneo['descripcion'], $miscelaneo['existencias'], $miscelaneo['id_marca'],
                 $miscelaneo['id_unidad']);
             $datos = $miscelaneos -> readMiscelaneo();
+            include('views/alert.php');
             include('views/productos/miscelaneos/index.php');
             break;
         case 'eliminar':
             $id_miscelaneo = $_GET['codigo_producto'];
             $resultado = $miscelaneos -> delete($id_miscelaneo, 'miscelaneo');
             $datos = $miscelaneos -> readMiscelaneo();
+            include('views/alert.php');
             include('views/productos/miscelaneos/index.php');
             break;
         case 'ver':
@@ -44,6 +46,7 @@
             $resultado = $miscelaneos -> updateMiscelaneo($miscelaneo['codigo_producto'], $miscelaneo['producto'], $miscelaneo['costo'],
                 $miscelaneo['descripcion'], $miscelaneo['id_marca'], $miscelaneo['id_unidad']);
             $datos = $miscelaneos -> readMiscelaneo();
+            include('views/alert.php');
             include('views/productos/miscelaneos/index.php');
             break;
         default:

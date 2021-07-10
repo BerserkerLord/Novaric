@@ -1,0 +1,16 @@
+.presentation{
+    padding: 3rem;
+}
+
+.main{
+    background-color: #e2e8ec
+}
+
+.servicios{
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+#texto_bannerMarcas{
+    text-align: center;
+}

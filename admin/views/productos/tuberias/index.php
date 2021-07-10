@@ -55,7 +55,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="10"><?="<b>" . "Descripción: " . "</b>" . $tuberia['descripcion']?></td>
+                <td colspan="9"><?="<b>" . "Descripción: " . "</b>" . $tuberia['descripcion']?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
@@ -93,3 +93,5 @@
         echo "Filtrando " . count($datos) . " de un total del " . $tuberias -> total('codigo_producto', 'tuberia') . " tuberias"
     ?>
 </div>
+
+

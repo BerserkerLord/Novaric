@@ -107,9 +107,9 @@
             $limite = (isset($_GET['limite']))?$_GET['limite']:'5';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
 
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
-                    $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.rfc AS rfc, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total FROM factura f
+                    $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.rfc AS rfc, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total, pro.razon_social AS razon_social FROM factura f
                                      INNER JOIN estatus_factura AS es USING(id_estatus_factura)
                                      INNER JOIN factura_compra AS fc USING(id_factura)
                                      INNER JOIN proveedor AS pro USING(rfc)
@@ -120,27 +120,17 @@
                                  ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
-                    $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.rfc AS rfc, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total FROM factura f
+                    $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.rfc AS rfc, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total, pro.razon_social AS razon_social FROM factura f
                                      INNER JOIN estatus_factura AS es USING(id_estatus_factura)
                                      INNER JOIN factura_compra AS fc USING(id_factura)
                                      INNER JOIN proveedor AS pro USING(rfc)
                                      INNER JOIN detalle_factura_producto_compra AS dfp ON fc.id_factura = dfp.id_factura
                                      INNER JOIN producto AS p USING(codigo_producto)
                                  WHERE pro.rfc ILIKE :busqueda
-                                 GROUP BY f.id_factura
+                                 GROUP BY f.id_factura, pro.razon_social, es.estatus_factura, pro.rfc
                                  ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-
-            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.razon_social AS razon_social, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total FROM factura f
-                                    INNER JOIN estatus_factura AS es USING(id_estatus_factura)
-                                    INNER JOIN factura_compra AS fc USING(id_factura)
-                                    INNER JOIN proveedor AS pro USING(rfc)
-                                    INNER JOIN detalle_factura_producto_compra AS dfp ON fc.id_factura = dfp.id_factura
-                                    INNER JOIN producto AS p USING(codigo_producto)
-                              WHERE pro.rfc LIKE :busqueda
-                              GROUP BY f.id_factura
-                              ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            }
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
@@ -159,7 +149,7 @@
         function readOneFactura($id_factura)
         {
             $dbh = $this -> Connect();
-            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.razon_social AS razon_social, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total FROM factura f
+            $sentencia = 'SELECT f.id_factura AS id_factura, f.fecha AS fecha, pro.razon_social AS razon_social, es.estatus_factura AS estatus_factura, SUM(dfp.cantidad * costo) AS total, f.id_estatus_factura AS id_estatus_factura, pro.rfc AS rfc FROM factura f
                                     INNER JOIN estatus_factura AS es USING(id_estatus_factura)
                                     INNER JOIN factura_compra AS fc USING(id_factura)
                                     INNER JOIN proveedor AS pro USING(rfc)
@@ -181,7 +171,7 @@
         */
         function readProductosFactura($id_factura){
             $dbh = $this -> Connect();
-            $sentencia = 'SELECT p.codigo_producto, p.producto, p.costo, dfp.cantidad FROM factura f
+            $sentencia = 'SELECT p.codigo_producto, p.producto, p.costo, dfp.cantidad, p.precio_publico AS precio_publico FROM factura f
                                     INNER JOIN detalle_factura_producto_compra AS dfp ON f.id_factura = dfp.id_factura
                                     INNER JOIN producto AS p ON dfp.codigo_producto = p.codigo_producto
                                     WHERE f.id_factura = :id_factura';
@@ -217,7 +207,10 @@
         */
         function readFacturaCompra($id_factura){
             $dbh = $this -> Connect();
-            $sentencia = 'SELECT * FROM factura WHERE id_factura = :id_factura';
+            $sentencia = 'SELECT * FROM factura
+                            INNER JOIN estatus_factura AS es USING(id_estatus_factura)
+                          WHERE id_factura = :id_factura
+                          GROUP BY id_factura';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":id_factura", $id_factura, PDO::PARAM_INT);
             $stmt -> execute();

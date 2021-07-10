@@ -1,5 +1,10 @@
 <?php
     require_once('sistema.controller.php');
+    use Upload\File;
+    use Upload\Storage\FileSystem;
+    use Upload\Validation\Size;
+    use Upload\Validation\Mimetype;
+    use Upload\Exception\UploadException;
 
     /*
     * Clase principal para servicios
@@ -100,15 +105,18 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'s.servicio';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'3';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
-                    $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM servicio s WHERE s.servicio LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
-                    $sentencia = 'SELECT * FROM proveedor p WHERE p.rfc ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                    $sentencia = 'SELECT * FROM servicio s WHERE s.servicio ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-            $sentencia = 'SELECT * FROM servicio s WHERE s.servicio LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+            }
+            if(!isset($_SESSION['engine'])){
+
+            }
+            //$sentencia = 'SELECT * FROM servicio s WHERE s.servicio LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
@@ -154,17 +162,29 @@
        */
         function guardarFotografia()
         {
-            $archivo = $_FILES['fotografia'];
-            $tipos = array('image/jpeg', 'image/png', 'image/gif');
-            if ($archivo['error'] == 0) {
-                if ($archivo['size'] <= 2097152) {
-                    $a = explode('/', $archivo['type']);
-                    $nueva_imagen = MD5(time()) . '.' . $a[1];
-                    if (move_uploaded_file($archivo['tmp_name'], '../archivos/' . $nueva_imagen)) {
-                        return $nueva_imagen;
-                    }
+            $storage = new FileSystem('../archivos');
+            $file = new File('fotografia', $storage);
+
+            $new_filename = MD5(uniqid());
+            $file -> setName($new_filename);
+
+            $file -> addValidations(array(
+                new Size('5M'),
+                new Mimetype(array('image/png', 'image/jpeg', 'image/jpg'))
+            ));
+            if($_FILES['fotografia']['error'] == 0)
+            {
+                try {
+                    $file -> upload();
+                    $filename = $new_filename . '.' . $file->getExtension();
+                    return $filename;
+                } catch (UploadException $e) {
+                    $errors = $file->getErrors();
+                    //print_r($errors);
+                    return false;
                 }
             }
+            return false;
         }
 
       /*

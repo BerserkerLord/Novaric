@@ -10,9 +10,9 @@
     $factura_servicios = new FacturaServicio;
     $servicio = new Servicio;
     $cliente = new Cliente;
-    $clientes = $cliente -> read();
+    $clientes = $cliente -> readAll();
     $estatuses = $factura_servicios -> readEstatuses();
-    $servicios = $servicio -> read();
+    $servicios = $servicio -> readAll();
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
     include('views/sidebar_navigation.php');
 

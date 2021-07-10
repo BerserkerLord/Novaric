@@ -112,11 +112,17 @@
                                                                 <table class="invoice">
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td>    ' . $cliente[0][1] . '<br>' . $cliente[0]['email'] . '<br>Factura #' . $factura[0]['id_factura'] . '<br>' . $factura[0]['fecha'] . '</td>
+                                                                            <td>' . $cliente[0][1] . '<br>' . $cliente[0]['email'] . '<br>Factura #' . $factura[0]['id_factura'] . '<br>' . $factura[0]['fecha'] . '<br>Estatus: ' . $factura[0]['estatus_factura'] . ' . <br>Descripción: ' . $factura[0]['descripcion'] . '. <br>Ubicación: ' . $factura[0]['domicilio'] . '</td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td>
                                                                                 <table class="invoice-items" cellpadding="0" cellspacing="0">
+                                                                                    <thead>
+                                                                                        <tr style="background-color: #e6eaee">
+                                                                                            <td>Servicio</td>
+                                                                                            <td class="line0 alignright">Monto</td>                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                        </tr>    
+                                                                                    </thead>
                                                                                     <tbody>';
                                                                                         $total = 0;
                                                                                         foreach ($servicio as $key => $servicios):
@@ -159,5 +165,5 @@
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4');
     $dompdf->render();
-    $dompdf->stream("codexworld", array("Attachment" => 0));
+    $dompdf->stream("Factura", array("Attachment" => 0));
 ?>

@@ -3,7 +3,7 @@
     include('controllers/departamentos.controller.php');
 $ptos = array();
 array_push($ptos, 'Administrador');
-array_push($ptos, 'RH');
+array_push($ptos, 'Director de Recursos Humanos');
 $sistema = New Sistema;
 $sistema -> verificarPuesto($ptos);
     $puestos = new  Puesto;

@@ -36,11 +36,10 @@
 
         <div class="col-md-2">
             <label class="form-label">Existencias</label>
-            <input type="text" name="tuberia[existencias]" value='<?php echo(isset($datos[0]['existencias']))?$datos[0]['existencias']:''; ?>' class="form-control" id="txtExistencias" <?php echo(isset($datos))?'disabled':'pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required'; ?>>
+            <input type="text" name="tuberia[existencias]" value='0' class="form-control" id="txtExistencias" readonly>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
-            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-2">

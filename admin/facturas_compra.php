@@ -10,7 +10,7 @@
     $factura_compras = new FacturaCompra;
     $producto = new Producto;
     $proveedor = new Proveedor();
-    $proveedores = $proveedor -> read();
+    $proveedores = $proveedor -> readAll();
     $estatuses = $factura_compras -> readEstatuses();
     $productos = $producto -> readAll('SELECT codigo_producto, producto, precio_publico FROM producto AS p');
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';

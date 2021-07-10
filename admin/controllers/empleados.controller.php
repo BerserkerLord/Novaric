@@ -1,5 +1,10 @@
 <?php
     include("sistema.controller.php");
+    use Upload\File;
+    use Upload\Storage\FileSystem;
+    use Upload\Validation\Size;
+    use Upload\Validation\Mimetype;
+    use Upload\Exception\UploadException;
    /*
     * Clase principal para empleados
     */
@@ -59,8 +64,7 @@
             $limite = (isset($_GET['limite']))?$_GET['limite']:'3';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
             $dbh = $this->connect();
-
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT * FROM empleado e
                                     INNER JOIN puesto USING(id_puesto)
@@ -71,11 +75,10 @@
                                     INNER JOIN puesto USING(id_puesto)
                                   WHERE e.rfc ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-
-            $sentencia = 'SELECT * FROM empleado e
+            }
+            /*$sentencia = 'SELECT * FROM empleado e
                               INNER JOIN puesto USING(id_puesto)
-                          WHERE e.rfc LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+                          WHERE e.rfc LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';*/
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);
@@ -159,6 +162,11 @@
         {
             $dbh = $this->connect();
             try {
+                if($_SESSION['rfc'] == $errefece){
+                    $msg['msg'] = 'Error al eliminar, no se puede eliminar al empleado con sesion activa.';
+                    $msg['status'] = 'danger';
+                    return $msg;
+                }
                 $sentencia = 'DELETE FROM empleado WHERE rfc = :rfc';
                 $stmt= $dbh->prepare($sentencia);
                 $stmt->bindParam(':rfc', $errefece, PDO::PARAM_STR);
@@ -179,17 +187,29 @@
        */
         function guardarFotografia()
         {
-            $archivo = $_FILES['fotografia'];
-            $tipos = array('image/jpeg', 'image/png', 'image/gif');
-            if ($archivo['error'] == 0) {
-                if ($archivo['size'] <= 2097152) {
-                    $a = explode('/', $archivo['type']);
-                    $nueva_imagen = MD5(time()) . '.' . $a[1];
-                    if (move_uploaded_file($archivo['tmp_name'], '../archivos/' . $nueva_imagen)) {
-                        return $nueva_imagen;
-                    }
+            $storage = new FileSystem('../archivos');
+            $file = new File('fotografia', $storage);
+
+            $new_filename = MD5(uniqid());
+            $file -> setName($new_filename);
+
+            $file -> addValidations(array(
+                new Size('5M'),
+                new Mimetype(array('image/png', 'image/jpeg', 'image/jpg'))
+            ));
+            if($_FILES['fotografia']['error'] == 0)
+            {
+                try {
+                    $file -> upload();
+                    $filename = $new_filename . '.' . $file->getExtension();
+                    return $filename;
+                } catch (UploadException $e) {
+                    $errors = $file->getErrors();
+                    //print_r($errors);
+                    return false;
                 }
             }
+            return false;
         }
 
         /*

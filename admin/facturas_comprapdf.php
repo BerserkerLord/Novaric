@@ -113,7 +113,7 @@
                                                                     <table class="invoice">
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td>    ' . $proveedor[0]['razon_social'] . '<br>' . $proveedor[0]['rfc'] . '<br>Factura #' . $factura[0]['id_factura'] . '<br>' . $factura[0]['fecha'] . '</td>
+                                                                                <td>    ' . $proveedor[0]['razon_social'] . '<br>RFC: ' . $proveedor[0]['rfc'] . '<br>Factura #' . $factura[0]['id_factura'] . '<br>' . $factura[0]['fecha'] . '<br>Estatus: ' . $factura[0]['estatus_factura'] . '</td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>

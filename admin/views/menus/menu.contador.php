@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-shopping-bag p-1 icons"></i>Facturación</a>
+    <a class="nav-link active dropdown-toggle" href="#" id="navbarScrollingDropdown4" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-shopping-bag p-1 icons"></i>Facturación</a>
     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown4">
         <li><a href="facturas_servicio.php" class="dropdown-item">Facturación servicios</a></li>
         <li><a href="facturas_compra.php" class="dropdown-item">Facturación compras</a></li>

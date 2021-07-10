@@ -113,7 +113,7 @@
                                                                         <table class="invoice">
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td>    ' . $cliente[0]['nombre'] . '<br>' . $cliente[0]['rfc'] . '<br>Factura #' . $factura[0]['id_factura'] . '<br>' . $factura[0]['fecha'] . '</td>
+                                                                                    <td>    ' . $cliente[0]['nombre'] . '<br>RFC:' . $cliente[0]['rfc'] . '<br>Factura #' . $factura[0]['id_factura'] . '<br>' . $factura[0]['fecha'] . '<br>Estatus: ' . $factura[0]['estatus_factura'] . '</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td>
@@ -123,20 +123,20 @@
                                                                                                     <td>Código</td>
                                                                                                     <td>Producto</td>
                                                                                                     <td class="line0 alignright">Cantidad</td>
-                                                                                                    <td class="line0 alignright">Costo</td>
+                                                                                                    <td class="line0 alignright">Precio</td>
                                                                                                     <td class="line0 alignright">Monto</td>                                                                                                                                                                                                                                                                                                                                                                                                
                                                                                                 </tr>    
                                                                                             </thead>
                                                                                             <tbody>';
                                                                                             $total = 0;
                                                                                             foreach ($producto as $key => $productos):
-                                                                                                $total += $productos['costo'] * $productos['cantidad'];
-                                                                                                $total_producto = $productos['costo'] * $productos['cantidad'];
+                                                                                                $total += $productos['precio_publico'] * $productos['cantidad'];
+                                                                                                $total_producto = $productos['precio_publico'] * $productos['cantidad'];
                                                                                                 $html .= '<tr>
                                                                                                             <td class="line0">' . $productos['codigo_producto'] . '</td> 
                                                                                                             <td class="line0">' . $productos['producto'] . '</td> 
                                                                                                             <td class="line0 alignright">' . $productos['cantidad'] . '</td>
-                                                                                                            <td class="line0 alignright">' . $productos['costo'] . '</td>
+                                                                                                            <td class="line0 alignright">' . $productos['precio_publico'] . '</td>
                                                                                                             <td class="line0 alignright">$' . $total_producto . '</td>
                                                                                                             
                                                                                                           </tr>';

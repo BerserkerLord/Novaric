@@ -19,10 +19,11 @@
 
         <div class="col-md-4">
             <label class="form-label">Costo</label>
-            <input type="text" name="conexion[costo]" value='<?php echo(isset($datos[0]['costo']))?$datos[0]['costo']:''; ?>' class="form-control" id="txtCosto" pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required>
+            <input type="text" name="conexion[costo]" value='<?php echo(isset($datos[0]['costo']))?$datos[0]['costo']:''; ?>' class="form-control" id="txtCosto" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
+            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-6">
@@ -35,7 +36,7 @@
 
         <div class="col-md-3">
             <label class="form-label">Existencias</label>
-            <input type="text" name="conexion[existencias]" value='<?php echo(isset($datos[0]['existencias']))?$datos[0]['existencias']:''; ?>' class="form-control" id="txtExistencias" <?php echo(isset($datos))?'disabled':'pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required'; ?>>
+            <input type="text" name="conexion[existencias]" value='0' class="form-control" id="txtExistencias" readonly>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
@@ -43,10 +44,11 @@
 
         <div class="col-md-3">
             <label class="form-label">Diametro</label>
-            <input type="text" name="conexion[diametro]" value='<?php echo(isset($datos[0]['diametro']))?$datos[0]['diametro']:''; ?>' class="form-control" id="txtDiametro" pattern="[0-9]{1,3}$|^[0-9]{1,3}\.[0-9]{1,3}" required>
+            <input type="text" name="conexion[diametro]" value='<?php echo(isset($datos[0]['diametro']))?$datos[0]['diametro']:''; ?>' class="form-control" id="txtDiametro" pattern="(0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*)" required>
             <div class="invalid-feedback">
                 Llenar este campo por favor o usar el formato adecuado.
             </div>
+            <small>Formato: Solo numeros mayores a cero</small><br><br>
         </div>
 
         <div class="col-md-3">
@@ -114,7 +116,6 @@
 
         <div class="col-md-3">
             <label class="form-label">Extremidad 2</label>
-            <?php print_r($formas_conexion); ?>
             <select name="conexion[id_extremidad2]" class="form-control" id="slctExtremidad2" required>
                 <?php
                 echo($_GET['action'] == 'crear')?"<option disabled selected value> -- Selecciona una opción --</option>":"";
@@ -157,7 +158,7 @@
 
         <div class="col-md-3">
             <label class="form-label">Imagen</label>
-            <input type="file" name="fotografia" class="form-control" required>
+            <input type="file" name="fotografia" class="form-control" <?php echo($_GET['action'] == 'crear')?'required':''; ?>>
             <div class="invalid-feedback">
                 Seleccione una imagen.
             </div>

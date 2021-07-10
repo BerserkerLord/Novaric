@@ -14,6 +14,7 @@
         <tr>
             <th scope="col">No.</th>
             <th scope="col">Fecha</th>
+            <th scope="col">RFC</th>
             <th scope="col">Razón social del proveedor</th>
             <th scope="col">Estatús</th>
             <th scope="col">Total</th>
@@ -25,6 +26,7 @@
             <tr>
                 <td><?=$factura_compra['id_factura']?></td>
                 <td><?=$factura_compra['fecha']?></td>
+                <td><?=$factura_compra['rfc']?></td>
                 <td><?=$factura_compra['razon_social']?></td>
                 <td><?=$factura_compra['estatus_factura']?></td>
                 <td><?='$' . $factura_compra['total']?></td>

@@ -31,7 +31,7 @@
                         </svg>
 
                         <strong class="me-auto">Inicio de sesión</strong>
-                        <small>Hospital San Juan</small>
+                        <small>Novaric</small>
                     </div>
                     <div class="toast-body">
                         <?php echo $mensaje; ?>

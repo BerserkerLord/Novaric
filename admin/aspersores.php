@@ -11,8 +11,8 @@
     $marca = new Marca;
     $unidad = new Unidad;
     $accion = (isset($_GET['action']))?$_GET['action']:'leer';
-    $marcas = $marca -> read();
-    $unidades = $unidad -> read();
+    $marcas = $marca -> readAll();
+    $unidades = $unidad -> readAll();
     include('views/sidebar_navigation.php');
 
     switch($accion)
@@ -27,12 +27,14 @@
                 $aspersor['presion_minima'], $aspersor['presion_maxima'],
                 $aspersor['alcance_minimo'], $aspersor['alcance_maximo']);
             $datos = $aspersores -> readAspersor();
+            include('views/alert.php');
             include('views/productos/aspersores/index.php');
             break;
         case 'eliminar':
             $id_aspersor = $_GET['codigo_producto'];
             $resultado = $aspersores -> delete($id_aspersor, 'aspersor');
             $datos = $aspersores -> readAspersor();
+            include('views/alert.php');
             include('views/productos/aspersores/index.php');
             break;
         case 'ver':
@@ -46,10 +48,12 @@
                 $aspersor['presion_minima'], $aspersor['presion_maxima'], $aspersor['alcance_minimo'], $aspersor['alcance_maximo'], $aspersor['producto'],
                 $aspersor['costo'], $aspersor['descripcion'], $aspersor['id_marca'], $aspersor['id_unidad']);
             $datos = $aspersores -> readAspersor();
+            include('views/alert.php');
             include('views/productos/aspersores/index.php');
             break;
         default:
             $datos = $aspersores -> readAspersor();
             include('views/productos/aspersores/index.php');
     }
+    include('views/footer.php');
 ?>

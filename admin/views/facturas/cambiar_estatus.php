@@ -14,7 +14,7 @@
 
 <div class="ps-5 pe-5 pt-5 pb-5 my-container active-cont">
     <h3 class="display-6">Actualizar estatús</h3>
-    <form action="facturas_<?php if($_GET['action'] != 'leer'){ if(isset($_GET['tipo'])) { echo $tipo; } else { echo ' '; }} else { echo ' '; } ?>
+    <form action="facturas_<?php if($_GET['action'] != 'leer'){ if(isset($_GET['tipo'])) { echo $tipo; } else { echo '5'; }} else { echo '5'; } ?>
 .php?action=actualizar_estatus" method="POST" enctype="multipart/form-data" class="row g-3">
         <div class="col-md-4">
             <label class="form-label">Estatus</label>

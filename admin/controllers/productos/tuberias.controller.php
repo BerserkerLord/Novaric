@@ -1,5 +1,10 @@
 <?php
     include("productos.controller.php");
+    use Upload\File;
+    use Upload\Storage\FileSystem;
+    use Upload\Validation\Size;
+    use Upload\Validation\Mimetype;
+    use Upload\Exception\UploadException;
 
     /*
      * Clase principal para tuberias
@@ -69,12 +74,12 @@
          * Return Array con todas las tuberias
          */
         function readTuberia(){
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT codigo_producto, producto, costo, precio, precio_publico, descripcion, existencias, p.fotografia,
                                  id_marca, marca, id_unidad, unidad, diametro, longitud, extremidad1.extremidad AS extremidad1, extremidad2.extremidad AS extremidad2 FROM producto p
                                     INNER JOIN tuberia t USING(codigo_producto)
-                                    INNER JOIN marca USING(id_marca)
+                                    INNER JOIN marca m USING(id_marca)
                                     INNER JOIN unidad USING(id_unidad)
                                     INNER JOIN extremidad AS extremidad1 ON t.id_extremidad1 = extremidad1.id_extremidad
                                     INNER JOIN extremidad AS extremidad2 ON t.id_extremidad2 = extremidad2.id_extremidad
@@ -90,15 +95,15 @@
                                     INNER JOIN extremidad AS extremidad2 ON t.id_extremidad2 = extremidad2.id_extremidad
                                  WHERE p.producto ILIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-            $sentencia = 'SELECT codigo_producto, producto, costo, precio, precio_publico, descripcion, existencias, p.fotografia,
+            }
+            /*$sentencia = 'SELECT codigo_producto, producto, costo, precio, precio_publico, descripcion, existencias, p.fotografia,
                                  id_marca, marca, id_unidad, unidad, diametro, longitud, extremidad1.extremidad AS extremidad1, extremidad2.extremidad AS extremidad2 FROM producto p 
                               INNER JOIN tuberia t USING(codigo_producto) 
                               INNER JOIN marca USING(id_marca)
                               INNER JOIN unidad USING(id_unidad)
                               INNER JOIN extremidad AS extremidad1 ON t.id_extremidad1 = extremidad1.id_extremidad
                               INNER JOIN extremidad AS extremidad2 ON t.id_extremidad2 = extremidad2.id_extremidad
-                          WHERE p.producto LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';
+                          WHERE p.producto LIKE :busqueda ORDER BY :ordenamiento ASC LIMIT :limite OFFSET :desde';*/
             return $this -> read($sentencia, 'p.codigo_producto');
         }
 

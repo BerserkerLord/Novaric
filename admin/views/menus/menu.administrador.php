@@ -10,8 +10,6 @@
         <li><a href="unidades.php" class="dropdown-item">Unidades</a></li>
         <li><a href="extremidades.php" class="dropdown-item">Extremidades</a></li>
         <li><a href="formas_conexion.php" class="dropdown-item">Formas de conexión</a></li>
-        <li><a href="tipos_boquilla.php" class="dropdown-item">Tipos de boquillas</a></li>
-        <li><a href="formas_aspersion.php" class="dropdown-item">Formas de aspersión</a></li>
     </ul>
 </li>
 <li class="nav-item dropdown">
@@ -20,9 +18,6 @@
         <li><a href="tuberias.php" class="dropdown-item">Tuberias</a></li>
         <li><a href="conexiones.php" class="dropdown-item">Conexiones</a></li>
         <li><a href="aspersores.php" class="dropdown-item">Aspersores</a></li>
-        <li><a href="boquillas.php" class="dropdown-item">Boquillas</a></li>
-        <li><a href="valvulas.php" class="dropdown-item">Válvulas</a></li>
-        <li><a href="programadores.php" class="dropdown-item">Programadores</a></li>
         <li><a href="miscelaneos.php" class="dropdown-item">Miscelaneos</a></li>
     </ul>
 </li>

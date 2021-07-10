@@ -21,7 +21,7 @@
         <?php foreach($datos as $key => $marca): ?>
             <tr>
                 <td>
-                    <img src="<?php echo (isset($marca['fotografia']))? '../archivos/marcas/'.$marca['fotografia']: '../archivos/default.jpg'; ?>" alt="foto_marca" class="rounded img-fluid" width="75" height="75">
+                    <img src="<?php echo (isset($marca['fotografia']))? '../archivos/'.$marca['fotografia']: '../archivos/default.jpg'; ?>" alt="foto_marca" class="rounded img-fluid" width="75" height="75">
                 </td>
                 <td><?=$marca['marca']?></td>
                 <td>

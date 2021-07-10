@@ -40,15 +40,15 @@
             $ordenamiento = (isset($_GET['ordenamiento']))?$_GET['ordenamiento']:'f.forma_conexion';
             $limite = (isset($_GET['limite']))?$_GET['limite']:'3';
             $desde = (isset($_GET['desde']))?$_GET['desde']:'0';
-            /*switch($_SESSION['engine']){
+            switch($_SESSION['engine']){
                 case 'mariadb':
                     $sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
                 case 'postgresql':
                     $sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion ILIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
                     break;
-            }*/
-            $sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
+            }
+            //$sentencia = 'SELECT * FROM forma_conexion f WHERE f.forma_conexion LIKE :busqueda ORDER BY :ordenamiento LIMIT :limite OFFSET :desde';
             $stmt = $dbh -> prepare($sentencia);
             $stmt -> bindValue(":busqueda", '%' . $busqueda . '%', PDO::PARAM_STR);
             $stmt -> bindValue(":ordenamiento", $ordenamiento, PDO::PARAM_STR);

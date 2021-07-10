@@ -8,8 +8,8 @@
     class Sistema
     {
         //Para PostgresSQL
-        /*var $dsn = "pgsql:host=localhost;port=5432;dbname=hospital";
-        var $user = "hospital";
+        /*var $dsn = "pgsql:host=localhost;port=5432;dbname=novaric";
+        var $user = "admin_novaric";
         var $pass = "123456";
         var $engine = "postgresql";*/
 
@@ -122,10 +122,11 @@
         *        String  @contrasena recibe la contraseña del usuario
         * Return Boolean validando al usuario
         */
-        function validateEmpleado($correo, $contrasena){
-            $contrasena = MD5($contrasena);
+        function validateEmpleado($correo, $contrasenia){
+            $contrasena = MD5($contrasenia);
             $dbh = $this -> Connect();
-            $query = "SELECT * FROM empleado WHERE correo = :correo AND contrasenia = :contrasena";
+
+            $query = 'SELECT * FROM empleado WHERE correo = :correo AND contrasenia = :contrasena';
             $stmt = $dbh ->prepare($query);
             $stmt -> bindParam(":correo", $correo, PDO::PARAM_STR);
             $stmt -> bindParam(":contrasena", $contrasena, PDO::PARAM_STR);
@@ -214,7 +215,7 @@
                 $mail -> setFrom('18030948@itcelaya.edu.mx', 'Dario Sebastian Zarate Ceballos');
                 $mail -> addReplyTo('18030948@itcelaya.edu.mx', 'Dario Sebastian Zarate Ceballos');
                 $mail -> addAddress($correo, 'Dario Zarate');
-                $mail -> Subject = 'Recuperación de contraseña del sistema del Hospital San Juan';
+                $mail -> Subject = 'Recuperación de contraseña del sistema de Novaric';
                 $cuerpo = "Estimado usuario, por favor presione la siguiente liga para recuperar su contraseña </br><a href='http://localhost/Novaric/login/login.php?action=change_pass&correo=" . $correo . "&token=" . $token . "'>Recuperar Contraseña</a>";
                 $mail -> msgHTML($cuerpo);
                 $mail -> AltBody = 'Mensaje alternativo';

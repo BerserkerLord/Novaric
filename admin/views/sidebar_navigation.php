@@ -12,9 +12,10 @@
         <link href="../css/fontawesome/css/all.css" rel="stylesheet">
         <link href="../css/features.css" rel="stylesheet">
         <script src="../css/bootstrap/js/bootstrap.js"></script>
-        <link rel="stylesheet" href="../css/chart4php/lib/js/jquery.min.js">
-        <script src="../css/chart4php/lib/js/jquery.min.js"></script>
-        <script src="../css/chart4php/lib/js/chartphp.js"></script>
+        <!-- jQuery library -->
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-success">
@@ -24,7 +25,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarScroll">
                     <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="font-size: 0.92rem">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.php"><i class="fa fa-home p-1 icons"></i>Inicio</a></li>
                         <?php
                             if($sistema -> validarPuesto('Administrador')){
                                 include('menus/menu.administrador.php');
@@ -32,7 +33,7 @@
                             if($sistema -> validarPuesto('Contador')){
                                 include('menus/menu.contador.php');
                             }
-                            if($sistema -> validarPuesto('RH')){
+                            if($sistema -> validarPuesto('Director de Recursos Humanos')){
                                 include('menus/menu.rh.php');
                             }
                             if($sistema -> validarPuesto('Encargado de Inventario')){
@@ -42,7 +43,7 @@
                                 include('menus/menu.almacen.php');
                             }
                         ?>
-                        <li class="nav-item"><a class="nav-link active" href="../login/login.php?action=logout" tabindex="-1">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="../login/login.php?action=logout" tabindex="-1"><i class="fa fa-sign-out-alt p-1 icons"></i>Logout</a></li>
                     </ul>
                 </div>
             </div>

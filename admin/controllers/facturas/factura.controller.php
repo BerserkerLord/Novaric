@@ -27,7 +27,7 @@
                 $stmt -> bindParam(':id_estatus_factura', $id_estatus_factura, PDO::PARAM_INT);
                 $stmt -> bindParam(':id_factura', $id_factura, PDO::PARAM_INT);
                 $stmt -> execute();
-                if($estatus != 3 && $id_estatus_factura = 3){
+                if($estatus != 3 && $id_estatus_factura == 3){
                     $sentencia = "SELECT codigo_producto, cantidad FROM detalle_factura_producto_compra WHERE id_factura = :id_factura";
                     $stmt = $dbh -> prepare($sentencia);
                     $stmt -> bindParam(':id_factura', $id_factura, PDO::PARAM_INT);
@@ -67,7 +67,8 @@
                 $msg['status'] = 'success';
                 return $msg;
             } catch (Exception $e) {
-                if($estatus != 3 && $id_estatus_factura = 3){
+                if($estatus != 3 && $id_estatus_factura == 3){
+                    print_r($e -> getMessage());
                     $dbh -> rollBack();
                 }
                 $msg['msg'] = 'Error desconocido al cambiar estatus, favor de contactar al desarrollador.';
@@ -100,7 +101,7 @@
                 $stmt -> bindParam(':id_estatus_factura', $id_estatus_factura, PDO::PARAM_INT);
                 $stmt -> bindParam(':id_factura', $id_factura, PDO::PARAM_INT);
                 $stmt -> execute();
-                if($estatus != 3 && $id_estatus_factura = 3){
+                if($estatus != 3 && $id_estatus_factura == 3){
                     $sentencia = "SELECT codigo_producto, cantidad FROM detalle_factura_producto_venta WHERE id_factura = :id_factura";
                     $stmt = $dbh -> prepare($sentencia);
                     $stmt -> bindParam(':id_factura', $id_factura, PDO::PARAM_INT);
@@ -140,7 +141,7 @@
                 $msg['status'] = 'success';
                 return $msg;
             } catch (Exception $e) {
-                if($estatus != 3 && $id_estatus_factura = 3){
+                if($estatus != 3 && $id_estatus_factura == 3){
                     $dbh -> rollBack();
                 }
                 $msg['msg'] = 'Error desconocido al cambiar estatus, favor de contactar al desarrollador.';

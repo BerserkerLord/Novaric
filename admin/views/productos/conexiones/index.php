@@ -1,13 +1,13 @@
 <div class="ps-5 pe-5 pt-3 pb-3 my-container active-cont">
     <h3 class="display-3">Conexiones</h3>
-    <div class="container">
-        <div class="row">
+    <div>
+        <div class="row no-gutters">
             <div class="col-md-4">
                 <a href="conexiones.php?action=crear" class="btn btn-outline-success mb-3"><i class="fa fa-plus p-1 icons"></i>
                     Agregar
                 </a>
             </div>
-            <div class="col-md-4 offset-md-4">
+            <div class="d-flex flex-row-reverse">
                 <form action="conexiones.php" method="GET">
                     <input class="input-group-text pe-1" style="display:inline-block;" type="text" name="busqueda">
                     <button class="btn btn-outline-secondary" type="submit">
@@ -36,13 +36,13 @@
         <?php foreach($datos as $key => $conexion): ?>
             <tr>
                 <td>
-                    <img src="<?php echo (isset($conexion['fotografia']))? '../archivos/'.$conexion['fotografia']: '../archivos/default.jpg'; ?>" alt="foto tuberia" class="rounded img-fluid" height="75px" width="75px">
+                    <img src="<?php echo (isset($conexion['fotografia']))? '../archivos/'.$conexion['fotografia']: '../archivos/default.jpg'; ?>" alt="foto tuberia" class="rounded img-fluid" height="75" width="75">
                 </td>
                 <td><?=$conexion['codigo_producto']?></td>
                 <td><?=$conexion['producto']?></td>
-                <td><?=$conexion['costo']?></td>
-                <td><?=$conexion['precio']?></td>
-                <td><?=$conexion['precio_publico']?></td>
+                <td>$<?=$conexion['costo']?></td>
+                <td>$<?=$conexion['precio']?></td>
+                <td>$<?=$conexion['precio_publico']?></td>
                 <td><?=$conexion['existencias'] . ' ' . $conexion['unidad'] . '(s)'?></td>
                 <td><?=$conexion['marca']?></td>
                 <td>
@@ -55,7 +55,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="10"><?="<b>" . "Descripción: " . "</b>" . $conexion['descripcion']?></td>
+                <td colspan="9"><?="<b>" . "Descripción: " . "</b>" . $conexion['descripcion']?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

@@ -8,6 +8,7 @@
                 <th scope="col">Codigo del producto</th>
                 <th scope="col">Producto</th>
                 <th scope="col">Cantidad</th>
+                <th scope="col">Estatús</th>
             </tr>
         </thead>
         <tbody>
@@ -18,18 +19,19 @@
                 <td><?=$entrada['codigo_producto']?></td>
                 <td><?=$entrada['producto']?></td>
                 <td><?=$entrada['cantidad']?></td>
+                <td><?=$entrada['estatus_factura']?></td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
     <nav>
         <ul class="pagination">
-            <?php for($i = 0, $k = 1; $i < $productos -> total('id_factura', 'detalle_factura_producto'); $i+=15, $k++): ?>
+            <?php for($i = 0, $k = 1; $i < $productos -> total('id_factura', 'detalle_factura_producto_compra'); $i+=15, $k++): ?>
                 <li class="page-item"><a class="page-link" href="entradas.php?<?php echo(isset($_GET['busqueda']))?'busqueda='.$_GET['busqueda'].'&':''; ?>&desde=<?php echo($i); ?>&limite=15"><?php echo ($k); ?></a></li>
             <?php endfor; ?>
         </ul>
     </nav>
     <?php
-        echo "Filtrando " . count($entradas) . " de un total del " . $productos -> total('id_factura', 'detalle_factura_producto') . " entradas"
+        echo "Filtrando " . count($entradas) . " de un total del " . $productos -> total('id_factura', 'detalle_factura_producto_compra') . " entradas"
     ?>
 </div>

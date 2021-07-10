@@ -6,8 +6,6 @@
     $sistema = new Sistema;
     $sistema -> verificarSesion();
     include('views/sidebar_navigation.php');
-?>
-    <h1>Bienvenido al sistema</h1>
-<?php
+    echo '<h1>Bienvenido al sistema</h1>';
     include('views/footer.php');
 ?>
